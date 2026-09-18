@@ -1,0 +1,88 @@
+<!-- wp:group {"tagName":"header","className":"site-header","layout":{"type":"default"}} -->
+<header id="siteHeader" class="site-header">
+
+    <!-- 1. BARIS ATAS (Top Bar: Logo KREASI & Partner / Hamburger) -->
+    <div id="topHeaderBar" class="header-top-bar bg-white py-2">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="d-flex justify-content-between align-items-center">
+
+                <!-- SISI KIRI: Logo Utama (Gutenberg Site Logo) -->
+                <div class="header-main-logo d-flex align-items-center">
+                    <!-- wp:site-logo {"width":140,"shouldSyncIcon":false} /-->
+                </div>
+
+                <!-- SISI KANAN DESKTOP: Barisan Logo Mitra -->
+                <div class="partner-logos d-none d-md-flex align-items-center gap-3">
+                    <img src="/wp-content/themes/customtheme/assets/images/logo-partner-1.png" alt="Kemendikdasmen" class="partner-logo-img" onerror="this.style.display='none'">
+                    <img src="/wp-content/themes/customtheme/assets/images/logo-partner-2.png" alt="Kemenag" class="partner-logo-img" onerror="this.style.display='none'">
+                    <img src="/wp-content/themes/customtheme/assets/images/logo-partner-3.png" alt="GPE" class="partner-logo-img" onerror="this.style.display='none'">
+                    <img src="/wp-content/themes/customtheme/assets/images/logo-save-the-children.png" alt="Save the Children" class="partner-logo-img" onerror="this.style.display='none'">
+                </div>
+
+                <!-- SISI KANAN MOBILE: Hamburger Menu Button -->
+                <button class="navbar-toggler d-md-none border rounded p-1 shadow-none" 
+                        type="button" 
+                        data-bs-toggle="collapse" 
+                        data-bs-target="#mobileNavCollapse" 
+                        aria-controls="mobileNavCollapse" 
+                        aria-expanded="false" 
+                        aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-2 text-dark"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Garis Pembatas Horizontal Tipis -->
+    <div class="header-divider"></div>
+
+    <!-- SISI MOBILE: Barisan Logo Partner di Bawah Garis -->
+    <div class="partner-logos-mobile d-md-none bg-white py-2 border-bottom">
+        <div class="container-fluid px-4">
+            <div class="d-flex justify-content-between align-items-center gap-2">
+                <img src="/wp-content/themes/customtheme/assets/images/logo-partner-1.png" alt="Kemendikdasmen" class="partner-logo-mobile-img" onerror="this.style.display='none'">
+                <img src="/wp-content/themes/customtheme/assets/images/logo-partner-2.png" alt="Kemenag" class="partner-logo-mobile-img" onerror="this.style.display='none'">
+                <img src="/wp-content/themes/customtheme/assets/images/logo-partner-3.png" alt="GPE" class="partner-logo-mobile-img" onerror="this.style.display='none'">
+                <img src="/wp-content/themes/customtheme/assets/images/logo-save-the-children.png" alt="Save the Children" class="partner-logo-mobile-img" onerror="this.style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. BARIS BAWAH (Main Navigation Bar - Desktop & Mobile Collapse) -->
+    <div id="mainHeaderNav" class="header-main-nav bg-white">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="collapse d-md-block" id="mobileNavCollapse">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center py-2 gap-3 gap-md-0">
+
+                    <!-- SISI KIRI: Navigasi Menu Utama (Pills Capsule) -->
+                    <nav class="main-navigation kreasi-nav-menu">
+                        <ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2">
+                            <li><a href="/tentang-kami">TENTANG KAMI</a></li>
+                            <li><a href="/artikel">ARTIKEL</a></li>
+                            <li><a href="/pustaka">PUSTAKA</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- SISI KANAN: Form Pencarian & Switcher Bahasa -->
+                    <div class="header-right-actions d-flex align-items-center gap-3">
+                        <form method="get" action="/" class="header-search-form">
+                            <button type="submit" aria-label="Search">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <input type="search" name="s" placeholder="CARI" class="ms-2">
+                        </form>
+
+                        <div class="language-switcher d-flex align-items-center gap-1">
+                            <a href="#" class="lang-btn active" title="Bahasa Indonesia">IN</a>
+                            <a href="#" class="lang-btn" title="English">EN</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+<!-- /wp:group -->

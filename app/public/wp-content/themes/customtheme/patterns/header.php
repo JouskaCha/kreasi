@@ -1,19 +1,11 @@
 <?php
 /**
- * Header template for customtheme
- *
- * @package customtheme
+ * Title: Header
+ * Slug: customtheme/header
+ * Categories: header
+ * Block Types: core/template-part/header
  */
-?><!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php wp_head(); ?>
-</head>
-<body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
-
+?>
 <header id="siteHeader" class="site-header">
 
     <!-- =========================================================
@@ -23,8 +15,8 @@
         <div class="container-fluid px-4 px-lg-5">
             <div class="d-flex justify-content-between align-items-center">
 
-                <!-- SISI KIRI: Logo Utama (Dinamis dari WordPress Media Library / Custom Logo) -->
-                <div class="header-main-logo d-flex align-items-center">
+                <!-- SISI KIRI: Logo Utama KREASI (Dinamis dari Media Library / Custom Logo) -->
+                <div class="header-main-logo">
                     <?php if (function_exists('the_custom_logo') && has_custom_logo()) : ?>
                         <?php the_custom_logo(); ?>
                     <?php else : ?>
@@ -74,8 +66,6 @@
     ========================================================== -->
     <div id="mainHeaderNav" class="header-main-nav bg-white">
         <div class="container-fluid px-4 px-lg-5">
-            
-            <!-- Mobile Collapse Wrapper -->
             <div class="collapse d-md-block" id="mobileNavCollapse">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center py-2 gap-3 gap-md-0">
 
@@ -99,8 +89,6 @@
 
                     <!-- SISI KANAN: Form Pencarian & Switcher Bahasa -->
                     <div class="header-right-actions d-flex align-items-center gap-3">
-                        
-                        <!-- Form Pencarian Capsule -->
                         <form method="get" action="<?php echo esc_url(home_url('/')); ?>" class="header-search-form">
                             <button type="submit" aria-label="Search">
                                 <i class="bi bi-search"></i>
@@ -108,54 +96,15 @@
                             <input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="CARI" class="ms-2">
                         </form>
 
-                        <!-- Switcher Bahasa (IN [Aktif - Merah] | EN) -->
                         <div class="language-switcher d-flex align-items-center gap-1">
                             <a href="#" class="lang-btn active" title="Bahasa Indonesia">IN</a>
                             <a href="#" class="lang-btn" title="English">EN</a>
                         </div>
-
                     </div>
 
                 </div>
             </div>
-
         </div>
     </div>
 
 </header>
-
-<!-- Skrip Sticky Header (Vanilla JS untuk Desktop) -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const mainNav = document.getElementById('mainHeaderNav');
-    const topBar = document.getElementById('topHeaderBar');
-
-    if (!mainNav || !topBar) return;
-
-    function handleSticky() {
-        // Efek Sticky hanya aktif pada Desktop (>= 768px)
-        if (window.innerWidth >= 768) {
-            const topBarOffset = topBar.offsetHeight + 2;
-            if (window.scrollY > topBarOffset) {
-                if (!mainNav.classList.contains('is-sticky')) {
-                    mainNav.classList.add('is-sticky');
-                    document.body.style.paddingTop = mainNav.offsetHeight + 'px';
-                }
-            } else {
-                if (mainNav.classList.contains('is-sticky')) {
-                    mainNav.classList.remove('is-sticky');
-                    document.body.style.paddingTop = '0px';
-                }
-            }
-        } else {
-            if (mainNav.classList.contains('is-sticky')) {
-                mainNav.classList.remove('is-sticky');
-                document.body.style.paddingTop = '0px';
-            }
-        }
-    }
-
-    window.addEventListener('scroll', handleSticky, { passive: true });
-    window.addEventListener('resize', handleSticky);
-});
-</script>
