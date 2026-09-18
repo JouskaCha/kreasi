@@ -1,18 +1,16 @@
 <?php
 /**
- * Footer template for customtheme
- *
- * @package customtheme
+ * Title: Footer
+ * Slug: customtheme/footer
+ * Categories: footer
+ * Block Types: core/template-part/footer
  */
 ?>
-
 <footer class="site-footer pt-5 pb-3">
     <div class="container-fluid px-4 px-lg-5">
         <div class="row gx-lg-5 gy-4 align-items-start">
             
-            <!-- =========================================================
-                 KOLOM 1: Branding & Organisasi Pengelola
-            ========================================================== -->
+            <!-- KOLOM 1: Branding & Organisasi Pengelola -->
             <div class="col-lg-4 col-md-12">
                 <?php if (is_active_sidebar('footer-col-1')) : ?>
                     <?php dynamic_sidebar('footer-col-1'); ?>
@@ -60,15 +58,12 @@
                 <?php endif; ?>
             </div>
 
-            <!-- =========================================================
-                 KOLOM 2: Informasi Kontak & Media Sosial
-            ========================================================== -->
+            <!-- KOLOM 2: Informasi Kontak & Media Sosial -->
             <div class="col-lg-4 col-md-6">
                 <?php if (is_active_sidebar('footer-col-2')) : ?>
                     <?php dynamic_sidebar('footer-col-2'); ?>
                 <?php else : ?>
                     <ul class="footer-contact-list list-unstyled mb-0">
-                        <!-- Alamat Kantor -->
                         <li class="d-flex align-items-start mb-3">
                             <span class="contact-icon me-3 mt-1 flex-shrink-0">
                                 <i class="bi bi-geo-alt-fill"></i>
@@ -78,7 +73,6 @@
                             </span>
                         </li>
 
-                        <!-- Telepon -->
                         <li class="d-flex align-items-center mb-3">
                             <span class="contact-icon me-3 flex-shrink-0">
                                 <i class="bi bi-telephone-fill"></i>
@@ -88,7 +82,6 @@
                             </a>
                         </li>
 
-                        <!-- Email -->
                         <li class="d-flex align-items-center mb-3">
                             <span class="contact-icon me-3 flex-shrink-0">
                                 <i class="bi bi-envelope-fill"></i>
@@ -98,7 +91,6 @@
                             </a>
                         </li>
 
-                        <!-- Instagram -->
                         <li class="d-flex align-items-center mb-3">
                             <span class="contact-icon me-3 flex-shrink-0">
                                 <i class="bi bi-instagram"></i>
@@ -108,7 +100,6 @@
                             </a>
                         </li>
 
-                        <!-- YouTube -->
                         <li class="d-flex align-items-center mb-0">
                             <span class="contact-icon me-3 flex-shrink-0">
                                 <i class="bi bi-youtube"></i>
@@ -121,16 +112,12 @@
                 <?php endif; ?>
             </div>
 
-            <!-- =========================================================
-                 KOLOM 3: Widget Interaktif (Newsletter & Laporan)
-            ========================================================== -->
+            <!-- KOLOM 3: Widget Interaktif (Newsletter & Laporan) -->
             <div class="col-lg-4 col-md-6">
                 <?php if (is_active_sidebar('footer-col-3')) : ?>
                     <?php dynamic_sidebar('footer-col-3'); ?>
                 <?php else : ?>
                     <div class="footer-interactive-cards d-flex flex-column gap-3">
-                        
-                        <!-- Card 1: Newsletter -->
                         <div class="card footer-card border-0 shadow-sm">
                             <div class="card-body p-3 p-xl-4">
                                 <h6 class="card-title fw-bold text-navy mb-3">Ikuti Kabar Terkini</h6>
@@ -147,7 +134,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 2: Laporan & Feedback -->
                         <div class="card footer-card border-0 shadow-sm">
                             <div class="card-body p-3 p-xl-4">
                                 <p class="card-text text-secondary small mb-3">
@@ -158,16 +144,12 @@
                                 </a>
                             </div>
                         </div>
-
                     </div>
                 <?php endif; ?>
             </div>
 
         </div>
 
-        <!-- =========================================================
-             FOOTER COPYRIGHT (Bottom Line)
-        ========================================================== -->
         <hr class="footer-divider mt-5 mb-3">
 
         <div class="row">
@@ -180,7 +162,3 @@
 
     </div>
 </footer>
-
-<?php wp_footer(); ?>
-</body>
-</html>

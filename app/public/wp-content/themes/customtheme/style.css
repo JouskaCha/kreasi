@@ -1,540 +1,344 @@
-/* =========================================
-   RESET
-========================================= */
+/*
+Theme Name: customtheme
+Theme URI: https://example.com/customtheme
+Author: Kreasi Team
+Author URI: https://example.com
+Description: Tema kustom WordPress responsif dengan Bootstrap 5 dan hirarki standar.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: customtheme
+Tags: custom-header, custom-menu, featured-images, full-width-template
+*/
 
+/* =========================================
+   RESET & BASE STYLES
+========================================= */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color: #222;
-    background: #fff;
+    background-color: #fff;
+    margin: 0;
 }
 
 img {
-    display: block;
     max-width: 100%;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-
-/* =========================================
-   HEADER
-========================================= */
-
-.site-header {
-    width: 100%;
-    background: #fff;
-}
-
-
-/* =========================================
-   HEADER CONTAINER
-========================================= */
-
-.header-container {
-    width: 100%;
-    max-width: 1200px;
-    height: 100%;
-    margin: 0 auto;
-
-    padding-left: 45px;
-    padding-right: 45px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-/* =========================================
-   HEADER TOP
-========================================= */
-
-.header-top {
-    height: 51px;
-    background: #fff;
-
-    border-bottom: 2px solid #1b9bea;
-}
-
-.header-top .header-container {
-    height: 51px;
-}
-
-
-/* =========================================
-   MAIN LOGO
-========================================= */
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo img {
-    width: 72px;
     height: auto;
 }
 
+.text-navy {
+    color: #0b2351 !important;
+}
 
 /* =========================================
-   PARTNER LOGOS
+   HEADER STYLING (Desktop & Mobile)
 ========================================= */
+.site-header {
+    width: 100%;
+    position: relative;
+    z-index: 1030;
+}
 
+/* Baris Atas (Top Bar Header) */
+.header-top-bar {
+    background-color: #fff;
+    min-height: 56px;
+}
+
+.header-main-logo .custom-logo,
+.header-main-logo .custom-logo-link img,
+.logo-kreasi-img {
+    max-height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: inline-block;
+}
+
+/* Logo Partner Desktop */
 .partner-logos {
     display: flex;
     align-items: center;
-
-    gap: 8px;
+    gap: 14px;
 }
 
-.partner-logos img {
+.partner-logo-img,
+.partner-logos .widget img {
+    max-height: 36px;
     width: auto;
-    height: 30px;
+    object-fit: contain;
+    display: inline-block;
+}
 
+/* Logo Partner Mobile */
+.partner-logos-mobile {
+    background-color: #fff;
+}
+
+.partner-logo-mobile-img {
+    max-height: 26px;
+    max-width: 22%;
     object-fit: contain;
 }
 
-
-/* =========================================
-   HEADER BOTTOM
-========================================= */
-
-.header-bottom {
-    height: 35px;
-
-    background: #fff;
+/* Garis Pembatas Horizontal */
+.header-divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    width: 100%;
 }
 
-.header-bottom .header-container {
-    height: 35px;
+/* Baris Bawah (Main Navigation Bar) */
+.header-main-nav {
+    background-color: #fff;
+    min-height: 50px;
+    transition: box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
+/* Sticky State saat Scroll di Desktop */
+.header-main-nav.is-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    z-index: 1040;
+    animation: headerSlideDown 0.3s ease forwards;
+}
 
-/* =========================================
-   NAVIGATION
-========================================= */
+@keyframes headerSlideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
 
-.main-navigation {
+/* Nav Menu Pills / Capsule */
+.kreasi-nav-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     align-items: center;
-
     gap: 8px;
 }
 
-.main-navigation a {
-    height: 27px;
+.kreasi-nav-menu ul li {
+    display: inline-block;
+}
 
-    padding: 0 11px;
-
-    display: flex;
+.kreasi-nav-menu ul li a {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    border-radius: 15px;
-
-    background: #f1f3f7;
-
-    color: #173b68;
-
-    font-size: 10px;
-    font-weight: 600;
-
-    white-space: nowrap;
-
-    transition: 0.2s ease;
+    height: 30px;
+    padding: 0 16px;
+    border-radius: 20px;
+    background-color: #f1f3f7;
+    color: #163d6b;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.4px;
+    transition: all 0.2s ease;
 }
 
-.main-navigation a:hover {
-    background: #e3e7ed;
+.kreasi-nav-menu ul li.current-menu-item a,
+.kreasi-nav-menu ul li a:hover {
+    background-color: #163d6b;
+    color: #ffffff;
 }
 
-
-/* =========================================
-   HEADER RIGHT
-========================================= */
-
-.header-right {
+/* Search Box Capsule */
+.header-search-form {
+    background-color: #f1f3f7;
+    border-radius: 20px;
+    padding: 4px 14px;
     display: flex;
     align-items: center;
-
-    gap: 10px;
+    width: 180px;
+    height: 32px;
 }
 
-
-/* =========================================
-   SEARCH
-========================================= */
-
-.search-box {
-    width: 170px;
-    height: 26px;
-
-    padding: 0 10px;
-
-    display: flex;
-    align-items: center;
-
-    background: #f3f4f6;
-
-    border-radius: 15px;
-}
-
-.search-icon {
-    margin-right: 5px;
-
-    color: #9ca3af;
-
-    font-size: 15px;
-}
-
-.search-box input {
-    width: 100%;
-    height: 100%;
-
-    padding: 0;
-
+.header-search-form input[type="search"] {
     border: none;
-    outline: none;
-
     background: transparent;
-
-    font-size: 9px;
+    font-size: 11px;
     color: #333;
-}
-
-.search-box input::placeholder {
-    color: #a0a0a0;
-}
-
-
-/* =========================================
-   LANGUAGE
-========================================= */
-
-.language-switcher {
-    display: flex;
-    align-items: center;
-
-    gap: 5px;
-}
-
-.language-switcher a {
-    width: 20px;
-    height: 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    color: #aaa;
-
-    font-size: 8px;
-    font-weight: 600;
-}
-
-.language-switcher a.active {
-    background: #e63332;
-
-    color: #fff;
-}
-
-
-/* =========================================
-   HERO
-========================================= */
-
-.hero {
-    position: relative;
-
     width: 100%;
-    height: calc(100vh - 86px);
-
-    min-height: 450px;
-    max-height: 650px;
-
-    overflow: hidden;
+    outline: none;
 }
 
-
-/* =========================================
-   HERO IMAGE
-========================================= */
-
-.hero-image {
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    object-position: center center;
-}
-
-
-/* =========================================
-   HERO OVERLAY
-========================================= */
-
-.hero-overlay {
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.35);
-}
-
-
-/* =========================================
-   HERO CONTAINER
-========================================= */
-
-.hero-container {
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
-    height: 100%;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    padding-left: 45px;
-    padding-right: 45px;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: flex-end;
-}
-
-
-/* =========================================
-   HERO CONTENT
-========================================= */
-
-.hero-content {
-    margin-bottom: 75px;
-}
-
-
-/* =========================================
-   HERO TITLE
-========================================= */
-
-.hero h1 {
-    max-width: 650px;
-
-    margin: 0;
-
-    color: #fff;
-
-    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-
-    font-size: clamp(32px, 4vw, 52px);
-
-    font-weight: 400;
-
-    line-height: 1.08;
-
-    text-transform: uppercase;
-}
-
-
-/* =========================================
-   READ MORE
-========================================= */
-
-.read-more {
-    position: absolute;
-
-    right: 45px;
-    bottom: 73px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
-
-    color: #fff;
-
-    font-size: 9px;
+.header-search-form input[type="search"]::placeholder {
+    color: #8c98a9;
     font-weight: 500;
-
-    text-transform: uppercase;
 }
 
-.read-more span {
-    font-size: 15px;
-
+.header-search-form button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: #8c98a9;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
     line-height: 1;
 }
 
-
-/* =========================================
-   SLIDER INDICATOR
-========================================= */
-
-.slider-indicator {
-    position: absolute;
-
-    left: 45px;
-    bottom: 34px;
-
-    display: flex;
+/* Switcher Bahasa (IN | EN) */
+.lang-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
     align-items: center;
-
-    gap: 4px;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #8c98a9;
+    transition: all 0.2s ease;
 }
 
-.indicator {
-    width: 7px;
-    height: 4px;
-
-    display: block;
-
-    border-radius: 5px;
-
-    background: rgba(255, 255, 255, 0.45);
+.lang-btn.active {
+    background-color: #d32f2f;
+    color: #ffffff;
 }
 
-.indicator.active {
-    width: 23px;
-
-    background: #fff;
+.lang-btn:hover:not(.active) {
+    background-color: #e2e8f0;
+    color: #333;
 }
 
 
 /* =========================================
-   FOOTER
+   FOOTER STYLING (Sesuai Desain PRD)
 ========================================= */
-
 .site-footer {
-    width: 100%;
+    background-color: #f3f5f8;
+    color: #2e384d;
+    border-top: 1px solid #e7ecf2;
 }
 
+.footer-logo-main,
+.footer-branding-wrap .custom-logo,
+.footer-branding-wrap .custom-logo-link img {
+    max-width: 150px;
+    height: auto;
+    object-fit: contain;
+    display: inline-block;
+}
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+.footer-logo-manager {
+    max-width: 160px;
+    height: auto;
+}
 
-@media (max-width: 768px) {
+.footer-contact-list {
+    font-size: 13px;
+    line-height: 1.5;
+}
 
-    .header-container {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+.contact-icon {
+    width: 26px;
+    height: 26px;
+    background-color: #0b2351;
+    color: #fff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
 
+.contact-text {
+    color: #0b2351;
+    font-weight: 500;
+    font-size: 13px;
+}
 
-    /* HEADER */
+.contact-link {
+    color: #0b2351;
+    font-weight: 500;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
 
-    .header-top {
-        height: 55px;
-    }
+.contact-link:hover {
+    color: #d32f2f;
+    text-decoration: underline;
+}
 
-    .header-top .header-container {
-        height: 55px;
-    }
+.footer-card {
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 18px rgba(11, 35, 81, 0.05) !important;
+}
 
-    .logo img {
-        width: 70px;
-    }
+.footer-card .card-title {
+    font-size: 15px;
+}
 
-    .partner-logos {
-        gap: 4px;
-    }
+.footer-input {
+    border-radius: 8px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    padding: 7px 12px;
+}
 
-    .partner-logos img {
-        height: 22px;
-        max-width: 55px;
-    }
+.footer-input:focus {
+    border-color: #0b2351;
+    box-shadow: 0 0 0 0.2rem rgba(11, 35, 81, 0.15);
+}
 
+.btn-subscribe {
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+    border-radius: 8px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
+}
 
-    .header-bottom {
-        height: 40px;
-    }
+.btn-subscribe:hover {
+    background-color: #b71c1c;
+    border-color: #b71c1c;
+}
 
-    .header-bottom .header-container {
-        height: 40px;
-    }
+.btn-navy {
+    background-color: #002060;
+    border-color: #002060;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
+}
 
+.btn-navy:hover {
+    background-color: #001540;
+    border-color: #001540;
+    color: #ffffff;
+}
 
-    .main-navigation {
-        gap: 4px;
-    }
+.footer-divider {
+    border: 0;
+    border-top: 1px solid #e0e5ec;
+    opacity: 1;
+}
 
-    .main-navigation a {
-        height: 25px;
-
-        padding: 0 8px;
-
-        font-size: 8px;
-    }
-
-
-    .search-box {
-        display: none;
-    }
-
-
-    /* HERO */
-
-    .hero {
-        height: calc(100vh - 95px);
-
-        min-height: 500px;
-    }
-
-    .hero-container {
-        padding-left: 25px;
-        padding-right: 25px;
-    }
-
-
-    .hero h1 {
-        font-size: clamp(28px, 8vw, 42px);
-    }
-
-
-    .hero-content {
-        margin-bottom: 80px;
-    }
-
-
-    .read-more {
-        right: 25px;
-        bottom: 70px;
-    }
-
-
-    .slider-indicator {
-        left: 25px;
-        bottom: 30px;
-    }
-
+.footer-copyright {
+    font-size: 12px;
+    color: #6c757d;
 }
