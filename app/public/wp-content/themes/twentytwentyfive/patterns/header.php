@@ -1,32 +1,105 @@
-<?php
-/**
- * Title: Header
- * Slug: twentytwentyfive/header
- * Categories: header
- * Block Types: core/template-part/header
- * Description: Site header with site title and navigation.
- *
- * @package WordPress
- * @subpackage Twenty_Twenty_Five
- * @since Twenty Twenty-Five 1.0
- */
+<!-- wp:group {"tagName":"header","align":"full","className":"kreasi-header"} -->
+<header class="wp-block-group alignfull kreasi-header">
 
-?>
-<!-- wp:group {"align":"full","layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull">
-	<!-- wp:group {"layout":{"type":"constrained"}} -->
-	<div class="wp-block-group">
-		<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-		<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30)">
-			<!-- wp:site-title {"level":0} /-->
-			<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|10"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
-			<div class="wp-block-group">
-				<!-- wp:navigation {"overlayBackgroundColor":"base","overlayTextColor":"contrast","layout":{"type":"flex","justifyContent":"right","flexWrap":"wrap"}} /-->
+	<!-- HEADER TOP -->
+	<!-- wp:html -->
+	<div class="kreasi-header-top">
+		<div class="kreasi-header-container">
+
+			<!-- LOGO KREASI -->
+			<div class="kreasi-logo">
+				<a href="/">
+					<img
+						src="/wp-content/themes/twentytwentyfive/assets/images/logo-kreasi.png"
+						alt="KREASI - Kolaborasi untuk Edukasi Anak Indonesia">
+				</a>
 			</div>
-			<!-- /wp:group -->
+
+			<!-- LOGO PARTNER -->
+			<div class="kreasi-partners">
+
+				<img
+					src="/wp-content/themes/twentytwentyfive/assets/images/logo-partner-1.png"
+					alt="Partner 1">
+
+				<img
+					src="/wp-content/themes/twentytwentyfive/assets/images/logo-partner-2.png"
+					alt="Partner 2">
+
+				<img
+					src="/wp-content/themes/twentytwentyfive/assets/images/logo-partner-3.png"
+					alt="Partner 3">
+
+				<img
+					src="/wp-content/themes/twentytwentyfive/assets/images/logo-save-the-children.png"
+					alt="Save the Children">
+
+			</div>
+
 		</div>
-		<!-- /wp:group -->
 	</div>
-	<!-- /wp:group -->
-</div>
+	<!-- /wp:html -->
+
+
+	<!-- HEADER BOTTOM -->
+	<!-- wp:html -->
+	<div class="kreasi-header-bottom">
+		<div class="kreasi-header-container">
+
+			<!-- NAVIGATION -->
+			<nav class="kreasi-navigation">
+
+				<a href="/tentang-kami">
+					TENTANG KAMI
+				</a>
+
+				<a href="/artikel">
+					ARTIKEL
+				</a>
+
+				<a href="/pustaka">
+					PUSTAKA
+				</a>
+
+			</nav>
+
+
+			<!-- RIGHT SIDE -->
+			<div class="kreasi-header-right">
+
+				<!-- SEARCH -->
+				<div class="kreasi-search">
+
+					<span class="kreasi-search-icon">
+						⌕
+					</span>
+
+					<input
+						type="search"
+						placeholder="CARI"
+						aria-label="Cari">
+
+				</div>
+
+
+				<!-- LANGUAGE -->
+				<div class="kreasi-language">
+
+					<a href="#" class="active">
+						ID
+					</a>
+
+					<a href="#">
+						EN
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<!-- /wp:html -->
+
+</header>
 <!-- /wp:group -->

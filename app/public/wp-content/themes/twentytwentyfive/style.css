@@ -74,3 +74,264 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
 :where(pre) {
 	overflow-x: auto;
 }
+
+/* ========================================
+   KREASI HEADER
+======================================== */
+
+.kreasi-header {
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+	background: #ffffff;
+}
+
+
+/* CONTAINER */
+
+.kreasi-header-container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-left: 40px;
+	padding-right: 40px;
+	box-sizing: border-box;
+}
+
+
+/* TOP */
+
+.kreasi-header-top {
+	width: 100%;
+	background: #ffffff;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.kreasi-header-top .kreasi-header-container {
+	height: 55px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+/* LOGO */
+
+.kreasi-logo {
+	display: flex;
+	align-items: center;
+}
+
+.kreasi-logo a {
+	display: block;
+}
+
+.kreasi-logo img {
+	display: block;
+	width: 110px;
+	height: auto;
+}
+
+
+/* PARTNER */
+
+.kreasi-partners {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.kreasi-partners img {
+	display: block;
+	width: auto;
+	max-width: 75px;
+	max-height: 36px;
+	object-fit: contain;
+}
+
+
+/* BOTTOM */
+
+.kreasi-header-bottom {
+	width: 100%;
+	background: #ffffff;
+}
+
+.kreasi-header-bottom .kreasi-header-container {
+	height: 38px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+/* NAVIGATION */
+
+.kreasi-navigation {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.kreasi-navigation a {
+	display: flex;
+	align-items: center;
+
+	height: 30px;
+
+	padding: 0 13px;
+
+	border-radius: 18px;
+
+	background: #f2f4f8;
+
+	color: #153b68;
+
+	font-family: Arial, sans-serif;
+	font-size: 11px;
+	font-weight: 600;
+
+	text-decoration: none !important;
+}
+
+.kreasi-navigation a:hover {
+	background: #e5e9ef;
+}
+
+
+/* RIGHT */
+
+.kreasi-header-right {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+
+/* SEARCH */
+
+.kreasi-search {
+	width: 170px;
+	height: 28px;
+
+	display: flex;
+	align-items: center;
+
+	padding: 0 10px;
+
+	background: #f4f5f7;
+
+	border-radius: 16px;
+
+	box-sizing: border-box;
+}
+
+.kreasi-search-icon {
+	margin-right: 5px;
+
+	color: #9ca3af;
+
+	font-size: 16px;
+	line-height: 1;
+}
+
+.kreasi-search input {
+	width: 100%;
+
+	margin: 0;
+	padding: 0;
+
+	border: none !important;
+	outline: none !important;
+
+	background: transparent !important;
+
+	font-family: Arial, sans-serif;
+	font-size: 10px;
+	color: #333;
+}
+
+.kreasi-search input::placeholder {
+	color: #9ca3af;
+}
+
+
+/* LANGUAGE */
+
+.kreasi-language {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.kreasi-language a {
+	width: 22px;
+	height: 22px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 50%;
+
+	color: #9ca3af;
+
+	font-family: Arial, sans-serif;
+	font-size: 9px;
+	font-weight: 600;
+
+	text-decoration: none !important;
+}
+
+.kreasi-language a.active {
+	background: #e6332a;
+	color: #ffffff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+	.kreasi-header-container {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.kreasi-header-top .kreasi-header-container {
+		height: auto;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.kreasi-partners {
+		gap: 5px;
+	}
+
+	.kreasi-partners img {
+		max-width: 50px;
+		max-height: 25px;
+	}
+
+	.kreasi-header-bottom .kreasi-header-container {
+		height: auto;
+		padding-top: 5px;
+		padding-bottom: 8px;
+	}
+
+	.kreasi-navigation {
+		gap: 4px;
+	}
+
+	.kreasi-navigation a {
+		padding: 0 8px;
+		font-size: 9px;
+	}
+
+	.kreasi-search {
+		display: none;
+	}
+
+}
