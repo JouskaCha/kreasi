@@ -16,9 +16,17 @@
                     <?php dynamic_sidebar('footer-col-1'); ?>
                 <?php else : ?>
                     <div class="footer-branding-wrap d-flex flex-column h-100 justify-content-between">
-                        <!-- Logo Utama (Dinamis dari Custom Logo / Fallback) -->
+                        <!-- Logo Utama (Dinamis dari Customizer / Custom Logo / Fallback) -->
                         <div class="mb-4">
-                            <?php if (function_exists('the_custom_logo') && has_custom_logo()) : ?>
+                            <?php 
+                            $footer_logo = get_theme_mod('footer_logo');
+                            if ($footer_logo) : ?>
+                                <a href="<?php echo esc_url(home_url('/')); ?>" class="d-inline-block">
+                                    <img src="<?php echo esc_url($footer_logo); ?>" 
+                                         alt="KREASI - Kolaborasi untuk Edukasi Anak Indonesia" 
+                                         class="footer-logo-main">
+                                </a>
+                            <?php elseif (function_exists('the_custom_logo') && has_custom_logo()) : ?>
                                 <?php the_custom_logo(); ?>
                             <?php else : ?>
                                 <a href="<?php echo esc_url(home_url('/')); ?>" class="d-inline-block">
@@ -30,11 +38,17 @@
                             <?php endif; ?>
                         </div>
                         
-                        <!-- Keterangan Dikelola oleh + Logo Save the Children -->
+                        <!-- Keterangan Dikelola oleh + Logo Save the Children (Dinamis dari Media Library / Fallback) -->
                         <div class="managed-by-wrap mt-lg-4 pt-2">
                             <p class="text-secondary small mb-2 fw-medium">Dikelola oleh</p>
+                            <?php 
+                            $stc_logo = get_theme_mod('save_the_children_logo');
+                            if (empty($stc_logo)) {
+                                $stc_logo = get_template_directory_uri() . '/assets/images/logo-save-the-children.png';
+                            }
+                            ?>
                             <a href="https://savethechildren.or.id" target="_blank" rel="noopener noreferrer" class="d-inline-block">
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-save-the-children.png'); ?>" 
+                                <img src="<?php echo esc_url($stc_logo); ?>" 
                                      alt="Save the Children" 
                                      class="footer-logo-manager"
                                      onerror="this.outerHTML='<span class=\'text-danger fw-bold fs-5\'>Save the Children</span>'">

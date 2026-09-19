@@ -53,7 +53,91 @@ add_action('after_setup_theme', 'customtheme_setup_features');
  * 2. Registrasi WordPress Customizer untuk Upload Logo Kemitraan dari Media Library
  */
 function customtheme_customize_register($wp_customize) {
-    // Section Logo Kemitraan
+    // --- Section 1: Hero Section & Slider (Homepage) ---
+    $wp_customize->add_section('customtheme_hero_section', array(
+        'title'       => __('Hero Section & Slider (Homepage)', 'customtheme'),
+        'description' => __('Unggah gambar atau video (MP4/WebM) dari Media Library untuk Hero Slider.', 'customtheme'),
+        'priority'    => 30,
+    ));
+
+    // Fallback single hero image
+    $wp_customize->add_setting('hero_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hero_image', array(
+        'label'    => __('Gambar Default Hero (Fallback)', 'customtheme'),
+        'section'  => 'customtheme_hero_section',
+        'settings' => 'hero_image',
+    )));
+
+    // Slider Autoplay Speed
+    $wp_customize->add_setting('hero_slider_interval', array(
+        'default'           => '6000',
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control('hero_slider_interval', array(
+        'label'       => __('Durasi Auto-Slide (Milidetik, contoh: 6000)', 'customtheme'),
+        'section'     => 'customtheme_hero_section',
+        'type'        => 'number',
+        'input_attrs' => array('min' => 2000, 'step' => 500),
+    ));
+
+    // 4 Slot Slide Hero (Bisa Gambar atau Video MP4/WebM)
+    for ($i = 1; $i <= 4; $i++) {
+        // Media (Upload Control accepts both Image and Video URLs from Media Library)
+        $media_setting = 'hero_slide_' . $i . '_media';
+        $wp_customize->add_setting($media_setting, array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ));
+        $wp_customize->add_control(new WP_Customize_Upload_Control($wp_customize, $media_setting, array(
+            'label'       => sprintf(__('Slide %d: Media (Gambar / Video MP4)', 'customtheme'), $i),
+            'description' => __('Pilih dari Media Library (file .mp4/.webm akan otomatis diputar sebagai video background).', 'customtheme'),
+            'section'     => 'customtheme_hero_section',
+            'settings'    => $media_setting,
+        )));
+
+        // Title
+        $title_setting = 'hero_slide_' . $i . '_title';
+        $wp_customize->add_setting($title_setting, array(
+            'default'           => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control($title_setting, array(
+            'label'    => sprintf(__('Slide %d: Judul / Heading', 'customtheme'), $i),
+            'section'  => 'customtheme_hero_section',
+            'type'     => 'textarea',
+        ));
+
+        // Link Target
+        $link_setting = 'hero_slide_' . $i . '_link';
+        $wp_customize->add_setting($link_setting, array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ));
+        $wp_customize->add_control($link_setting, array(
+            'label'    => sprintf(__('Slide %d: URL Link (opsional)', 'customtheme'), $i),
+            'section'  => 'customtheme_hero_section',
+            'type'     => 'url',
+        ));
+
+        // Link Text
+        $link_text_setting = 'hero_slide_' . $i . '_link_text';
+        $wp_customize->add_setting($link_text_setting, array(
+            'default'           => 'READ MORE',
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control($link_text_setting, array(
+            'label'    => sprintf(__('Slide %d: Teks Tombol Link', 'customtheme'), $i),
+            'section'  => 'customtheme_hero_section',
+            'type'     => 'text',
+        ));
+    }
+
+    // --- Section 2: Logo Kemitraan (Header Top) ---
     $wp_customize->add_section('customtheme_partner_logos_section', array(
         'title'       => __('Logo Kemitraan (Header Top)', 'customtheme'),
         'description' => __('Unggah dan kelola logo mitra/kemitraan langsung dari WordPress Media Library.', 'customtheme'),
@@ -74,6 +158,117 @@ function customtheme_customize_register($wp_customize) {
             'section'  => 'customtheme_partner_logos_section',
             'settings' => $setting_id,
         )));
+    }
+
+    // --- Section 3: Footer & Logo Save the Children ---
+    $wp_customize->add_section('customtheme_footer_section', array(
+        'title'       => __('Pengaturan Footer & Logo', 'customtheme'),
+        'description' => __('Unggah dan kelola logo Footer & Save the Children dari Media Library.', 'customtheme'),
+        'priority'    => 40,
+    ));
+
+    // Logo Utama Footer
+    $wp_customize->add_setting('footer_logo', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'footer_logo', array(
+        'label'    => __('Logo Utama Footer (Pilih dari Media Library)', 'customtheme'),
+        'section'  => 'customtheme_footer_section',
+        'settings' => 'footer_logo',
+    )));
+
+    // Logo Save the Children Footer
+    $wp_customize->add_setting('save_the_children_logo', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'save_the_children_logo', array(
+        'label'    => __('Logo Save the Children (Pilih dari Media Library)', 'customtheme'),
+        'section'  => 'customtheme_footer_section',
+        'settings' => 'save_the_children_logo',
+    )));
+
+    // --- Section 4: Kartu Statistik Dampak (Impact Cards) ---
+    $wp_customize->add_section('customtheme_impact_section', array(
+        'title'       => __('Kartu Statistik (Membawa Perubahan)', 'customtheme'),
+        'description' => __('Unggah gambar background dan kelola angka/teks 4 kartu statistik dari Media Library.', 'customtheme'),
+        'priority'    => 38,
+    ));
+
+    $default_impact_data = array(
+        1 => array(
+            'num'   => '50,000', 
+            'label' => 'Murid',
+            'desc'  => 'Mendapatkan akses buku berkualitas dan ruang baca yang nyaman untuk menumbuhkan kecintaan pada literasi sejak dini.'
+        ),
+        2 => array(
+            'num'   => '4,000',  
+            'label' => 'Guru',
+            'desc'  => 'Mendapatkan pelatihan metode pembelajaran kreatif dan efektif untuk meningkatkan kualitas pengajaran di kelas.'
+        ),
+        3 => array(
+            'num'   => '560',    
+            'label' => 'Kepala Sekolah',
+            'desc'  => 'Mendapatkan pendampingan manajemen kepemimpinan sekolah dan tata kelola pendidikan yang inklusif.'
+        ),
+        4 => array(
+            'num'   => '560',    
+            'label' => 'Sekolah',
+            'desc'  => 'Menerima perbaikan fasilitas perpustakaan, sarana belajar, dan ruang kelas yang kondusif untuk siswa.'
+        ),
+    );
+
+    for ($i = 1; $i <= 4; $i++) {
+        // Gambar Kartu
+        $img_setting = 'impact_card_' . $i . '_image';
+        $wp_customize->add_setting($img_setting, array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ));
+        $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, $img_setting, array(
+            'label'    => sprintf(__('Kartu %d: Gambar Background (Media Library)', 'customtheme'), $i),
+            'section'  => 'customtheme_impact_section',
+            'settings' => $img_setting,
+        )));
+
+        // Angka Statistik
+        $num_setting = 'impact_card_' . $i . '_number';
+        $wp_customize->add_setting($num_setting, array(
+            'default'           => $default_impact_data[$i]['num'],
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control($num_setting, array(
+            'label'    => sprintf(__('Kartu %d: Angka / Jumlah', 'customtheme'), $i),
+            'section'  => 'customtheme_impact_section',
+            'type'     => 'text',
+        ));
+
+        // Label Teks
+        $lbl_setting = 'impact_card_' . $i . '_label';
+        $wp_customize->add_setting($lbl_setting, array(
+            'default'           => $default_impact_data[$i]['label'],
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control($lbl_setting, array(
+            'label'    => sprintf(__('Kartu %d: Label Keterangan', 'customtheme'), $i),
+            'section'  => 'customtheme_impact_section',
+            'type'     => 'text',
+        ));
+
+        // Deskripsi Hover Box
+        $desc_setting = 'impact_card_' . $i . '_desc';
+        $wp_customize->add_setting($desc_setting, array(
+            'default'           => $default_impact_data[$i]['desc'],
+            'sanitize_callback' => 'sanitize_textarea_field',
+        ));
+        $wp_customize->add_control($desc_setting, array(
+            'label'    => sprintf(__('Kartu %d: Teks Deskripsi Hover (Kotak Biru)', 'customtheme'), $i),
+            'section'  => 'customtheme_impact_section',
+            'type'     => 'textarea',
+        ));
     }
 }
 add_action('customize_register', 'customtheme_customize_register');
@@ -99,12 +294,24 @@ function customtheme_render_partner_logos($is_mobile = false) {
     } elseif (is_active_sidebar('partner-logos-sidebar')) {
         dynamic_sidebar('partner-logos-sidebar');
     } else {
+        $stc_logo = get_theme_mod('save_the_children_logo', '');
+        $stc_fallback = $stc_logo ? $stc_logo : get_template_directory_uri() . '/assets/images/logo-save-the-children.png';
         // Fallback default gambar jika belum diupload
         echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-1.png') . '" alt="Kemendikdasmen" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
         echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-2.png') . '" alt="Kemenag" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
         echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-3.png') . '" alt="GPE" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
-        echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-save-the-children.png') . '" alt="Save the Children" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
     }
+}
+
+/**
+ * Helper Function: Cek apakah URL media adalah file video (MP4, WebM, MOV, dll)
+ */
+function customtheme_is_video_url($url) {
+    if (empty($url)) return false;
+    $path = parse_url($url, PHP_URL_PATH);
+    if (!$path) return false;
+    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    return in_array($ext, array('mp4', 'webm', 'ogg', 'mov', 'm4v'), true);
 }
 
 /**
