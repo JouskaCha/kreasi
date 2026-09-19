@@ -86,7 +86,7 @@
                             wp_nav_menu(array(
                                 'theme_location' => 'primary',
                                 'container'      => false,
-                                'menu_class'     => 'd-flex flex-wrap align-items-center m-0 p-0 gap-2',
+                                'menu_class'     => 'd-flex flex-wrap align-items-center m-0 p-0 gap-2 list-unstyled',
                                 'fallback_cb'    => 'customtheme_render_default_nav_menu',
                             ));
                         } else {

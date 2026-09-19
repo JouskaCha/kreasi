@@ -67,10 +67,10 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                              style="background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.55) 100%); z-index: 1; pointer-events: none;"></div>
 
                         <!-- CONTENT LAYER (TEXT & LINK ON TOP) -->
-                        <div class="container-fluid px-5 position-relative h-100 d-flex align-items-end pb-5 hero-content-layer" style="z-index: 5;">
+                        <div class="container-fluid px-3 px-md-5 position-relative h-100 d-flex align-items-end pb-5 hero-content-layer" style="z-index: 5;">
                             <div class="text-white mb-4 position-relative" style="max-width: 700px; z-index: 6;">
                                 <?php if (!empty($slide['title'])) : ?>
-                                    <h1 class="fw-bold text-white mb-0" style="font-size: 36px; line-height: 1.15; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.4);">
+                                    <h1 class="fw-bold text-white mb-0 hero-slide-title" style="text-shadow: 0 2px 4px rgba(0,0,0,0.4);">
                                         <?php echo wp_kses_post($slide['title']); ?>
                                     </h1>
                                 <?php endif; ?>
@@ -92,7 +92,7 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
 
             <!-- CAROUSEL INDICATORS (Pill & Dots) -->
             <?php if (count($slides) > 1) : ?>
-                <div class="carousel-indicators position-absolute d-flex align-items-center m-0" style="left: 50px; bottom: 30px; gap: 6px; justify-content: flex-start; width: auto; z-index: 3;">
+                <div class="carousel-indicators position-absolute d-flex align-items-center m-0 hero-carousel-indicators" style="gap: 6px; justify-content: flex-start; width: auto; z-index: 3;">
                     <?php foreach ($slides as $index => $slide) : 
                         $is_active = ($index === 0) ? 'active' : '';
                     ?>
@@ -109,8 +109,17 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
         </div>
     </section>
 
-    <!-- STYLING UNTUK INDICATOR PILL DESAIN FIGMA -->
+    <!-- STYLING UNTUK INDICATOR PILL DESAIN FIGMA & RESPONSIVE MOBILE FONT SIZE -->
     <style>
+    .hero-slide-title {
+        font-size: 36px;
+        line-height: 1.15;
+        letter-spacing: -0.5px;
+    }
+    .hero-carousel-indicators {
+        left: 50px;
+        bottom: 30px;
+    }
     .hero-indicator-btn {
         width: 8px !important;
         height: 8px !important;
@@ -126,6 +135,29 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
         width: 25px !important;
         border-radius: 5px !important;
         background-color: #ffffff !important;
+    }
+
+    /* MEDIA QUERY RESPONSIVE FONT SIZE (DESAIN MOBILE FIGMA) */
+    @media (max-width: 767.98px) {
+        .hero-section {
+            height: 480px !important;
+        }
+        .hero-content-layer {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            padding-bottom: 55px !important;
+        }
+        .hero-slide-title {
+            font-size: 22px !important;
+            line-height: 1.25 !important;
+        }
+        .hero-carousel-indicators {
+            left: 20px !important;
+            bottom: 20px !important;
+        }
+        .about-section h2 {
+            font-size: 26px !important;
+        }
     }
     </style>
 
@@ -182,8 +214,8 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                 </p>
             </div>
 
-            <!-- 4 KARTU STATISTIK GRID -->
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            <!-- 4 KARTU STATISTIK GRID (2x2 DI MOBILE, 4 KOLOM DI DESKTOP) -->
+            <div class="row row-cols-2 row-cols-lg-4 g-2 g-md-4">
                 
                 <?php
                 $default_cards = array(
@@ -231,7 +263,7 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                 ?>
 
                     <div class="col">
-                        <div class="card impact-card border-0 rounded-4 overflow-hidden position-relative shadow-sm" style="height: 380px;">
+                        <div class="card impact-card border-0 rounded-4 overflow-hidden position-relative shadow-sm">
                             <!-- BACKGROUND IMAGE -->
                             <img src="<?php echo esc_url($card_img); ?>" 
                                  alt="<?php echo esc_attr($card_lbl); ?>" 
@@ -244,11 +276,11 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                                  style="background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.85) 100%); pointer-events: none;"></div>
 
                             <!-- KONTEN ANGKA & LABEL (BERGESER KE ATAS SAAT HOVER) -->
-                            <div class="card-body position-relative z-2 d-flex flex-column justify-content-end align-items-center p-4 text-white h-100 impact-card-main-content">
-                                <h3 class="fw-bold text-white mb-0 text-center impact-card-num" style="font-size: 42px; line-height: 1.0; letter-spacing: -0.5px;">
+                            <div class="card-body position-relative z-2 d-flex flex-column justify-content-end align-items-center p-3 p-md-4 text-white h-100 impact-card-main-content">
+                                <h3 class="fw-bold text-white mb-0 text-center impact-card-num" style="line-height: 1.0; letter-spacing: -0.5px;">
                                     <?php echo esc_html($card_num); ?>
                                 </h3>
-                                <p class="text-white mb-0 fw-medium fs-6 mt-1 text-center impact-card-lbl">
+                                <p class="text-white mb-0 fw-medium mt-1 text-center impact-card-lbl">
                                     <?php echo esc_html($card_lbl); ?>
                                 </p>
                             </div>
@@ -283,8 +315,15 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
     
     /* STYLING EFEK HOVER KARTU STATISTIK (SESUAI DESAIN FIGMA) */
     .impact-card {
+        height: 380px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
+    }
+    .impact-card-num {
+        font-size: 42px;
+    }
+    .impact-card-lbl {
+        font-size: 16px;
     }
     .impact-card .impact-card-main-content {
         transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -294,6 +333,19 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
         opacity: 0;
         visibility: hidden;
         transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* MEDIA QUERY MOBILE RESPONSIVE (2x2 GRID FIGMA) */
+    @media (max-width: 767.98px) {
+        .impact-card {
+            height: 240px !important;
+        }
+        .impact-card-num {
+            font-size: 30px !important;
+        }
+        .impact-card-lbl {
+            font-size: 13px !important;
+        }
     }
 
     /* KETIKA KARTU DI-HOVER */
@@ -314,6 +366,21 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
         visibility: visible !important;
     }
     </style>
+
+    <!-- ==========================================
+         SECTION 4: ARTIKEL TERKINI (PIN & RECENTLY POSTS)
+    =========================================== -->
+    <?php get_template_part('parts/section', 'articles'); ?>
+
+    <!-- ==========================================
+         SECTION 5: PUBLIKASI (BULETIN & BAHAN AJAR)
+    =========================================== -->
+    <?php get_template_part('parts/section', 'publications'); ?>
+
+    <!-- ==========================================
+         SECTION 6: AREA INTERVENSI & MITRA PELAKSANA
+    =========================================== -->
+    <?php get_template_part('parts/section', 'map'); ?>
 
 </main>
 
