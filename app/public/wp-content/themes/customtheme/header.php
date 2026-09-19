@@ -82,18 +82,16 @@
                     <!-- SISI KIRI: Navigasi Menu Utama (Pills Capsule) -->
                     <nav class="main-navigation kreasi-nav-menu">
                         <?php
-                        wp_nav_menu(array(
-                            'theme_location' => 'primary',
-                            'container'      => false,
-                            'menu_class'     => 'd-flex flex-wrap align-items-center m-0 p-0 gap-2',
-                            'fallback_cb'    => function () {
-                                echo '<ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2">';
-                                echo '<li><a href="' . esc_url(home_url('/tentang-kami')) . '">TENTANG KAMI</a></li>';
-                                echo '<li><a href="' . esc_url(home_url('/artikel')) . '">ARTIKEL</a></li>';
-                                echo '<li><a href="' . esc_url(home_url('/pustaka')) . '">PUSTAKA</a></li>';
-                                echo '</ul>';
-                            },
-                        ));
+                        if (has_nav_menu('primary')) {
+                            wp_nav_menu(array(
+                                'theme_location' => 'primary',
+                                'container'      => false,
+                                'menu_class'     => 'd-flex flex-wrap align-items-center m-0 p-0 gap-2',
+                                'fallback_cb'    => 'customtheme_render_default_nav_menu',
+                            ));
+                        } else {
+                            customtheme_render_default_nav_menu();
+                        }
                         ?>
                     </nav>
 

@@ -152,10 +152,15 @@ img {
     transition: all 0.2s ease;
 }
 
+/* State Aktif (Current Page / Active Route) & Hover */
 .kreasi-nav-menu ul li.current-menu-item a,
+.kreasi-nav-menu ul li.current_page_item a,
+.kreasi-nav-menu ul li.current-menu-ancestor a,
+.kreasi-nav-menu ul li a.active,
 .kreasi-nav-menu ul li a:hover {
     background-color: #163d6b;
     color: #ffffff;
+    box-shadow: 0 2px 8px rgba(22, 61, 107, 0.25);
 }
 
 /* Search Box Capsule */
