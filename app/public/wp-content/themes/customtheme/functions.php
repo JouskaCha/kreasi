@@ -546,3 +546,43 @@ function customtheme_enqueue_scripts() {
     );
 }
 add_action('wp_enqueue_scripts', 'customtheme_enqueue_scripts');
+
+/**
+ * Menambah jumlah view artikel satu kali per browser setiap 24 jam.
+ */
+function customtheme_track_post_views()
+{
+    if (
+        is_admin() ||
+        wp_doing_ajax() ||
+        !is_singular('post') ||
+        is_preview()
+    ) {
+        return;
+    }
+
+    $post_id    = get_queried_object_id();
+    $cookie_key = 'customtheme_viewed_post_' . $post_id;
+
+    // Jangan menghitung refresh berulang dari browser yang sama selama 24 jam.
+    if (isset($_COOKIE[$cookie_key])) {
+        return;
+    }
+
+    $views = (int) get_post_meta($post_id, 'customtheme_post_views', true);
+    update_post_meta($post_id, 'customtheme_post_views', $views + 1);
+
+    setcookie(
+        $cookie_key,
+        '1',
+        array(
+            'expires'  => time() + DAY_IN_SECONDS,
+            'path'     => COOKIEPATH ? COOKIEPATH : '/',
+            'domain'   => COOKIE_DOMAIN,
+            'secure'   => is_ssl(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        )
+    );
+}
+add_action('template_redirect', 'customtheme_track_post_views');
