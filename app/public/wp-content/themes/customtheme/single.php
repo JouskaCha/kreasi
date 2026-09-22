@@ -19,7 +19,11 @@ while (have_posts()) :
     $share_url   = rawurlencode(get_permalink());
     $share_title = rawurlencode(get_the_title());
 
-    $category_ids = wp_list_pluck($categories, 'term_id');
+    // Badge 1: kategori pertama artikel.
+    $cat_name = !empty($categories) ? $categories[0]->name : 'Cerita';
+
+    // Badge 2: tag pertama artikel.
+    $tag_name = !empty($tags) ? $tags[0]->name : 'Kayong Utara';
 
     $related_args = array(
         'post_type'           => 'post',
@@ -29,9 +33,9 @@ while (have_posts()) :
         'ignore_sticky_posts' => true,
     );
 
-    if (!empty($category_ids)) {
-        $related_args['category__in'] = $category_ids;
-    }
+    // if (!empty($category_ids)) {
+    //     $related_args['category__in'] = $category_ids;
+    // }
 
     $related_query = new WP_Query($related_args);
 ?>
@@ -71,21 +75,25 @@ while (have_posts()) :
                         <section class="single-article-meta py-4 border-bottom">
                             <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
                                 <div class="d-flex flex-wrap gap-2">
-                                    <?php foreach ($categories as $category) : ?>
-                                        <a class="single-article-badge single-article-badge--category"
-                                            href="<?php echo esc_url(get_category_link($category)); ?>">
-                                            <?php echo esc_html($category->name); ?>
-                                        </a>
-                                    <?php endforeach; ?>
+                                    <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #163d6b; color: #163d6b;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                                            <line x1="9" y1="9" x2="15" y2="9" stroke-width="1.8" />
+                                            <line x1="9" y1="13" x2="15" y2="13" stroke-width="1.8" />
+                                            <line x1="10.5" y1="7" x2="10.5" y2="15" stroke-width="1.8" />
+                                            <line x1="13.5" y1="7" x2="13.5" y2="15" stroke-width="1.8" />
+                                        </svg>
+                                        <?php echo esc_html($cat_name); ?>
+                                    </span>
 
-                                    <?php if (!empty($tags)) : ?>
-                                        <?php foreach (array_slice($tags, 0, 2) as $tag) : ?>
-                                            <a class="single-article-badge single-article-badge--tag"
-                                                href="<?php echo esc_url(get_tag_link($tag)); ?>">
-                                                <?php echo esc_html($tag->name); ?>
-                                            </a>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
+                                    <!-- BADGE 2: TAG DAERAH (MERAH + LOCATION PIN ICON) -->
+                                    <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                        <?php echo esc_html($tag_name); ?>
+                                    </span>
                                 </div>
 
                                 <div class="small text-secondary d-flex flex-wrap gap-3">

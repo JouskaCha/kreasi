@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Title: Header
  * Slug: customtheme/header
@@ -21,10 +22,10 @@
                         <?php the_custom_logo(); ?>
                     <?php else : ?>
                         <a href="<?php echo esc_url(home_url('/')); ?>" class="d-inline-block" rel="home">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-kreasi.png'); ?>" 
-                                 alt="<?php bloginfo('name'); ?>" 
-                                 class="logo-kreasi-img"
-                                 onerror="this.outerHTML='<h3 class=\'fw-bold text-navy mb-0\'>KREASI</h3><small class=\'text-secondary fw-semibold\'>Kolaborasi untuk Edukasi Anak Indonesia</small>'">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-kreasi.png'); ?>"
+                                alt="<?php bloginfo('name'); ?>"
+                                class="logo-kreasi-img"
+                                onerror="this.outerHTML='<h3 class=\'fw-bold text-navy mb-0\'>KREASI</h3><small class=\'text-secondary fw-semibold\'>Kolaborasi untuk Edukasi Anak Indonesia</small>'">
                         </a>
                     <?php endif; ?>
                 </div>
@@ -35,13 +36,13 @@
                 </div>
 
                 <!-- SISI KANAN MOBILE: Hamburger Menu Button (Visible on Mobile only) -->
-                <button class="navbar-toggler d-md-none border rounded p-1 shadow-none" 
-                        type="button" 
-                        data-bs-toggle="collapse" 
-                        data-bs-target="#mobileNavCollapse" 
-                        aria-controls="mobileNavCollapse" 
-                        aria-expanded="false" 
-                        aria-label="Toggle navigation">
+                <button class="navbar-toggler d-md-none border rounded p-1 shadow-none"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mobileNavCollapse"
+                    aria-controls="mobileNavCollapse"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <i class="bi bi-list fs-2 text-dark"></i>
                 </button>
 
@@ -72,19 +73,38 @@
                     <!-- SISI KIRI: Navigasi Menu Utama (Pills Capsule) -->
                     <nav class="main-navigation kreasi-nav-menu">
                         <?php
-                        wp_nav_menu(array(
-                            'theme_location' => 'primary',
-                            'container'      => false,
-                            'menu_class'     => 'd-flex flex-wrap align-items-center m-0 p-0 gap-2',
-                            'fallback_cb'    => function () {
-                                echo '<ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2">';
-                                echo '<li><a href="' . esc_url(home_url('/tentang-kami')) . '">TENTANG KAMI</a></li>';
-                                echo '<li><a href="' . esc_url(home_url('/artikel')) . '">ARTIKEL</a></li>';
-                                echo '<li><a href="' . esc_url(home_url('/pustaka')) . '">PUSTAKA</a></li>';
-                                echo '</ul>';
-                            },
-                        ));
+                        $nav_items = array(
+                            array(
+                                'label' => 'TENTANG KAMI',
+                                'slug'  => 'tentang-kami',
+                            ),
+                            array(
+                                'label' => 'ARTIKEL',
+                                'slug'  => 'artikel',
+                            ),
+                            array(
+                                'label' => 'PUSTAKA',
+                                'slug'  => 'pustaka',
+                            ),
+                        );
                         ?>
+                        <ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2">
+                            <li>
+                                <a href="<?php echo esc_url(home_url('/tentang-kami/')); ?>">
+                                    TENTANG KAMI
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo esc_url(home_url('/artikel/')); ?>">
+                                    ARTIKEL
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo esc_url(home_url('/pustaka/')); ?>">
+                                    PUSTAKA
+                                </a>
+                            </li>
+                        </ul>
                     </nav>
 
                     <!-- SISI KANAN: Form Pencarian & Switcher Bahasa -->

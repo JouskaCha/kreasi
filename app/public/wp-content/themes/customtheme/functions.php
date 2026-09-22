@@ -47,7 +47,63 @@ function customtheme_setup_features() {
         'primary' => __('Primary Menu', 'customtheme'),
     ));
 }
+
+
 add_action('after_setup_theme', 'customtheme_setup_features');
+
+/**
+ * Route URL statis langsung ke file desain theme.HARDCODE
+ */
+function customtheme_register_design_routes()
+{
+    add_rewrite_rule(
+        '^artikel/?$',
+        'index.php?customtheme_design_page=artikel',
+        'top'
+    );
+
+    add_rewrite_rule(
+        '^pustaka/?$',
+        'index.php?customtheme_design_page=pustaka',
+        'top'
+    );
+
+    add_rewrite_rule(
+        '^tentang-kami/?$',
+        'index.php?customtheme_design_page=tentang-kami',
+        'top'
+    );
+}
+add_action('init', 'customtheme_register_design_routes');
+
+function customtheme_design_query_vars($vars)
+{
+    $vars[] = 'customtheme_design_page';
+    return $vars;
+}
+add_filter('query_vars', 'customtheme_design_query_vars');
+
+function customtheme_load_design_page($template)
+{
+    $design_page = get_query_var('customtheme_design_page');
+
+    $templates = array(
+        'artikel'      => 'page-artikel.php',
+        'pustaka'      => 'page-pustaka.php',
+        'tentang-kami' => 'front-page.php',
+    );
+
+    if (isset($templates[$design_page])) {
+        $file = get_template_directory() . '/' . $templates[$design_page];
+
+        if (file_exists($file)) {
+            return $file;
+        }
+    }
+
+    return $template;
+}
+add_filter('template_include', 'customtheme_load_design_page');
 
 /**
  * 2. Registrasi WordPress Customizer untuk Upload Logo Kemitraan dari Media Library
