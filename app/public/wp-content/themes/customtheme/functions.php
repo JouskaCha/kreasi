@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Functions and definitions for customtheme
  *
@@ -12,7 +13,8 @@ if (!defined('ABSPATH')) {
 /**
  * 1. Setup Theme Features & Supports
  */
-function customtheme_setup_features() {
+function customtheme_setup_features()
+{
     // Menambahkan dukungan Title Tag dinamis
     add_theme_support('title-tag');
 
@@ -73,6 +75,12 @@ function customtheme_register_design_routes()
         'index.php?customtheme_design_page=tentang-kami',
         'top'
     );
+
+    add_rewrite_rule(
+        '^publikasi/?$',
+        'index.php?customtheme_design_page=publikasi',
+        'top'
+    );
 }
 add_action('init', 'customtheme_register_design_routes');
 
@@ -87,16 +95,34 @@ function customtheme_load_design_page($template)
 {
     $design_page = get_query_var('customtheme_design_page');
 
+    // Fallback untuk instalasi yang belum menyegarkan rewrite rules.
+    if (!$design_page && !empty($_SERVER['REQUEST_URI'])) {
+        $request_path = trim((string) wp_parse_url(wp_unslash($_SERVER['REQUEST_URI']), PHP_URL_PATH), '/');
+        $home_path    = trim((string) wp_parse_url(home_url('/'), PHP_URL_PATH), '/');
+
+        if ($home_path && strpos($request_path, $home_path . '/') === 0) {
+            $request_path = substr($request_path, strlen($home_path) + 1);
+        }
+
+        if (in_array($request_path, array('artikel', 'pustaka', 'tentang-kami', 'publikasi'), true)) {
+            $design_page = $request_path;
+        }
+    }
+
     $templates = array(
-        'artikel'      => 'page-artikel.php',
+        'artikel'      => 'home.php',
         'pustaka'      => 'page-pustaka.php',
-        'tentang-kami' => 'front-page.php',
+        'tentang-kami' => 'page-tentang-kami.php',
+        'publikasi'    => 'page-publikasi.php',
     );
 
     if (isset($templates[$design_page])) {
         $file = get_template_directory() . '/' . $templates[$design_page];
 
         if (file_exists($file)) {
+            global $wp_query;
+            $wp_query->is_404 = false;
+            status_header(200);
             return $file;
         }
     }
@@ -108,7 +134,8 @@ add_filter('template_include', 'customtheme_load_design_page');
 /**
  * 2. Registrasi WordPress Customizer untuk Upload Logo Kemitraan dari Media Library
  */
-function customtheme_customize_register($wp_customize) {
+function customtheme_customize_register($wp_customize)
+{
     // --- Section 1: Hero Section & Slider (Homepage) ---
     $wp_customize->add_section('customtheme_hero_section', array(
         'title'       => __('Hero Section & Slider (Homepage)', 'customtheme'),
@@ -227,7 +254,7 @@ function customtheme_customize_register($wp_customize) {
         1 => array('title' => 'TENTANG KAMI', 'url' => '/tentang-kami'),
         2 => array('title' => 'ARTIKEL',      'url' => '/artikel'),
         3 => array('title' => 'PUSTAKA',      'url' => '/pustaka'),
-        4 => array('title' => '',             'url' => ''),
+        4 => array('title' => 'PUBLIKASI',     'url' => '/publikasi'),
         5 => array('title' => '',             'url' => ''),
         6 => array('title' => '',             'url' => ''),
     );
@@ -312,22 +339,22 @@ function customtheme_customize_register($wp_customize) {
 
     $default_impact_data = array(
         1 => array(
-            'num'   => '50,000', 
+            'num'   => '50,000',
             'label' => 'Murid',
             'desc'  => 'Mendapatkan akses buku berkualitas dan ruang baca yang nyaman untuk menumbuhkan kecintaan pada literasi sejak dini.'
         ),
         2 => array(
-            'num'   => '4,000',  
+            'num'   => '4,000',
             'label' => 'Guru',
             'desc'  => 'Mendapatkan pelatihan metode pembelajaran kreatif dan efektif untuk meningkatkan kualitas pengajaran di kelas.'
         ),
         3 => array(
-            'num'   => '560',    
+            'num'   => '560',
             'label' => 'Kepala Sekolah',
             'desc'  => 'Mendapatkan pendampingan manajemen kepemimpinan sekolah dan tata kelola pendidikan yang inklusif.'
         ),
         4 => array(
-            'num'   => '560',    
+            'num'   => '560',
             'label' => 'Sekolah',
             'desc'  => 'Menerima perbaikan fasilitas perpustakaan, sarana belajar, dan ruang kelas yang kondusif untuk siswa.'
         ),
@@ -418,7 +445,8 @@ add_action('customize_register', 'customtheme_customize_register');
 /**
  * Helper Function: Render Logo Kemitraan (Customizer Media / Widget / Fallback)
  */
-function customtheme_render_partner_logos($is_mobile = false) {
+function customtheme_render_partner_logos($is_mobile = false)
+{
     $class = $is_mobile ? 'partner-logo-mobile-img' : 'partner-logo-img';
 
     $logo1 = get_theme_mod('partner_logo_1', '');
@@ -448,18 +476,19 @@ function customtheme_render_partner_logos($is_mobile = false) {
 /**
  * Helper Function: Render Nav Menu Buttons (Customizer Page Selector / Route URLs)
  */
-function customtheme_render_default_nav_menu() {
+function customtheme_render_default_nav_menu()
+{
     $default_items = array(
         1 => array('title' => 'TENTANG KAMI', 'slug' => '/tentang-kami'),
         2 => array('title' => 'ARTIKEL',      'slug' => '/artikel'),
         3 => array('title' => 'PUSTAKA',      'slug' => '/pustaka'),
-        4 => array('title' => '',             'slug' => ''),
+        4 => array('title' => 'PUBLIKASI',     'slug' => '/publikasi'),
         5 => array('title' => '',             'slug' => ''),
         6 => array('title' => '',             'slug' => ''),
     );
 
     echo '<ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2 list-unstyled">';
-    
+
     for ($i = 1; $i <= 6; $i++) {
         $default_title = isset($default_items[$i]) ? $default_items[$i]['title'] : '';
         $default_slug  = isset($default_items[$i]) ? $default_items[$i]['slug'] : '';
@@ -494,19 +523,22 @@ function customtheme_render_default_nav_menu() {
             $is_active = true;
         } elseif ($i === 3 && (is_page('pustaka') || is_page_template('page-pustaka.php'))) {
             $is_active = true;
+        } elseif ($i === 4 && (is_page('publikasi') || is_page_template('page-publikasi.php'))) {
+            $is_active = true;
         }
 
         $cls = $is_active ? 'current-menu-item active' : '';
         echo '<li class="' . esc_attr($cls) . '"><a href="' . esc_url($url) . '" class="' . ($is_active ? 'active' : '') . '">' . esc_html($title) . '</a></li>';
     }
-    
+
     echo '</ul>';
 }
 
 /**
  * Helper Function: Cek apakah URL media adalah file video (MP4, WebM, MOV, dll)
  */
-function customtheme_is_video_url($url) {
+function customtheme_is_video_url($url)
+{
     if (empty($url)) return false;
     $path = parse_url($url, PHP_URL_PATH);
     if (!$path) return false;
@@ -517,7 +549,8 @@ function customtheme_is_video_url($url) {
 /**
  * 3. Registrasi Dynamic Sidebars / Widget Areas
  */
-function customtheme_widgets_init() {
+function customtheme_widgets_init()
+{
     // Area Logo Mitra di Atas Header
     register_sidebar(array(
         'name'          => __('Logo Kemitraan (Header Top)', 'customtheme'),
@@ -567,7 +600,8 @@ add_action('widgets_init', 'customtheme_widgets_init');
 /**
  * 4. Enqueue Stylesheets & Scripts (Bootstrap 5 CDN, Bootstrap Icons, & Theme Style)
  */
-function customtheme_enqueue_scripts() {
+function customtheme_enqueue_scripts()
+{
     // Bootstrap 5 CSS CDN
     wp_enqueue_style(
         'bootstrap-css',

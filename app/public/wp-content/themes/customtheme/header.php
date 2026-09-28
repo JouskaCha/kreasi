@@ -85,23 +85,7 @@
 
                         <!-- SISI KIRI: Navigasi Menu Utama (Pills Capsule) -->
                         <nav class="main-navigation kreasi-nav-menu">
-                            <ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2">
-                                <li>
-                                    <a href="<?php echo esc_url(home_url('/')); ?>">
-                                        TENTANG KAMI
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo esc_url(home_url('/artikel/')); ?>">
-                                        ARTIKEL
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo esc_url(home_url('/pustaka/')); ?>">
-                                        PUSTAKA
-                                    </a>
-                                </li>
-                            </ul>
+                            <?php customtheme_render_default_nav_menu(); ?>
                         </nav>
 
                         <!-- SISI KANAN: Form Pencarian & Switcher Bahasa -->
