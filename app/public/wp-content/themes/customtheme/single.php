@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template for displaying all single posts (Detail Artikel)
  *
@@ -18,7 +19,7 @@ get_header();
                     the_post();
                 ?>
                     <article id="post-<?php the_ID(); ?>" <?php post_class('single-post-entry'); ?>>
-                        
+
                         <!-- Header Artikel -->
                         <header class="post-header mb-4">
                             <div class="post-meta text-muted small mb-2">
