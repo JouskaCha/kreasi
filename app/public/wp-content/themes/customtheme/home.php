@@ -1,5 +1,6 @@
 <?php
 /**
+ * Template Name: Artikel
  * The template for displaying the blog posts index (Artikel / Berita)
  *
  * @package customtheme

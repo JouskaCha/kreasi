@@ -47,7 +47,63 @@ function customtheme_setup_features() {
         'primary' => __('Primary Menu', 'customtheme'),
     ));
 }
+
+
 add_action('after_setup_theme', 'customtheme_setup_features');
+
+/**
+ * Route URL statis langsung ke file desain theme.HARDCODE
+ */
+function customtheme_register_design_routes()
+{
+    add_rewrite_rule(
+        '^artikel/?$',
+        'index.php?customtheme_design_page=artikel',
+        'top'
+    );
+
+    add_rewrite_rule(
+        '^pustaka/?$',
+        'index.php?customtheme_design_page=pustaka',
+        'top'
+    );
+
+    add_rewrite_rule(
+        '^tentang-kami/?$',
+        'index.php?customtheme_design_page=tentang-kami',
+        'top'
+    );
+}
+add_action('init', 'customtheme_register_design_routes');
+
+function customtheme_design_query_vars($vars)
+{
+    $vars[] = 'customtheme_design_page';
+    return $vars;
+}
+add_filter('query_vars', 'customtheme_design_query_vars');
+
+function customtheme_load_design_page($template)
+{
+    $design_page = get_query_var('customtheme_design_page');
+
+    $templates = array(
+        'artikel'      => 'page-artikel.php',
+        'pustaka'      => 'page-pustaka.php',
+        'tentang-kami' => 'front-page.php',
+    );
+
+    if (isset($templates[$design_page])) {
+        $file = get_template_directory() . '/' . $templates[$design_page];
+
+        if (file_exists($file)) {
+            return $file;
+        }
+    }
+
+    return $template;
+}
+add_filter('template_include', 'customtheme_load_design_page');
 
 /**
  * 2. Registrasi WordPress Customizer untuk Upload Logo Kemitraan dari Media Library
@@ -160,72 +216,61 @@ function customtheme_customize_register($wp_customize) {
         )));
     }
 
-    // --- Section: Pengaturan Menu Navigasi Header (Pilih Route Halaman) ---
+    // --- Section: Pengaturan Menu Navigasi Header (Pilih Route Halaman / Tambah Slot) ---
     $wp_customize->add_section('customtheme_nav_section', array(
         'title'       => __('Pengaturan Menu Navigasi Header', 'customtheme'),
-        'description' => __('Pilih halaman tujuan untuk tombol menu navigasi header (Tentang Kami, Artikel, Pustaka).', 'customtheme'),
+        'description' => __('Kelola tombol menu navigasi header (Tambah label, pilih Halaman WordPress, atau isi URL kustom). Isi label untuk mengaktifkan slot menu.', 'customtheme'),
         'priority'    => 36,
     ));
 
-    // Menu 1
-    $wp_customize->add_setting('nav_item_1_title', array(
-        'default'           => 'TENTANG KAMI',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-    $wp_customize->add_control('nav_item_1_title', array(
-        'label'    => __('Label Menu 1', 'customtheme'),
-        'section'  => 'customtheme_nav_section',
-        'type'     => 'text',
-    ));
-    $wp_customize->add_setting('nav_item_1_page', array(
-        'default'           => '0',
-        'sanitize_callback' => 'absint',
-    ));
-    $wp_customize->add_control('nav_item_1_page', array(
-        'label'    => __('Pilih Halaman untuk Menu 1', 'customtheme'),
-        'section'  => 'customtheme_nav_section',
-        'type'     => 'dropdown-pages',
-    ));
+    $default_nav_items = array(
+        1 => array('title' => 'TENTANG KAMI', 'url' => '/tentang-kami'),
+        2 => array('title' => 'ARTIKEL',      'url' => '/artikel'),
+        3 => array('title' => 'PUSTAKA',      'url' => '/pustaka'),
+        4 => array('title' => '',             'url' => ''),
+        5 => array('title' => '',             'url' => ''),
+        6 => array('title' => '',             'url' => ''),
+    );
 
-    // Menu 2
-    $wp_customize->add_setting('nav_item_2_title', array(
-        'default'           => 'ARTIKEL',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-    $wp_customize->add_control('nav_item_2_title', array(
-        'label'    => __('Label Menu 2', 'customtheme'),
-        'section'  => 'customtheme_nav_section',
-        'type'     => 'text',
-    ));
-    $wp_customize->add_setting('nav_item_2_page', array(
-        'default'           => '0',
-        'sanitize_callback' => 'absint',
-    ));
-    $wp_customize->add_control('nav_item_2_page', array(
-        'label'    => __('Pilih Halaman untuk Menu 2', 'customtheme'),
-        'section'  => 'customtheme_nav_section',
-        'type'     => 'dropdown-pages',
-    ));
+    for ($i = 1; $i <= 6; $i++) {
+        // Label Tombol Menu
+        $title_setting = 'nav_item_' . $i . '_title';
+        $wp_customize->add_setting($title_setting, array(
+            'default'           => $default_nav_items[$i]['title'],
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control($title_setting, array(
+            'label'       => sprintf(__('Slot %d: Label Tombol Menu', 'customtheme'), $i),
+            'description' => __('Isi nama tombol (kosongkan jika slot ini tidak digunakan).', 'customtheme'),
+            'section'     => 'customtheme_nav_section',
+            'type'        => 'text',
+        ));
 
-    // Menu 3
-    $wp_customize->add_setting('nav_item_3_title', array(
-        'default'           => 'PUSTAKA',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-    $wp_customize->add_control('nav_item_3_title', array(
-        'label'    => __('Label Menu 3', 'customtheme'),
-        'section'  => 'customtheme_nav_section',
-        'type'     => 'text',
-    ));
-    $wp_customize->add_setting('nav_item_3_page', array(
-        'default'           => '0',
-        'sanitize_callback' => 'absint',
-    ));
-    $wp_customize->add_control('nav_item_3_page', array(
-        'label'    => __('Pilih Halaman untuk Menu 3', 'customtheme'),
-        'section'  => 'customtheme_nav_section',
-        'type'     => 'dropdown-pages',
-    ));
+        // Pilih Halaman (Dropdown Pages)
+        $page_setting = 'nav_item_' . $i . '_page';
+        $wp_customize->add_setting($page_setting, array(
+            'default'           => '0',
+            'sanitize_callback' => 'absint',
+        ));
+        $wp_customize->add_control($page_setting, array(
+            'label'    => sprintf(__('Slot %d: Pilih Halaman (Page)', 'customtheme'), $i),
+            'section'  => 'customtheme_nav_section',
+            'type'     => 'dropdown-pages',
+        ));
+
+        // Custom URL Input
+        $url_setting = 'nav_item_' . $i . '_url';
+        $wp_customize->add_setting($url_setting, array(
+            'default'           => $default_nav_items[$i]['url'],
+            'sanitize_callback' => 'esc_url_raw',
+        ));
+        $wp_customize->add_control($url_setting, array(
+            'label'       => sprintf(__('Slot %d: Atau Input URL Kustom (Opsional)', 'customtheme'), $i),
+            'description' => __('Contoh: /galeri atau https://...', 'customtheme'),
+            'section'     => 'customtheme_nav_section',
+            'type'        => 'text',
+        ));
+    }
 
     // --- Section 3: Footer & Logo Save the Children ---
     $wp_customize->add_section('customtheme_footer_section', array(
@@ -337,6 +382,36 @@ function customtheme_customize_register($wp_customize) {
             'type'     => 'textarea',
         ));
     }
+
+    // --- Section 5: Area Intervensi & Mitra Pelaksana ---
+    $wp_customize->add_section('customtheme_map_section', array(
+        'title'       => __('Area Intervensi & Peta Mitra', 'customtheme'),
+        'description' => __('Kelola judul dan unggah gambar peta area intervensi & mitra pelaksana dari Media Library.', 'customtheme'),
+        'priority'    => 39,
+    ));
+
+    // Judul Section
+    $wp_customize->add_setting('map_section_title', array(
+        'default'           => 'AREA INTERVENSI & MITRA PELAKSANA',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+    $wp_customize->add_control('map_section_title', array(
+        'label'    => __('Judul Section', 'customtheme'),
+        'section'  => 'customtheme_map_section',
+        'type'     => 'text',
+    ));
+
+    // Gambar Peta Intervensi
+    $wp_customize->add_setting('map_section_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'map_section_image', array(
+        'label'       => __('Gambar Peta Intervensi (Pilih dari Media Library)', 'customtheme'),
+        'description' => __('Unggah grafis peta Indonesia & logo mitra pelaksana.', 'customtheme'),
+        'section'     => 'customtheme_map_section',
+        'settings'    => 'map_section_image',
+    )));
 }
 add_action('customize_register', 'customtheme_customize_register');
 
@@ -374,34 +449,57 @@ function customtheme_render_partner_logos($is_mobile = false) {
  * Helper Function: Render Nav Menu Buttons (Customizer Page Selector / Route URLs)
  */
 function customtheme_render_default_nav_menu() {
-    $item1_title = get_theme_mod('nav_item_1_title', 'TENTANG KAMI');
-    $item1_page  = get_theme_mod('nav_item_1_page', 0);
-    $item1_url   = $item1_page ? get_permalink($item1_page) : home_url('/tentang-kami');
-    $is_active_1 = ($item1_page && is_page($item1_page)) || is_page('tentang-kami') || is_page_template('page-tentang-kami.php');
-
-    $item2_title = get_theme_mod('nav_item_2_title', 'ARTIKEL');
-    $item2_page  = get_theme_mod('nav_item_2_page', 0);
-    $item2_url   = $item2_page ? get_permalink($item2_page) : home_url('/artikel');
-    $is_active_2 = ($item2_page && is_page($item2_page)) || is_home() || is_singular('post') || is_category() || is_tag() || is_page('artikel');
-
-    $item3_title = get_theme_mod('nav_item_3_title', 'PUSTAKA');
-    $item3_page  = get_theme_mod('nav_item_3_page', 0);
-    $item3_url   = $item3_page ? get_permalink($item3_page) : home_url('/pustaka');
-    $is_active_3 = ($item3_page && is_page($item3_page)) || is_page('pustaka') || is_page_template('page-pustaka.php');
+    $default_items = array(
+        1 => array('title' => 'TENTANG KAMI', 'slug' => '/tentang-kami'),
+        2 => array('title' => 'ARTIKEL',      'slug' => '/artikel'),
+        3 => array('title' => 'PUSTAKA',      'slug' => '/pustaka'),
+        4 => array('title' => '',             'slug' => ''),
+        5 => array('title' => '',             'slug' => ''),
+        6 => array('title' => '',             'slug' => ''),
+    );
 
     echo '<ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2 list-unstyled">';
-    if (!empty($item1_title)) {
-        $cls1 = $is_active_1 ? 'current-menu-item active' : '';
-        echo '<li class="' . esc_attr($cls1) . '"><a href="' . esc_url($item1_url) . '" class="' . ($is_active_1 ? 'active' : '') . '">' . esc_html($item1_title) . '</a></li>';
+    
+    for ($i = 1; $i <= 6; $i++) {
+        $default_title = isset($default_items[$i]) ? $default_items[$i]['title'] : '';
+        $default_slug  = isset($default_items[$i]) ? $default_items[$i]['slug'] : '';
+
+        $title      = get_theme_mod('nav_item_' . $i . '_title', $default_title);
+        $page_id    = get_theme_mod('nav_item_' . $i . '_page', 0);
+        $custom_url = get_theme_mod('nav_item_' . $i . '_url', '');
+
+        // If title is empty, skip rendering this slot
+        if (empty(trim($title))) {
+            continue;
+        }
+
+        // Determine link URL
+        if ($page_id) {
+            $url = get_permalink($page_id);
+        } elseif (!empty($custom_url)) {
+            $url = $custom_url;
+        } elseif (!empty($default_slug)) {
+            $url = home_url($default_slug);
+        } else {
+            $url = '#';
+        }
+
+        // Determine active state
+        $is_active = false;
+        if ($page_id && is_page($page_id)) {
+            $is_active = true;
+        } elseif ($i === 1 && (is_page('tentang-kami') || is_page_template('page-tentang-kami.php'))) {
+            $is_active = true;
+        } elseif ($i === 2 && (is_home() || is_singular('post') || is_category() || is_tag() || is_page('artikel'))) {
+            $is_active = true;
+        } elseif ($i === 3 && (is_page('pustaka') || is_page_template('page-pustaka.php'))) {
+            $is_active = true;
+        }
+
+        $cls = $is_active ? 'current-menu-item active' : '';
+        echo '<li class="' . esc_attr($cls) . '"><a href="' . esc_url($url) . '" class="' . ($is_active ? 'active' : '') . '">' . esc_html($title) . '</a></li>';
     }
-    if (!empty($item2_title)) {
-        $cls2 = $is_active_2 ? 'current-menu-item active' : '';
-        echo '<li class="' . esc_attr($cls2) . '"><a href="' . esc_url($item2_url) . '" class="' . ($is_active_2 ? 'active' : '') . '">' . esc_html($item2_title) . '</a></li>';
-    }
-    if (!empty($item3_title)) {
-        $cls3 = $is_active_3 ? 'current-menu-item active' : '';
-        echo '<li class="' . esc_attr($cls3) . '"><a href="' . esc_url($item3_url) . '" class="' . ($is_active_3 ? 'active' : '') . '">' . esc_html($item3_title) . '</a></li>';
-    }
+    
     echo '</ul>';
 }
 
@@ -504,3 +602,43 @@ function customtheme_enqueue_scripts() {
     );
 }
 add_action('wp_enqueue_scripts', 'customtheme_enqueue_scripts');
+
+/**
+ * Menambah jumlah view artikel satu kali per browser setiap 24 jam.
+ */
+function customtheme_track_post_views()
+{
+    if (
+        is_admin() ||
+        wp_doing_ajax() ||
+        !is_singular('post') ||
+        is_preview()
+    ) {
+        return;
+    }
+
+    $post_id    = get_queried_object_id();
+    $cookie_key = 'customtheme_viewed_post_' . $post_id;
+
+    // Jangan menghitung refresh berulang dari browser yang sama selama 24 jam.
+    if (isset($_COOKIE[$cookie_key])) {
+        return;
+    }
+
+    $views = (int) get_post_meta($post_id, 'customtheme_post_views', true);
+    update_post_meta($post_id, 'customtheme_post_views', $views + 1);
+
+    setcookie(
+        $cookie_key,
+        '1',
+        array(
+            'expires'  => time() + DAY_IN_SECONDS,
+            'path'     => COOKIEPATH ? COOKIEPATH : '/',
+            'domain'   => COOKIE_DOMAIN,
+            'secure'   => is_ssl(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        )
+    );
+}
+add_action('template_redirect', 'customtheme_track_post_views');
