@@ -34,7 +34,6 @@ if (empty($slides)) {
 
 $interval = get_theme_mod('hero_slider_interval', 6000);
 ?>
-
     <!-- HERO SECTION SLIDER (IMAGE & VIDEO) -->
     <section class="hero-section position-relative overflow-hidden" style="height: 450px;">
         <div id="heroCarousel" class="carousel slide carousel-fade h-100 position-relative" data-bs-ride="carousel" data-bs-interval="<?php echo esc_attr($interval); ?>">
