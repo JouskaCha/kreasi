@@ -17,6 +17,7 @@ Tags: custom-header, custom-menu, featured-images, full-width-template
 /* =========================================
    RESET & BASE STYLES
 ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap');
 * {
     box-sizing: border-box;
 }

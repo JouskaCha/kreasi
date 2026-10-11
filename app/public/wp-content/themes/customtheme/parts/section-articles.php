@@ -120,8 +120,9 @@ if (!empty($post_ids)) {
                                 <div>
                                     <!-- BADGES (BADGE 1: KATEGORI, BADGE 2: TAG DAERAH - SESUAI FIGMA) -->
                                     <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                                        <!-- BADGE 1: KATEGORI (BIRU NAVY + SPEECH BUBBLE HASHTAG ICON) -->
-                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #163d6b; color: #163d6b;">
+                                        <!-- BADGE KATEGORI -->
+                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
+                                            style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #163d6b; color: #163d6b;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                                                 <line x1="9" y1="9" x2="15" y2="9" stroke-width="1.8"/>
@@ -131,9 +132,9 @@ if (!empty($post_ids)) {
                                             </svg>
                                             <?php echo esc_html($cat_name); ?>
                                         </span>
-
-                                        <!-- BADGE 2: TAG DAERAH (MERAH + LOCATION PIN ICON) -->
-                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
+                                        <!-- BADGE TAG DAERAH -->
+                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
+                                            style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                                 <circle cx="12" cy="10" r="3"></circle>
@@ -141,10 +142,12 @@ if (!empty($post_ids)) {
                                             <?php echo esc_html($tag_name); ?>
                                         </span>
                                     </div>
-
                                     <!-- TITLE -->
-                                    <h5 class="fw-bold mb-3" style="color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px;">
-                                        <a href="<?php the_permalink(); ?>" class="text-decoration-none text-dark article-title-link" style="transition: color 0.3s ease;">
+                                    <h5 class="fw-bold mb-3"
+                                        style="font-family: 'Oswald', sans-serif; color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px;">
+                                        <a href="<?php the_permalink(); ?>"
+                                        class="text-decoration-none text-dark article-title-link"
+                                        style="font-family: 'Oswald', sans-serif; transition: color 0.3s ease;">
                                             <?php the_title(); ?>
                                         </a>
                                     </h5>
@@ -152,16 +155,15 @@ if (!empty($post_ids)) {
 
                                 <!-- DATE & SELENGKAPNYA LINK (ANIMASI MASUK DARI BAWAH) -->
                                 <div class="mt-3 d-flex align-items-center justify-content-between position-relative" style="min-height: 24px;">
-                                    <span class="fw-semibold small" style="color: #D8232A; font-size: 12px;">
+                                    <span class="fw-semibold small"
+                                        style="font-family: 'Lato', sans-serif; color: #D8232A; font-size: 12px;">
                                         <?php echo get_the_date('j F Y'); ?>
                                     </span>
                                     <a href="<?php the_permalink(); ?>" class="text-decoration-none fw-bold text-uppercase article-hover-link" style="color: #D8232A; font-size: 11px; letter-spacing: 0.5px;">
                                         SELENGKAPNYA →
                                     </a>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
             <?php
@@ -221,7 +223,8 @@ if (!empty($post_ids)) {
                                             <?php echo esc_html($dummy['tag']); ?>
                                         </span>
                                     </div>
-                                    <h5 class="fw-bold mb-3" style="color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px;">
+                                    <h5 class="fw-bold mb-3"
+                                        style="font-family: 'Oswald', sans-serif; color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px;">
                                         <a href="#" class="text-decoration-none text-dark article-title-link" style="transition: color 0.3s ease;"><?php echo esc_html($dummy['title']); ?></a>
                                     </h5>
                                 </div>
@@ -246,14 +249,13 @@ if (!empty($post_ids)) {
             $posts_page_id = get_option('page_for_posts');
             $artikel_url   = $posts_page_id ? get_permalink($posts_page_id) : home_url('/artikel');
             ?>
-            <a href="<?php echo esc_url($artikel_url); ?>" 
-               class="btn text-white fw-bold px-4 py-3 text-uppercase shadow-sm articles-more-btn d-inline-flex align-items-center justify-content-center" 
-               style="background-color: #D8232A; border-radius: 6px; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
-                <span>BACA ARTIKEL LAINNYA</span>
+            <a href="<?php echo esc_url($artikel_url); ?>"
+            class="btn text-white fw-bold px-4 py-3 text-uppercase shadow-sm articles-more-btn d-inline-flex align-items-center justify-content-center"
+            style="font-family: 'Oswald', sans-serif; background-color: #D8232A; border-radius: 6px; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
+                <span style="font-family: 'Oswald', sans-serif;">BACA ARTIKEL LAINNYA</span>
                 <span class="btn-arrow ms-2">→</span>
             </a>
         </div>
-
     </div>
 </section>
 
