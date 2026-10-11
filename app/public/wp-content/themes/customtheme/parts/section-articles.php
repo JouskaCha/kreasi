@@ -72,10 +72,10 @@ if (!empty($post_ids)) {
         
         <!-- HEADER SECTION -->
         <div class="text-center mb-5">
-            <h2 class="fw-bold text-dark text-uppercase mb-2" style="font-size: 34px; letter-spacing: 0.5px; color: #1A202C;">
+            <h2 class="text-dark text-uppercase mb-2" style="font-size: 64px; letter-spacing: 0.5px; color: #1A202C;">
                 ARTIKEL TERKINI
             </h2>
-            <p class="text-secondary mb-0" style="font-size: 15px; max-width: 680px; margin-left: auto; margin-right: auto;">
+            <p class="mb-0" style="font-family: 'Lato', sans-serif; font-size: 18px; font-weight: 500; opacity: 0.9; margin-left: auto; margin-right: auto;">
                 Ikuti berita perkembangan dan cerita dari delapan kabupaten dampingan KREASI.
             </p>
         </div>

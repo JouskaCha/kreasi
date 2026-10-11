@@ -122,6 +122,13 @@ img {
     }
 }
 
+.kreasi-nav-menu ul li a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 400 !important;
+    letter-spacing: 0.4px;
+}
+
 /* Nav Menu Pills / Capsule */
 .kreasi-nav-menu ul {
     list-style: none;
@@ -146,7 +153,7 @@ img {
     background-color: #f1f3f7;
     color: #163d6b;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 400;
     text-decoration: none;
     letter-spacing: 0.4px;
     transition: all 0.2s ease;
@@ -226,6 +233,33 @@ img {
     box-shadow: none;
 }
 
+/* HEADER: Font Oswald untuk Search & Language Switcher */
+.header-search-form,
+.header-search-form input[type="search"],
+.header-search-form input[type="search"]::placeholder,
+.header-search-form button,
+.language-switcher,
+.language-switcher .lang-btn {
+    font-family: 'Oswald', sans-serif !important;
+}
+
+/* Search input */
+.header-search-form input[type="search"] {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+/* Placeholder CARI */
+.header-search-form input[type="search"]::placeholder {
+    font-weight: 400;
+}
+
+/* Tombol IN / EN */
+.language-switcher .lang-btn {
+    font-size: 10px;
+    font-weight: 400;
+}
+
 /* Search Box Capsule */
 .header-search-form {
     background-color: #f1f3f7;
@@ -288,33 +322,249 @@ img {
     color: #333;
 }
 
+/* =========================================
+   HERO SECTION - BACKGROUND 1440 x 800
+========================================= */
+
+.hero-section,
+.hero-slider,
+.hero-slide {
+    position: relative;
+    width: 100%;
+    height: min(55.5556vw, 800px);
+    min-height: 480px;
+    overflow: hidden;
+}
+
+/* Background image */
+.hero-slide img,
+.hero-slide .hero-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+/* Layer konten */
+.hero-content-layer {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+}
+
+/* Judul dan Read More */
+.hero-slide-content {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+    width: 100%;
+}
+
+.hero-slide-title {
+    max-width: 700px;
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+    .hero-section,
+    .hero-slider,
+    .hero-slide {
+        height: 480px;
+        min-height: 0;
+    }
+
+    .hero-slide-title {
+        font-size: clamp(30px, 7vw, 42px);
+        line-height: 1.1;
+    }
+
+    .hero-slide-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
 
 /* =========================================
-   FOOTER STYLING (Sesuai Desain PRD)
+   HERO SLIDER: TITLE + READ MORE
 ========================================= */
+
+.hero-content-layer {
+    width: 100%;
+}
+
+.hero-slide-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 24px;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Judul Hero */
+.hero-slide-title {
+    flex: 0 1 700px;
+    min-width: 0;
+    margin: 0;
+    color: #fff;
+
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 36px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Tombol READ MORE di kanan judul */
+.hero-slide-read-more {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 5px;
+    color: #fff;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+
+    position: relative;
+    z-index: 7;
+}
+
+.hero-slide-read-more:hover {
+    color: #fff;
+    opacity: 0.8;
+}
+
+.hero-slide-arrow {
+    display: inline-block;
+    font-size: 15px;
+    transition: transform 0.2s ease;
+}
+
+.hero-slide-read-more:hover .hero-slide-arrow {
+    transform: translateX(4px);
+}
+
+/* Desktop besar */
+@media (min-width: 1200px) {
+    .hero-slide-title {
+        font-size: 36px;
+        max-width: 700px;
+    }
+}
+
+/* Tablet dan mobile */
+@media (max-width: 767.98px) {
+    .hero-slide-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .hero-slide-title {
+        flex: 0 1 auto;
+        width: 100%;
+        font-size: clamp(26px, 7vw, 34px);
+        line-height: 1.08;
+    }
+
+    .hero-slide-read-more {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.about-section {
+    min-height: 456px;
+    display: flex;
+    align-items: center;
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+}
+
+.about-section > .container {
+    width: 100%;
+}
+
+.about-description {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: #333333;
+}
+
+.about-description strong {
+    font-weight: 700;
+}
+
+
+/* =========================================
+   FOOTER STYLING
+========================================= */
+
 .site-footer {
     background-color: #f3f5f8;
     color: #2e384d;
     border-top: 1px solid #e7ecf2;
 }
 
+/* =========================================
+   LOGO KREASI & SAVE THE CHILDREN
+========================================= */
+
 .footer-logo-main,
 .footer-branding-wrap .custom-logo,
 .footer-branding-wrap .custom-logo-link img {
-    max-width: 150px;
+    width: 180px;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
     display: inline-block;
 }
 
 .footer-logo-manager {
-    max-width: 160px;
+    width: 220px;
+    max-width: 100%;
     height: auto;
+    object-fit: contain;
 }
 
+/* Label Dikelola oleh */
+.footer-managed-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #6c757d;
+}
+
+/* =========================================
+   KONTAK & MEDIA SOSIAL — LATO
+========================================= */
+
 .footer-contact-list {
+    font-family: 'Lato', sans-serif;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .contact-icon {
@@ -327,19 +577,25 @@ img {
     align-items: center;
     justify-content: center;
     font-size: 12px;
+    flex-shrink: 0;
 }
 
 .contact-text {
+    font-family: 'Lato', sans-serif;
     color: #0b2351;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
+    line-height: 1.6;
 }
 
 .contact-link {
+    font-family: 'Lato', sans-serif;
     color: #0b2351;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px;
+    line-height: 1.6;
     text-decoration: none;
+    overflow-wrap: anywhere;
     transition: color 0.2s ease;
 }
 
@@ -348,21 +604,43 @@ img {
     text-decoration: underline;
 }
 
+/* =========================================
+   CARD FOOTER
+========================================= */
+
 .footer-card {
     border-radius: 12px;
     background-color: #ffffff;
     box-shadow: 0 4px 18px rgba(11, 35, 81, 0.05) !important;
 }
 
+/* Judul: Ikuti Kabar Terkini — OSWALD */
 .footer-card .card-title {
-    font-size: 15px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #0b2351;
 }
 
+/* =========================================
+   INPUT EMAIL — LATO
+========================================= */
+
 .footer-input {
-    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
     font-size: 12px;
+    font-weight: 400;
+    border-radius: 8px;
     border: 1px solid #ced4da;
-    padding: 7px 12px;
+    padding: 5px 12px;
+}
+
+.footer-input::placeholder {
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #6c757d;
+    opacity: 1;
 }
 
 .footer-input:focus {
@@ -370,11 +648,18 @@ img {
     box-shadow: 0 0 0 0.2rem rgba(11, 35, 81, 0.15);
 }
 
+/* =========================================
+   TOMBOL BERLANGGANAN — OSWALD
+========================================= */
+
 .btn-subscribe {
+    font-family: 'Oswald', sans-serif;
     background-color: #d32f2f;
     border-color: #d32f2f;
+    color: #ffffff;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 13px;
+    font-weight: 500;
     letter-spacing: 0.5px;
     transition: background-color 0.2s ease;
 }
@@ -382,14 +667,21 @@ img {
 .btn-subscribe:hover {
     background-color: #b71c1c;
     border-color: #b71c1c;
+    color: #ffffff;
 }
 
+/* =========================================
+   TOMBOL SELENGKAPNYA — OSWALD
+========================================= */
+
 .btn-navy {
+    font-family: 'Oswald', sans-serif;
     background-color: #002060;
     border-color: #002060;
     color: #ffffff;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 500;
     letter-spacing: 0.5px;
     transition: background-color 0.2s ease;
 }
@@ -400,6 +692,22 @@ img {
     color: #ffffff;
 }
 
+/* =========================================
+   TEKS LAPORAN SAFEGUARDING — LATO
+========================================= */
+
+.footer-card .card-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #6c757d;
+}
+
+/* =========================================
+   GARIS PEMBATAS & HAK CIPTA — LATO
+========================================= */
+
 .footer-divider {
     border: 0;
     border-top: 1px solid #e0e5ec;
@@ -407,8 +715,42 @@ img {
 }
 
 .footer-copyright {
+    font-family: 'Lato', sans-serif;
     font-size: 12px;
+    font-weight: 400;
     color: #6c757d;
+}
+
+/* =========================================
+   RESPONSIVE MOBILE
+========================================= */
+
+@media (max-width: 767.98px) {
+    .footer-logo-main {
+        max-width: 140px;
+    }
+
+    .footer-logo-manager {
+        max-width: 145px;
+    }
+
+    .footer-card .card-title {
+        font-size: 17px;
+    }
+
+    .footer-contact-list,
+    .contact-text,
+    .contact-link {
+        font-size: 13px;
+    }
+
+    .footer-card .card-text {
+        font-size: 13px;
+    }
+
+    .footer-copyright {
+        font-size: 12px;
+    }
 }
 
 /* Single article hero */

@@ -13,6 +13,8 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 
 <body <?php body_class(); ?>>
@@ -81,9 +83,9 @@
 
                         <!-- SISI KIRI: Navigasi Menu Utama (Pills Capsule) -->
                         <nav class="main-navigation kreasi-nav-menu">
-                            <ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2">
+                            <ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2 list-unstyled">
                                 <li>
-                                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                                    <a href="<?php echo esc_url(home_url('/tentang-kami/')); ?>">
                                         TENTANG KAMI
                                     </a>
                                 </li>

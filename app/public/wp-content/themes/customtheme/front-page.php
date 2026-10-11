@@ -20,12 +20,10 @@ for ($i = 1; $i <= 4; $i++) {
 
 // Fallback if no specific slides are defined in Customizer
 if (empty($slides)) {
-    $hero_image = get_theme_mod('hero_image');
-    if (empty($hero_image)) {
-        $hero_image = get_template_directory_uri() . '/assets/images/hero.jpg';
-    }
+    $hero_video = get_template_directory_uri() . '/assets/videos/hero.mp4';
+
     $slides[] = array(
-        'media'     => $hero_image,
+        'media'     => $hero_video,
         'title'     => 'GURU DI PESISIR BARAT MENYULAP RUANG<br>SEDERHANA MENJADI PERPUSTAKAAN',
         'link'      => '#',
         'link_text' => 'READ MORE',
@@ -35,7 +33,7 @@ if (empty($slides)) {
 $interval = get_theme_mod('hero_slider_interval', 6000);
 ?>
     <!-- HERO SECTION SLIDER (IMAGE & VIDEO) -->
-    <section class="hero-section position-relative overflow-hidden" style="height: 450px;">
+    <section class="hero-section position-relative overflow-hidden">
         <div id="heroCarousel" class="carousel slide carousel-fade h-100 position-relative" data-bs-ride="carousel" data-bs-interval="<?php echo esc_attr($interval); ?>">
             
             <!-- CAROUSEL SLIDES -->
@@ -66,25 +64,24 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                              style="background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.55) 100%); z-index: 1; pointer-events: none;"></div>
 
                         <!-- CONTENT LAYER (TEXT & LINK ON TOP) -->
-                        <div class="container-fluid px-3 px-md-5 position-relative h-100 d-flex align-items-end pb-5 hero-content-layer" style="z-index: 5;">
-                            <div class="text-white mb-4 position-relative" style="max-width: 700px; z-index: 6;">
+                        <div class="container-fluid px-3 px-md-5 position-relative h-100 d-flex align-items-end pb-4 pb-md-5 hero-content-layer" style="z-index: 5;">
+                            <div class="hero-slide-content text-white position-relative">
                                 <?php if (!empty($slide['title'])) : ?>
-                                    <h1 class="fw-bold text-white mb-0 hero-slide-title" style="text-shadow: 0 2px 4px rgba(0,0,0,0.4);">
+                                    <h1 class="hero-slide-title text-white mb-0">
                                         <?php echo wp_kses_post($slide['title']); ?>
                                     </h1>
                                 <?php endif; ?>
-
                                 <?php if (!empty($slide['link'])) : ?>
-                                    <a href="<?php echo esc_url($slide['link']); ?>" 
-                                       class="text-white text-decoration-none d-inline-flex align-items-center" 
-                                       style="margin-top: 20px; font-size: 10px; font-weight: 600; position: relative; z-index: 7;">
-                                        <?php echo esc_html($slide['link_text'] ? $slide['link_text'] : 'READ MORE'); ?>
-                                        <span class="ms-2" style="font-size: 15px;">→</span>
+                                    <a href="<?php echo esc_url($slide['link']); ?>"
+                                    class="hero-slide-read-more text-white text-decoration-none">
+                                        <span>
+                                            <?php echo esc_html(!empty($slide['link_text']) ? $slide['link_text'] : 'READ MORE'); ?>
+                                        </span>
+                                        <span class="hero-slide-arrow" aria-hidden="true">→</span>
                                     </a>
                                 <?php endif; ?>
                             </div>
                         </div>
-
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -110,11 +107,6 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
 
     <!-- STYLING UNTUK INDICATOR PILL DESAIN FIGMA & RESPONSIVE MOBILE FONT SIZE -->
     <style>
-    .hero-slide-title {
-        font-size: 36px;
-        line-height: 1.15;
-        letter-spacing: -0.5px;
-    }
     .hero-carousel-indicators {
         left: 50px;
         bottom: 30px;
@@ -154,9 +146,6 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
             left: 20px !important;
             bottom: 20px !important;
         }
-        .about-section h2 {
-            font-size: 26px !important;
-        }
     }
     </style>
 
@@ -174,12 +163,12 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                 
                 <!-- SISI KIRI: HEADING & CTA BUTTON -->
                 <div class="col-lg-5 col-md-12">
-                    <h2 class="fw-bold mb-4" style="color: #0E2A5D; font-size: 38px; line-height: 1.15; letter-spacing: -0.5px;">
+                    <h2 class="mb-4" style="color: #0E2A5D; font-size: 56px; line-height: 1.15; letter-spacing: -0.5px;">
                         UNTUK PENDIDIKAN<br>YANG <span style="color: #D8232A;">BERKUALITAS</span>
                     </h2>
                     
                     <a href="<?php echo esc_url(home_url('/tentang-kami')); ?>" 
-                       class="btn text-white fw-bold px-4 py-3 text-uppercase shadow-sm about-cta-btn" 
+                       class="btn text-white px-4 py-3 text-uppercase shadow-sm about-cta-btn" 
                        style="background-color: #D8232A; border-radius: 6px; font-size: 13px; letter-spacing: 0.5px; transition: all 0.3s ease;">
                         SELENGKAPNYA TENTANG KAMI
                     </a>
@@ -187,8 +176,14 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
 
                 <!-- SISI KANAN: PARAGRAF DESKRIPSI -->
                 <div class="col-lg-7 col-md-12">
-                    <p class="mb-0" style="font-size: 15px; line-height: 1.75; color: #333333;">
-                        <strong>KREASI</strong> atau <strong>Kolaborasi untuk Edukasi Anak Indonesia</strong> adalah program peningkatan kualitas pendidikan dengan memperkuat literasi, numerasi, dan pendidikan karakter di delapan kabupaten di empat provinsi di Indonesia. KREASI dikelola Save the Children, diimplementasi mitra pelaksana lokal, dengan pendanaan Global Partnership for Education (GPE) dan didukung Mitra Pendidikan Indonesia yang dipimpin Kementerian Pendidikan Dasar dan Menengah (Kemendikdasmen) dan Kementerian Agama (Kemenag).
+                    <p class="about-description mb-0" style="font-size: 18px;">
+                        <strong>KREASI</strong> atau <strong>Kolaborasi untuk Edukasi Anak Indonesia</strong>
+                        adalah program peningkatan kualitas pendidikan dengan memperkuat literasi,
+                        numerasi, dan pendidikan karakter di delapan kabupaten di empat provinsi di Indonesia.
+                        KREASI dikelola Save the Children, diimplementasi mitra pelaksana lokal, dengan
+                        pendanaan Global Partnership for Education (GPE) dan didukung Mitra Pendidikan
+                        Indonesia yang dipimpin Kementerian Pendidikan Dasar dan Menengah (Kemendikdasmen)
+                        dan Kementerian Agama (Kemenag).
                     </p>
                 </div>
 
@@ -205,10 +200,10 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
             
             <!-- HEADER SECTION -->
             <div class="text-center mb-5">
-                <h2 class="fw-bold text-white text-uppercase mb-2" style="font-size: 34px; letter-spacing: 0.5px;">
+                <h2 class="text-white text-uppercase mb-2" style="font-size: 64px; letter-spacing: 0.5px;">
                     MEMBAWA PERUBAHAN KE PELOSOK
                 </h2>
-                <p class="text-white mb-0" style="font-size: 15px; opacity: 0.9; max-width: 720px; margin-left: auto; margin-right: auto;">
+                <p class="text-white mb-0" style="font-family: 'Lato', sans-serif; font-size: 18px; font-weight: 700; opacity: 0.9; margin-left: auto; margin-right: auto;">
                     Dari advokasi untuk kebijakan pendidikan yang lebih baik, hingga ke ruang kelas yang menyenangkan.
                 </p>
             </div>
@@ -276,24 +271,23 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
 
                             <!-- KONTEN ANGKA & LABEL (BERGESER KE ATAS SAAT HOVER) -->
                             <div class="card-body position-relative z-2 d-flex flex-column justify-content-end align-items-center p-3 p-md-4 text-white h-100 impact-card-main-content">
-                                <h3 class="fw-bold text-white mb-0 text-center impact-card-num" style="line-height: 1.0; letter-spacing: -0.5px;">
+                                <h3 class="text-white mb-0 text-center impact-card-num" style="line-height: 1.0; letter-spacing: -0.5px;">
                                     <?php echo esc_html($card_num); ?>
                                 </h3>
-                                <p class="text-white mb-0 fw-medium mt-1 text-center impact-card-lbl">
+                                <p class="text-white mb-0 mt-1 text-center impact-card-lbl">
                                     <?php echo esc_html($card_lbl); ?>
                                 </p>
                             </div>
 
                             <!-- HOVER BOX BLUE (KOTAK BIRU DENGAN DESKRIPSI) -->
                             <?php if (!empty($card_desc)) : ?>
-                                <div class="position-absolute bottom-0 start-0 w-100 impact-card-hover-box p-3 p-xl-4 text-center text-white" 
-                                     style="background-color: #0B2567; border-radius: 16px; z-index: 5;">
-                                    <p class="mb-0 text-white" style="font-size: 13px; line-height: 1.5; font-weight: 400;">
-                                        <?php echo esc_html($card_desc); ?>
-                                    </p>
-                                </div>
+                            <div class="position-absolute bottom-0 start-0 w-100 impact-card-hover-box p-3 p-xl-4 text-center text-white"
+                                style="background-color: #0B2567; border-radius: 16px; z-index: 5;">
+                                <p class="mb-0 text-white" style="font-family: 'Lato', sans-serif; font-size: 18px; line-height: 1.5; font-weight: 500;">
+                                    <?php echo esc_html($card_desc); ?>
+                                </p>
+                            </div>
                             <?php endif; ?>
-
                         </div>
                     </div>
 
@@ -319,7 +313,7 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
         cursor: pointer;
     }
     .impact-card-num {
-        font-size: 42px;
+        font-size: 80px;
     }
     .impact-card-lbl {
         font-size: 16px;

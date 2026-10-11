@@ -93,7 +93,7 @@ function customtheme_load_design_page($template)
     $design_page = get_query_var('customtheme_design_page');
 
     $templates = array(
-        'artikel'      => 'page-artikel.php',
+        'artikel'      => 'artikel.php',
         'pustaka'      => 'page-pustaka.php',
         'tentang-kami' => 'front-page.php',
     );
@@ -631,6 +631,13 @@ function customtheme_enqueue_scripts() {
     wp_enqueue_style(
         'customtheme-google-fonts',
         'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;500;600;700;800&display=swap',
+        array(),
+        null
+    );
+
+    wp_enqueue_style(
+        'customtheme-lato-font',
+        'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap',
         array(),
         null
     );
