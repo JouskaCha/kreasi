@@ -9,15 +9,15 @@
             
             <!-- SISI KIRI: TITLE, SUBTITLE & CTA BUTTON -->
             <div class="col-lg-4 col-md-12">
-                <h2 class="fw-bold text-white text-uppercase mb-3" style="font-size: 36px; letter-spacing: 0.5px;">
+                <h2 class="text-white text-uppercase mb-3" style="font-size: 64px; letter-spacing: 2px;">
                     PUBLIKASI
                 </h2>
-                <p class="text-white mb-4" style="font-size: 14px; line-height: 1.7; opacity: 0.95;">
+                <p class="text-white mb-4" style="font-family: 'Lato', sans-serif; font-size: 14px; opacity: 0.95;">
                     Dari buletin bulanan, hingga berbagai bahan ajar seperti poster, dan permainan, terus kami buat untuk mendukung implementasi program.
                 </p>
                 <a href="<?php echo esc_url(home_url('/pustaka')); ?>" 
-                   class="btn text-white fw-bold px-4 py-3 text-uppercase shadow-sm publications-cta-btn d-inline-flex align-items-center justify-content-center" 
-                   style="background-color: #0E2A5D; border-radius: 6px; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
+                   class="btn text-white px-4 py-3 text-uppercase shadow-sm publications-cta-btn d-inline-flex align-items-center justify-content-center" 
+                   style="background-color: #0E2A5D; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
                     <span>LIHAT PUBLIKASI LAINNYA</span>
                     <span class="btn-arrow ms-2">→</span>
                 </a>
@@ -59,7 +59,7 @@
                                 <div class="publication-cover-wrap position-relative mb-2" style="height: 220px;">
                                     <!-- 3D RED STACKED SHADOW LAYER -->
                                     <div class="pub-cover-shadow position-absolute rounded-3" 
-                                         style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #B81B21; border: 1px solid rgba(0,0,0,0.15); z-index: 1; transition: all 0.3s ease;"></div>
+                                         style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #ffffff; opacity: 30%; border: 1px solid rgba(0,0,0,0.15); z-index: 1; transition: all 0.3s ease;"></div>
                                     
                                     <!-- MAIN COVER IMAGE -->
                                     <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm" 
@@ -73,13 +73,13 @@
 
                                 <!-- TAG BADGE -->
                                 <div class="mb-1">
-                                    <span class="badge border border-white text-white rounded-pill fw-normal" style="font-size: 10px; padding: 3px 8px;">
+                                    <span class="badge border border-white text-white rounded-pill fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10px; padding: 3px 8px;">
                                         📁 <?php echo esc_html($pub['tag']); ?>
                                     </span>
                                 </div>
 
                                 <!-- TITLE -->
-                                <p class="text-white small fw-medium mb-0" style="font-size: 12px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                <p class="text-white mb-0" style="font-family: 'Oswald', sans-serif; font-size: 14px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                                     <?php echo esc_html($pub['title']); ?>
                                 </p>
                             </div>
@@ -113,12 +113,12 @@
     cursor: pointer;
 }
 .publication-card:hover .pub-cover-main {
-    transform: translate(-4px, -4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25) !important;
+    transform: translate(-4px, -4px) rotate(-2deg); 
+    box-shadow: 0 8px 20px rgba(218, 216, 216, 0.25) !important; 
 }
 .publication-card:hover .pub-cover-shadow {
-    transform: translate(3px, 3px);
-    background-color: #961318 !important;
+     transform: translate(3px, 3px) rotate(2deg); 
+     background-color: #ffffff !important;
 }
 .publication-card:hover .pub-cover-img {
     transform: scale(1.05);
