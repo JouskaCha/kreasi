@@ -116,8 +116,8 @@ function customtheme_load_design_page($template)
 
     $templates = array(
         'artikel'      => 'artikel.php',
-        'pustaka'      => 'page-pustaka.php',
-        'tentang-kami' => 'page-tentang-kami.php',
+        'pustaka'      => 'page-publikasi.php',
+        'tentang-kami' => 'front-page.php',
         'publikasi'    => 'page-publikasi.php',
     );
 

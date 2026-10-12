@@ -217,28 +217,28 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                         'number'   => '50,000',
                         'label'    => 'Murid',
                         'desc'     => 'Mendapatkan akses buku berkualitas dan ruang baca yang nyaman untuk menumbuhkan kecintaan pada literasi sejak dini.',
-                        'image'    => get_template_directory_uri() . '/assets/images/impact-murid.jpg',
+                        'image'    => get_template_directory_uri() . '/assets/images/impact-murid.png',
                         'fallback' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '4,000',
                         'label'    => 'Guru',
                         'desc'     => 'Mendapatkan pelatihan metode pembelajaran kreatif dan efektif untuk meningkatkan kualitas pengajaran di kelas.',
-                        'image'    => get_template_directory_uri() . '/assets/images/impact-guru.jpg',
+                        'image'    => get_template_directory_uri() . '/assets/images/impact-guru.png',
                         'fallback' => 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '560',
                         'label'    => 'Kepala Sekolah',
                         'desc'     => 'Mendapatkan pendampingan manajemen kepemimpinan sekolah dan tata kelola pendidikan yang inklusif.',
-                        'image'    => get_template_directory_uri() . '/assets/images/impact-kepala-sekolah.jpg',
+                        'image'    => get_template_directory_uri() . '/assets/images/impact-kepala-sekolah.png',
                         'fallback' => 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '560',
                         'label'    => 'Sekolah',
                         'desc'     => 'Menerima perbaikan fasilitas perpustakaan, sarana belajar, dan ruang kelas yang kondusif untuk siswa.',
-                        'image'    => get_template_directory_uri() . '/assets/images/impact-sekolah.jpg',
+                        'image'    => get_template_directory_uri() . '/assets/images/impact-sekolah.png',
                         'fallback' => 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=600&auto=format&fit=crop'
                     ),
                 );

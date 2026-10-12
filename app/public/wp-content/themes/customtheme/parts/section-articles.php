@@ -90,7 +90,7 @@ if (!empty($post_ids)) {
                     $tags        = get_the_tags();
                     $thumb_url   = has_post_thumbnail() 
                         ? get_the_post_thumbnail_url(get_the_ID(), 'medium_large') 
-                        : 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop';
+                        : get_template_directory_uri() . '/assets/images/thumbnail-1.png';
 
                     // Badge 1: Kategori Utama (Border Biru Navy + Speech Bubble Hashtag Icon)
                     $cat_name = !empty($categories) ? $categories[0]->name : 'Cerita';
