@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Part: Section Publikasi (Red Background + Publication Cards Grid & 3D Layer Hover Effect)
  */
@@ -6,7 +7,7 @@
 <section class="publications-section py-5 text-white position-relative overflow-hidden" style="background-color: #D8232A;">
     <div class="container py-lg-4">
         <div class="row align-items-center gy-4">
-            
+
             <!-- SISI KIRI: TITLE, SUBTITLE & CTA BUTTON -->
             <div class="col-lg-4 col-md-12">
                 <h2 class="text-white text-uppercase mb-3" style="font-size: 64px; letter-spacing: 2px;">
@@ -54,7 +55,7 @@
                     ?>
                         <div class="col-7 col-sm-4 col-md-3 flex-shrink-0 flex-md-shrink-1">
                             <div class="publication-card d-flex flex-column h-100 position-relative">
-                                
+
                                 <!-- COVER IMAGE CONTAINER WITH 3D LAYER SHADOW -->
                                 <div class="publication-cover-wrap position-relative mb-2" style="height: 220px;">
                                     <!-- 3D RED STACKED SHADOW LAYER -->
@@ -62,12 +63,12 @@
                                          style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #ffffff; opacity: 30%; border: 1px solid rgba(0,0,0,0.15); z-index: 1; transition: all 0.3s ease;"></div>
                                     
                                     <!-- MAIN COVER IMAGE -->
-                                    <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm" 
-                                         style="background-color: #ffffff; z-index: 2; transition: all 0.3s ease;">
-                                        <img src="<?php echo esc_url($pub['img']); ?>" 
-                                             alt="<?php echo esc_attr($pub['title']); ?>" 
-                                             class="w-100 h-100 object-fit-cover pub-cover-img"
-                                             style="transition: transform 0.4s ease;">
+                                    <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm"
+                                        style="background-color: #ffffff; z-index: 2; transition: all 0.3s ease;">
+                                        <img src="<?php echo esc_url($pub['img']); ?>"
+                                            alt="<?php echo esc_attr($pub['title']); ?>"
+                                            class="w-100 h-100 object-fit-cover pub-cover-img"
+                                            style="transition: transform 0.4s ease;">
                                     </div>
                                 </div>
 
@@ -79,7 +80,7 @@
                                 </div>
 
                                 <!-- TITLE -->
-                                <p class="text-white mb-0" style="font-family: 'Oswald', sans-serif; font-size: 14px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                <p class="text-white small fw-medium mb-0" style="font-size: 12px; line-height: 1.4; display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                                     <?php echo esc_html($pub['title']); ?>
                                 </p>
                             </div>
@@ -94,20 +95,13 @@
 
 <!-- STYLING HOVER PUBLIKASI & MOBILE HORIZONTAL PEEK SCROLL -->
 <style>
-/* MOBILE HORIZONTAL SCROLL PEEK (SESUAI FIGMA MOBILE) */
-@media (max-width: 767.98px) {
-    .mobile-horizontal-scroll {
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-    .mobile-horizontal-scroll::-webkit-scrollbar {
-        display: none;
-    }
-    .mobile-horizontal-scroll > div {
-        scroll-snap-align: start;
-    }
-}
+    /* MOBILE HORIZONTAL SCROLL PEEK (SESUAI FIGMA MOBILE) */
+    @media (max-width: 767.98px) {
+        .mobile-horizontal-scroll {
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
 
 .publication-card {
     cursor: pointer;
@@ -124,27 +118,57 @@
     transform: scale(1.05);
 }
 
-/* TOMBOL LIHAT PUBLIKASI LAINNYA (PANAH MASUK DARI KANAN) */
-.publications-cta-btn {
-    overflow: hidden;
-    position: relative;
+.mobile-horizontal-scroll::-webkit-scrollbar {
+    display: none;
 }
-.publications-cta-btn .btn-arrow {
-    display: inline-block;
-    opacity: 0;
-    transform: translateX(14px);
-    max-width: 0;
-    white-space: nowrap;
-    transition: opacity 0.35s ease, transform 0.35s ease, max-width 0.35s ease;
+
+.mobile-horizontal-scroll>div {
+    scroll-snap-align: start;
 }
-.publications-cta-btn:hover {
-    background-color: #06173E !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(6, 23, 62, 0.4) !important;
-}
-.publications-cta-btn:hover .btn-arrow {
-    opacity: 1;
-    transform: translateX(0);
-    max-width: 20px;
-}
+    }
+
+    .publication-card {
+        cursor: pointer;
+    }
+
+    .publication-card:hover .pub-cover-main {
+        transform: translate(-4px, -4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .publication-card:hover .pub-cover-shadow {
+        transform: translate(3px, 3px);
+        background-color: #961318 !important;
+    }
+
+    .publication-card:hover .pub-cover-img {
+        transform: scale(1.05);
+    }
+
+    /* TOMBOL LIHAT PUBLIKASI LAINNYA (PANAH MASUK DARI KANAN) */
+    .publications-cta-btn {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .publications-cta-btn .btn-arrow {
+        display: inline-block;
+        opacity: 0;
+        transform: translateX(14px);
+        max-width: 0;
+        white-space: nowrap;
+        transition: opacity 0.35s ease, transform 0.35s ease, max-width 0.35s ease;
+    }
+
+    .publications-cta-btn:hover {
+        background-color: #06173E !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(6, 23, 62, 0.4) !important;
+    }
+
+    .publications-cta-btn:hover .btn-arrow {
+        opacity: 1;
+        transform: translateX(0);
+        max-width: 20px;
+    }
 </style>
