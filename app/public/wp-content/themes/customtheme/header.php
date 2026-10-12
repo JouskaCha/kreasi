@@ -19,26 +19,22 @@
     <?php wp_body_open(); ?>
 
     <header id="siteHeader" class="site-header">
-
         <!-- =========================================================
          1. BARIS ATAS (Top Bar: Logo KREASI & Partner / Hamburger)
     ========================================================== -->
         <div id="topHeaderBar" class="header-top-bar bg-white py-2">
             <div class="container-fluid px-4 px-lg-5">
                 <div class="d-flex justify-content-between align-items-center">
-
                     <!-- SISI KIRI: Logo Utama (Dinamis dari WordPress Media Library / Custom Logo) -->
                     <div class="header-main-logo d-flex align-items-center">
-                        <?php if (function_exists('the_custom_logo') && has_custom_logo()) : ?>
-                            <?php the_custom_logo(); ?>
-                        <?php else : ?>
-                            <a href="<?php echo esc_url(home_url('/')); ?>" class="d-inline-block" rel="home">
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-kreasi.png'); ?>"
-                                    alt="<?php bloginfo('name'); ?>"
-                                    class="logo-kreasi-img"
-                                    onerror="this.outerHTML='<h3 class=\'fw-bold text-navy mb-0\'>KREASI</h3><small class=\'text-secondary fw-semibold\'>Kolaborasi untuk Edukasi Anak Indonesia</small>'">
-                            </a>
-                        <?php endif; ?>
+                        <a href="<?php echo esc_url(home_url('/')); ?>" class="d-inline-block" rel="home">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-kreasi.png'); ?>"
+                                alt="<?php bloginfo('name'); ?>"
+                                class="logo-kreasi-img"
+                                onerror="this.outerHTML='<h3 class=\'fw-bold text-navy mb-0\'>KREASI</h3><small class=\'text-secondary fw-semibold\'>Kolaborasi untuk Edukasi Anak Indonesia</small>'">
+                        </a>
+                        <!-- <p class="text-secondary fw-semibold mb-0 small d-none d-md-block">
+                                Iki Header Template Default -->
                     </div>
 
                     <!-- SISI KANAN DESKTOP: Barisan Logo Mitra/Partner (Hidden on Mobile) -->

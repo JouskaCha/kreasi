@@ -1,0 +1,549 @@
+/*
+Theme Name: customtheme
+Theme URI: https://example.com/customtheme
+Author: Kreasi Team
+Author URI: https://example.com
+Description: Tema kustom WordPress responsif dengan Bootstrap 5 dan hirarki standar.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: customtheme
+Tags: custom-header, custom-menu, featured-images, full-width-template
+*/
+
+/* =========================================
+   RESET & BASE STYLES
+========================================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #222;
+    background-color: #fff;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.text-navy {
+    color: #0b2351 !important;
+}
+
+/* =========================================
+   HEADER STYLING (Desktop & Mobile)
+========================================= */
+.site-header {
+    width: 100%;
+    position: relative;
+    z-index: 1030;
+}
+
+/* Baris Atas (Top Bar Header) */
+.header-top-bar {
+    background-color: #fff;
+    min-height: 56px;
+}
+
+.header-main-logo .custom-logo,
+.header-main-logo .custom-logo-link img,
+.logo-kreasi-img {
+    max-height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: inline-block;
+}
+
+/* Logo Partner Desktop */
+.partner-logos {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.partner-logo-img,
+.partner-logos .widget img {
+    max-height: 36px;
+    width: auto;
+    object-fit: contain;
+    display: inline-block;
+}
+
+/* Logo Partner Mobile */
+.partner-logos-mobile {
+    background-color: #fff;
+}
+
+.partner-logo-mobile-img {
+    max-height: 26px;
+    max-width: 22%;
+    object-fit: contain;
+}
+
+/* Garis Pembatas Horizontal */
+.header-divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    width: 100%;
+}
+
+/* Baris Bawah (Main Navigation Bar) */
+.header-main-nav {
+    background-color: #fff;
+    min-height: 50px;
+    transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+/* Sticky State saat Scroll di Desktop */
+.header-main-nav.is-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    z-index: 1040;
+    animation: headerSlideDown 0.3s ease forwards;
+}
+
+@keyframes headerSlideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Nav Menu Pills / Capsule */
+.kreasi-nav-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kreasi-nav-menu ul li {
+    display: inline-block;
+}
+
+.kreasi-nav-menu ul li a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    padding: 0 16px;
+    border-radius: 20px;
+    background-color: #f1f3f7;
+    color: #163d6b;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.4px;
+    transition: all 0.2s ease;
+}
+
+/* State Aktif (Current Page / Active Route) & Hover */
+.kreasi-nav-menu ul li.current-menu-item > a,
+.kreasi-nav-menu ul li.current_page_item > a,
+.kreasi-nav-menu ul li.current-menu-ancestor > a,
+.kreasi-nav-menu ul li a.active,
+.kreasi-nav-menu ul li > a:hover {
+    background-color: #163d6b;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(22, 61, 107, 0.25);
+}
+
+/* DROPDOWN / NESTED MENU STYLING (Sub-menu) */
+.kreasi-nav-menu ul li.menu-item-has-children {
+    position: relative;
+}
+
+.kreasi-nav-menu ul li.menu-item-has-children > a::after {
+    content: " ▾";
+    font-size: 10px;
+    margin-left: 4px;
+}
+
+.kreasi-nav-menu ul li .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 190px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    padding: 8px 0;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s ease-in-out;
+    z-index: 1050;
+}
+
+.kreasi-nav-menu ul li:hover > .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.kreasi-nav-menu ul li .sub-menu li {
+    display: block;
+    width: 100%;
+}
+
+.kreasi-nav-menu ul li .sub-menu li a {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 10px 18px;
+    border-radius: 0;
+    background-color: transparent;
+    color: #163d6b;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.kreasi-nav-menu ul li .sub-menu li a:hover,
+.kreasi-nav-menu ul li .sub-menu li.current-menu-item > a {
+    background-color: #f1f3f7;
+    color: #d8232a;
+    box-shadow: none;
+}
+
+/* Search Box Capsule */
+.header-search-form {
+    background-color: #f1f3f7;
+    border-radius: 20px;
+    padding: 4px 14px;
+    display: flex;
+    align-items: center;
+    width: 180px;
+    height: 32px;
+}
+
+.header-search-form input[type="search"] {
+    border: none;
+    background: transparent;
+    font-size: 11px;
+    color: #333;
+    width: 100%;
+    outline: none;
+}
+
+.header-search-form input[type="search"]::placeholder {
+    color: #8c98a9;
+    font-weight: 500;
+}
+
+.header-search-form button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: #8c98a9;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+}
+
+/* Switcher Bahasa (IN | EN) */
+.lang-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #8c98a9;
+    transition: all 0.2s ease;
+}
+
+.lang-btn.active {
+    background-color: #d32f2f;
+    color: #ffffff;
+}
+
+.lang-btn:hover:not(.active) {
+    background-color: #e2e8f0;
+    color: #333;
+}
+
+
+/* =========================================
+   FOOTER STYLING (Sesuai Desain PRD)
+========================================= */
+.site-footer {
+    background-color: #f3f5f8;
+    color: #2e384d;
+    border-top: 1px solid #e7ecf2;
+}
+
+.footer-logo-main,
+.footer-branding-wrap .custom-logo,
+.footer-branding-wrap .custom-logo-link img {
+    max-width: 150px;
+    height: auto;
+    object-fit: contain;
+    display: inline-block;
+}
+
+.footer-logo-manager {
+    max-width: 160px;
+    height: auto;
+}
+
+.footer-contact-list {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.contact-icon {
+    width: 26px;
+    height: 26px;
+    background-color: #0b2351;
+    color: #fff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.contact-text {
+    color: #0b2351;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.contact-link {
+    color: #0b2351;
+    font-weight: 500;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: #d32f2f;
+    text-decoration: underline;
+}
+
+.footer-card {
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 18px rgba(11, 35, 81, 0.05) !important;
+}
+
+.footer-card .card-title {
+    font-size: 15px;
+}
+
+.footer-input {
+    border-radius: 8px;
+    font-size: 12px;
+    border: 1px solid #ced4da;
+    padding: 7px 12px;
+}
+
+.footer-input:focus {
+    border-color: #0b2351;
+    box-shadow: 0 0 0 0.2rem rgba(11, 35, 81, 0.15);
+}
+
+.btn-subscribe {
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+    border-radius: 8px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-subscribe:hover {
+    background-color: #b71c1c;
+    border-color: #b71c1c;
+}
+
+.btn-navy {
+    background-color: #002060;
+    border-color: #002060;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-navy:hover {
+    background-color: #001540;
+    border-color: #001540;
+    color: #ffffff;
+}
+
+.footer-divider {
+    border: 0;
+    border-top: 1px solid #e0e5ec;
+    opacity: 1;
+}
+
+.footer-copyright {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+/* Single article hero */
+.single-article-hero {
+    width: auto;
+    position: relative;
+    height: min(62vw, 720px);
+    min-height: 560px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    color: #fff;
+}
+
+.single-article-hero__image,
+.single-article-hero__fallback,
+.single-article-hero__overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.single-article-hero__image {
+    object-fit: cover;
+    object-position: center center;
+}
+
+.single-article-hero__fallback {
+    background: #0b2351;
+}
+
+.single-article-hero__overlay {
+    background: linear-gradient(to top,
+            rgba(5, 20, 48, .85) 0%,
+            rgba(5, 20, 48, .40) 55%,
+            rgba(5, 20, 48, .05) 100%);
+}
+
+.single-article-hero__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.single-article-hero__inner {
+    max-width: 1050px;
+    padding: 4rem 0 3.5rem;
+}
+
+.single-article-hero__eyebrow {
+    margin: 0 0 .75rem;
+    font-size: .875rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.single-article-hero__title {
+    max-width: 950px;
+    color: #fff;
+    font-size: clamp(2.25rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.06;
+    text-transform: uppercase;
+}
+
+@media (max-width: 767.98px) {
+    .single-article-hero {
+        height: 420px;
+        min-height: 0;
+    }
+
+    .single-article-hero__inner {
+        padding: 2.5rem 0;
+    }
+}
+
+.single-article-badge,
+.single-article-tag {
+    display: inline-flex;
+    padding: .35rem .75rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.single-article-badge--category {
+    color: #0b2351;
+    border: 1px solid #0b2351;
+}
+
+.single-article-badge--tag {
+    color: #d8232a;
+    border: 1px solid #d8232a;
+}
+
+.single-article-tag {
+    color: #0b2351;
+    background: #f1f3f7;
+}
+
+.single-article-content {
+    color: #3f4856;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.single-article-content img {
+    border-radius: 1rem;
+}
+
+.single-article-content figcaption {
+    margin-top: .75rem;
+    color: #6c757d;
+    font-size: .8rem;
+    font-style: italic;
+}
+
+.single-article-related {
+    background: #f3f5f8;
+}
+
+.single-related-card__image {
+    height: 220px;
+    object-fit: cover;
+}
+
+@media (max-width: 767.98px) {
+    .single-article-hero {
+        min-height: 360px;
+    }
+
+    .single-article-hero__inner {
+        padding: 3rem 0;
+    }
+}

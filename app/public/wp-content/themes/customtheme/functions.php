@@ -50,9 +50,8 @@ function customtheme_setup_features() {
 
 
 add_action('after_setup_theme', 'customtheme_setup_features');
-
 /**
- * Route URL statis langsung ke file desain theme.HARDCODE
+ * Register custom design page routes.
  */
 function customtheme_register_design_routes()
 {
@@ -76,6 +75,9 @@ function customtheme_register_design_routes()
 }
 add_action('init', 'customtheme_register_design_routes');
 
+/**
+ * Register custom query variable.
+ */
 function customtheme_design_query_vars($vars)
 {
     $vars[] = 'customtheme_design_page';
@@ -83,6 +85,9 @@ function customtheme_design_query_vars($vars)
 }
 add_filter('query_vars', 'customtheme_design_query_vars');
 
+/**
+ * Load the corresponding template.
+ */
 function customtheme_load_design_page($template)
 {
     $design_page = get_query_var('customtheme_design_page');
@@ -94,11 +99,16 @@ function customtheme_load_design_page($template)
     );
 
     if (isset($templates[$design_page])) {
-        $file = get_template_directory() . '/' . $templates[$design_page];
+        $file = get_theme_file_path($templates[$design_page]);
 
         if (file_exists($file)) {
             return $file;
         }
+
+        error_log(
+            'CustomTheme: Template tidak ditemukan: ' .
+                $file
+        );
     }
 
     return $template;
@@ -194,27 +204,27 @@ function customtheme_customize_register($wp_customize) {
     }
 
     // --- Section 2: Logo Kemitraan (Header Top) ---
-    $wp_customize->add_section('customtheme_partner_logos_section', array(
-        'title'       => __('Logo Kemitraan (Header Top)', 'customtheme'),
-        'description' => __('Unggah dan kelola logo mitra/kemitraan langsung dari WordPress Media Library.', 'customtheme'),
-        'priority'    => 35,
-    ));
+    // $wp_customize->add_section('customtheme_partner_logos_section', array(
+    //     'title'       => __('Logo Kemitraan (Header Top)', 'customtheme'),
+    //     'description' => __('Unggah dan kelola logo mitra/kemitraan langsung dari WordPress Media Library.', 'customtheme'),
+    //     'priority'    => 35,
+    // ));
 
-    // 4 Slot Logo Kemitraan (Bisa diunggah dari Media Library)
-    for ($i = 1; $i <= 4; $i++) {
-        $setting_id = 'partner_logo_' . $i;
+    // // 4 Slot Logo Kemitraan (Bisa diunggah dari Media Library)
+    // for ($i = 1; $i <= 4; $i++) {
+    //     $setting_id = 'partner_logo_' . $i;
 
-        $wp_customize->add_setting($setting_id, array(
-            'default'           => '',
-            'sanitize_callback' => 'esc_url_raw',
-        ));
+    //     $wp_customize->add_setting($setting_id, array(
+    //         'default'           => '',
+    //         'sanitize_callback' => 'esc_url_raw',
+    //     ));
 
-        $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, $setting_id, array(
-            'label'    => sprintf(__('Logo Mitra %d (Pilih dari Media)', 'customtheme'), $i),
-            'section'  => 'customtheme_partner_logos_section',
-            'settings' => $setting_id,
-        )));
-    }
+    //     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, $setting_id, array(
+    //         'label'    => sprintf(__('Logo Mitra %d (Pilih dari Media)', 'customtheme'), $i),
+    //         'section'  => 'customtheme_partner_logos_section',
+    //         'settings' => $setting_id,
+    //     )));
+    // }
 
     // --- Section: Pengaturan Menu Navigasi Header (Pilih Route Halaman / Tambah Slot) ---
     $wp_customize->add_section('customtheme_nav_section', array(
@@ -418,32 +428,66 @@ add_action('customize_register', 'customtheme_customize_register');
 /**
  * Helper Function: Render Logo Kemitraan (Customizer Media / Widget / Fallback)
  */
+// function customtheme_render_partner_logos($is_mobile = false) {
+//     $class = $is_mobile ? 'partner-logo-mobile-img' : 'partner-logo-img';
+
+//     $logo1 = get_theme_mod('partner_logo_1', '');
+//     $logo2 = get_theme_mod('partner_logo_2', '');
+//     $logo3 = get_theme_mod('partner_logo_3', '');
+//     $logo4 = get_theme_mod('partner_logo_4', '');
+
+//     $has_custom_partner_logos = ($logo1 || $logo2 || $logo3 || $logo4);
+
+//     if ($has_custom_partner_logos) {
+//         if ($logo1) echo '<img src="' . esc_url($logo1) . '" alt="Mitra 1" class="' . esc_attr($class) . '">';
+//         if ($logo2) echo '<img src="' . esc_url($logo2) . '" alt="Mitra 2" class="' . esc_attr($class) . '">';
+//         if ($logo3) echo '<img src="' . esc_url($logo3) . '" alt="Mitra 3" class="' . esc_attr($class) . '">';
+//         if ($logo4) echo '<img src="' . esc_url($logo4) . '" alt="Mitra 4" class="' . esc_attr($class) . '">';
+//     } elseif (is_active_sidebar('partner-logos-sidebar')) {
+//         dynamic_sidebar('partner-logos-sidebar');
+//     } else {
+//         $stc_logo = get_theme_mod('save_the_children_logo', '');
+//         $stc_fallback = $stc_logo ? $stc_logo : get_template_directory_uri() . '/assets/images/logo-save-the-children.png';
+//         // Fallback default gambar jika belum diupload
+//         echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-1.png') . '" alt="Kemendikdasmen" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
+//         echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-2.png') . '" alt="Kemenag" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
+//         echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-3.png') . '" alt="GPE" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
+//     }
+// }
+
 function customtheme_render_partner_logos($is_mobile = false) {
-    $class = $is_mobile ? 'partner-logo-mobile-img' : 'partner-logo-img';
 
-    $logo1 = get_theme_mod('partner_logo_1', '');
-    $logo2 = get_theme_mod('partner_logo_2', '');
-    $logo3 = get_theme_mod('partner_logo_3', '');
-    $logo4 = get_theme_mod('partner_logo_4', '');
+    $class = $is_mobile
+        ? 'partner-logo-mobile-img'
+        : 'partner-logo-img';
 
-    $has_custom_partner_logos = ($logo1 || $logo2 || $logo3 || $logo4);
+    $theme_uri = get_template_directory_uri();
+    $logos = [
+        [
+            'src' => $theme_uri . '/assets/images/logo-kemendikdasmen.png',
+            'alt' => 'Kemendikdasmen',
+        ],
+        [
+            'src' => $theme_uri . '/assets/images/logo-kemenag.png',
+            'alt' => 'Kemenag',
+        ],
+        [
+            'src' => $theme_uri . '/assets/images/logo-gpe.png',
+            'alt' => 'GPE',
+        ],
+        [
+            'src' => $theme_uri . '/assets/images/logo-save-the-children.png',
+            'alt' => 'Save the Children',
+        ],
+    ];
 
-    if ($has_custom_partner_logos) {
-        if ($logo1) echo '<img src="' . esc_url($logo1) . '" alt="Mitra 1" class="' . esc_attr($class) . '">';
-        if ($logo2) echo '<img src="' . esc_url($logo2) . '" alt="Mitra 2" class="' . esc_attr($class) . '">';
-        if ($logo3) echo '<img src="' . esc_url($logo3) . '" alt="Mitra 3" class="' . esc_attr($class) . '">';
-        if ($logo4) echo '<img src="' . esc_url($logo4) . '" alt="Mitra 4" class="' . esc_attr($class) . '">';
-    } elseif (is_active_sidebar('partner-logos-sidebar')) {
-        dynamic_sidebar('partner-logos-sidebar');
-    } else {
-        $stc_logo = get_theme_mod('save_the_children_logo', '');
-        $stc_fallback = $stc_logo ? $stc_logo : get_template_directory_uri() . '/assets/images/logo-save-the-children.png';
-        // Fallback default gambar jika belum diupload
-        echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-1.png') . '" alt="Kemendikdasmen" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
-        echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-2.png') . '" alt="Kemenag" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
-        echo '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/logo-partner-3.png') . '" alt="GPE" class="' . esc_attr($class) . '" onerror="this.style.display=\'none\'">';
+    foreach ($logos as $logo) {
+        echo '<img src="' . esc_url($logo['src']) . '"'
+            . ' alt="' . esc_attr($logo['alt']) . '"'
+            . ' class="' . esc_attr($class) . '">';
     }
 }
+
 
 /**
  * Helper Function: Render Nav Menu Buttons (Customizer Page Selector / Route URLs)
@@ -583,6 +627,15 @@ function customtheme_enqueue_scripts() {
         array(),
         '1.11.3'
     );
+
+    wp_enqueue_style(
+        'customtheme-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;500;600;700;800&display=swap',
+        array(),
+        null
+    );
+
+
 
     // Main Theme Stylesheet (style.css)
     wp_enqueue_style(

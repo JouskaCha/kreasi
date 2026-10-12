@@ -8,7 +8,6 @@
  */
 ?>
 <header id="siteHeader" class="site-header">
-
     <!-- =========================================================
          1. BARIS ATAS (Top Bar: Logo KREASI & Partner / Hamburger)
     ========================================================== -->
