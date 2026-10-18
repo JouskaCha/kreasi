@@ -446,7 +446,7 @@ img {
 .hero-slide-read-more {
     flex: 0 0 auto;
     display: inline-flex;
-    align-items: center;
+    align-items: right;
     gap: 8px;
 
     margin-bottom: 5px;
