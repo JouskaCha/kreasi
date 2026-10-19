@@ -156,8 +156,8 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
     <?php
     $about_bg = get_theme_mod('about_section_bg', '');
     if (empty($about_bg)) {
-        if (file_exists(get_template_directory() . '/assets/images/about-bg.png')) {
-            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.png';
+        if (file_exists(get_template_directory() . '/assets/images/bg-section2.png')) {
+            $about_bg = get_template_directory_uri() . '/assets/images/bg-section2.png';
         } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.jpg')) {
             $about_bg = get_template_directory_uri() . '/assets/images/about-bg.jpg';
         } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.jpeg')) {
