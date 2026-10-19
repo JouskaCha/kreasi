@@ -13,6 +13,20 @@ $current_kategori = isset($_GET['kategori']) ? sanitize_title($_GET['kategori'])
 $current_daerah   = isset($_GET['daerah']) ? sanitize_title($_GET['daerah']) : '';
 $search_keyword   = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
 
+if (empty($current_kategori) && is_category()) {
+    $cat_obj = get_queried_object();
+    if ($cat_obj && !is_wp_error($cat_obj)) {
+        $current_kategori = $cat_obj->slug;
+    }
+}
+
+if (empty($current_daerah) && is_tag()) {
+    $tag_obj = get_queried_object();
+    if ($tag_obj && !is_wp_error($tag_obj)) {
+        $current_daerah = $tag_obj->slug;
+    }
+}
+
 // 2. Ambil Kategori ID Parent Artikel & Publikasi
 $artikel_cat_ids   = function_exists('kreasi_get_artikel_category_ids') ? kreasi_get_artikel_category_ids() : array();
 $publikasi_cat_ids = function_exists('kreasi_get_publikasi_category_ids') ? kreasi_get_publikasi_category_ids() : array();
@@ -63,6 +77,26 @@ if (!empty($search_keyword)) {
 
 $artikel_query = new WP_Query($query_args);
 $total_posts_count = $artikel_query->found_posts;
+
+// Hitung total artikel published untuk badge "Semua Daerah"
+$all_articles_args = array(
+    'post_type'      => 'post',
+    'post_status'    => 'publish',
+    'posts_per_page' => -1,
+    'fields'         => 'ids',
+);
+if (!empty($current_kategori) && $current_kategori !== 'semua') {
+    $all_articles_args['category_name'] = $current_kategori;
+} else {
+    if (!empty($artikel_cat_ids)) {
+        $all_articles_args['category__in'] = $artikel_cat_ids;
+    }
+    if (!empty($publikasi_cat_ids)) {
+        $all_articles_args['category__not_in'] = $publikasi_cat_ids;
+    }
+}
+$all_articles_query = new WP_Query($all_articles_args);
+$total_all_daerah_count = (int) $all_articles_query->found_posts;
 
 // URL Dasar untuk Filter
 $base_artikel_url = home_url('/artikel/');
@@ -169,7 +203,7 @@ $base_artikel_url = home_url('/artikel/');
                 <a href="<?php echo esc_url($all_daerah_url); ?>" 
                    class="btn btn-daerah-filter rounded-pill d-inline-flex align-items-center <?php echo $is_all_daerah ? 'active' : ''; ?>">
                     Semua Daerah
-                    <span class="badge rounded-pill ms-1 badge-count"><?php echo esc_html($total_posts_count > 0 ? $total_posts_count : 24); ?></span>
+                    <span class="badge rounded-pill ms-1 badge-count"><?php echo esc_html($total_all_daerah_count); ?></span>
                 </a>
 
                 <!-- Daftar 8 Kabupaten + Nasional -->
@@ -258,7 +292,7 @@ $base_artikel_url = home_url('/artikel/');
                     $cat_name = $cat_obj ? $cat_obj->name : 'Cerita';
                     
                     $tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag(get_the_ID()) : null;
-                    $tag_name = $tag_obj ? $tag_obj->name : 'Nias Utara';
+                    $tag_name = $tag_obj ? $tag_obj->name : '';
 
                     $thumb_url = has_post_thumbnail() 
                         ? get_the_post_thumbnail_url(get_the_ID(), 'large') 
@@ -284,6 +318,7 @@ $base_artikel_url = home_url('/artikel/');
                                     </svg>
                                     <?php echo esc_html($cat_name); ?>
                                 </span>
+                                <?php if (!empty($tag_name)) : ?>
                                 <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center badge-tag-outline">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -291,6 +326,7 @@ $base_artikel_url = home_url('/artikel/');
                                     </svg>
                                     <?php echo esc_html($tag_name); ?>
                                 </span>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Judul Besar -->
@@ -333,7 +369,7 @@ $base_artikel_url = home_url('/artikel/');
                         $cat_obj  = function_exists('kreasi_get_post_child_category') ? kreasi_get_post_child_category(get_the_ID()) : null;
                         $cat_name = $cat_obj ? $cat_obj->name : 'Berita & Perkembangan';
                         $tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag(get_the_ID()) : null;
-                        $tag_name = $tag_obj ? $tag_obj->name : 'Tanggamus';
+                        $tag_name = $tag_obj ? $tag_obj->name : '';
                         $thumb_url = has_post_thumbnail() 
                             ? get_the_post_thumbnail_url(get_the_ID(), 'medium_large') 
                             : get_template_directory_uri() . '/assets/images/thumbnail-2.png';
@@ -355,6 +391,7 @@ $base_artikel_url = home_url('/artikel/');
                                     </svg>
                                     <?php echo esc_html($cat_name); ?>
                                 </span>
+                                <?php if (!empty($tag_name)) : ?>
                                 <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center badge-tag-outline">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -362,6 +399,7 @@ $base_artikel_url = home_url('/artikel/');
                                     </svg>
                                     <?php echo esc_html($tag_name); ?>
                                 </span>
+                                <?php endif; ?>
                             </div>
 
                             <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 17px; line-height: 1.35;">
@@ -383,7 +421,7 @@ $base_artikel_url = home_url('/artikel/');
                         $cat_obj  = function_exists('kreasi_get_post_child_category') ? kreasi_get_post_child_category(get_the_ID()) : null;
                         $cat_name = $cat_obj ? $cat_obj->name : 'Berita & Perkembangan';
                         $tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag(get_the_ID()) : null;
-                        $tag_name = $tag_obj ? $tag_obj->name : 'Tanggamus';
+                        $tag_name = $tag_obj ? $tag_obj->name : '';
                         $thumb_url = has_post_thumbnail() 
                             ? get_the_post_thumbnail_url(get_the_ID(), 'medium_large') 
                             : get_template_directory_uri() . '/assets/images/thumbnail3.png';
@@ -405,6 +443,7 @@ $base_artikel_url = home_url('/artikel/');
                                     </svg>
                                     <?php echo esc_html($cat_name); ?>
                                 </span>
+                                <?php if (!empty($tag_name)) : ?>
                                 <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center badge-tag-outline">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -412,6 +451,7 @@ $base_artikel_url = home_url('/artikel/');
                                     </svg>
                                     <?php echo esc_html($tag_name); ?>
                                 </span>
+                                <?php endif; ?>
                             </div>
 
                             <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 17px; line-height: 1.35;">
@@ -440,7 +480,7 @@ $base_artikel_url = home_url('/artikel/');
                         $cat_obj  = function_exists('kreasi_get_post_child_category') ? kreasi_get_post_child_category(get_the_ID()) : null;
                         $cat_name = $cat_obj ? $cat_obj->name : 'Berita & Perkembangan';
                         $tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag(get_the_ID()) : null;
-                        $tag_name = $tag_obj ? $tag_obj->name : 'Tanggamus';
+                        $tag_name = $tag_obj ? $tag_obj->name : '';
                         $thumb_url = has_post_thumbnail() 
                             ? get_the_post_thumbnail_url(get_the_ID(), 'medium_large') 
                             : get_template_directory_uri() . '/assets/images/thumbnail-1.png';
@@ -464,6 +504,7 @@ $base_artikel_url = home_url('/artikel/');
                                             </svg>
                                             <?php echo esc_html($cat_name); ?>
                                         </span>
+                                        <?php if (!empty($tag_name)) : ?>
                                         <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center badge-tag-outline">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -471,6 +512,7 @@ $base_artikel_url = home_url('/artikel/');
                                             </svg>
                                             <?php echo esc_html($tag_name); ?>
                                         </span>
+                                        <?php endif; ?>
                                     </div>
 
                                     <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 17px; line-height: 1.35;">

@@ -114,7 +114,7 @@ if (!empty($post_ids)) {
                     
                     // Badge 2: Tag Daerah (Kayong Utara, dll)
                     $tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag(get_the_ID()) : null;
-                    $tag_name = $tag_obj ? $tag_obj->name : (!empty($tags) ? $tags[0]->name : 'Kayong Utara');
+                    $tag_name = $tag_obj ? $tag_obj->name : (!empty($tags) ? $tags[0]->name : '');
             ?>
                     <div class="col-10 col-sm-6 col-lg-4 flex-shrink-0 flex-md-shrink-1">
                         <div class="card article-card border-0 rounded-4 overflow-hidden shadow-sm h-100 bg-white">
@@ -151,6 +151,7 @@ if (!empty($post_ids)) {
                                             <?php echo esc_html($cat_name); ?>
                                         </span>
                                         <!-- BADGE TAG DAERAH -->
+                                        <?php if (!empty($tag_name)) : ?>
                                         <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
                                             style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
@@ -159,6 +160,7 @@ if (!empty($post_ids)) {
                                             </svg>
                                             <?php echo esc_html($tag_name); ?>
                                         </span>
+                                        <?php endif; ?>
                                     </div>
                                     <!-- TITLE -->
                                     <h5 class="fw-bold mb-3"

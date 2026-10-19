@@ -418,7 +418,7 @@ img {
 .hero-slide-content {
     display: flex;
     align-items: flex-end;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 24px;
     width: 100%;
     max-width: 100%;
@@ -426,50 +426,56 @@ img {
 
 /* Judul Hero */
 .hero-slide-title {
-    flex: 0 1 700px;
+    flex: 1 1 auto;
+    max-width: 850px;
     min-width: 0;
     margin: 0;
     color: #fff;
 
     font-family: 'Bebas Neue', sans-serif !important;
-    font-size: 36px;
+    font-size: clamp(44px, 4.2vw, 72px);
     font-weight: 400;
     font-style: normal;
-    line-height: 1.1;
-    letter-spacing: 0;
+    line-height: 1.06;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
 
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* Tombol READ MORE di kanan judul */
 .hero-slide-read-more {
     flex: 0 0 auto;
     display: inline-flex;
-    align-items: right;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    margin-left: auto;
     gap: 8px;
 
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #fff;
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
+    font-family: 'Nunito Sans', 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     line-height: 1;
     white-space: nowrap;
     text-decoration: none;
 
     position: relative;
     z-index: 7;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .hero-slide-read-more:hover {
     color: #fff;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .hero-slide-arrow {
     display: inline-block;
-    font-size: 15px;
+    font-size: 16px;
     transition: transform 0.2s ease;
 }
 
@@ -480,8 +486,8 @@ img {
 /* Desktop besar */
 @media (min-width: 1200px) {
     .hero-slide-title {
-        font-size: 36px;
-        max-width: 700px;
+        font-size: 72px;
+        max-width: 850px;
     }
 }
 
@@ -496,22 +502,30 @@ img {
     .hero-slide-title {
         flex: 0 1 auto;
         width: 100%;
-        font-size: clamp(26px, 7vw, 34px);
-        line-height: 1.08;
+        font-size: clamp(30px, 7vw, 42px);
+        line-height: 1.1;
     }
 
     .hero-slide-read-more {
-        margin-top: 0;
+        margin-top: 4px;
         margin-bottom: 0;
+        margin-left: auto;
+        align-self: flex-end;
+        text-align: right;
     }
 }
 
 .about-section {
-    min-height: 456px;
+    min-height: 480px;
     display: flex;
     align-items: center;
-    padding-top: 48px !important;
-    padding-bottom: 48px !important;
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    position: relative;
 }
 
 .about-section > .container {

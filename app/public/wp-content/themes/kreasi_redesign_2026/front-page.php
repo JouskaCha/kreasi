@@ -65,7 +65,7 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
 
                         <!-- CONTENT LAYER (TEXT & LINK ON TOP) -->
                         <div class="container-fluid px-3 px-md-5 position-relative h-100 d-flex align-items-end pb-4 pb-md-5 hero-content-layer" style="z-index: 5;">
-                            <div class="hero-slide-content text-white position-relative">
+                            <div class="hero-slide-content text-white position-relative w-100 d-flex align-items-end justify-content-between">
                                 <?php if (!empty($slide['title'])) : ?>
                                     <h1 class="hero-slide-title text-white mb-0">
                                         <?php echo wp_kses_post($slide['title']); ?>
@@ -73,7 +73,7 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                                 <?php endif; ?>
                                 <?php if (!empty($slide['link'])) : ?>
                                     <a href="<?php echo esc_url($slide['link']); ?>"
-                                    class="hero-slide-read-more text-white text-decoration-none">
+                                    class="hero-slide-read-more text-white text-decoration-none ms-auto text-end">
                                         <span>
                                             <?php echo esc_html(!empty($slide['link_text']) ? $slide['link_text'] : 'READ MORE'); ?>
                                         </span>
@@ -128,7 +128,7 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
         background-color: #ffffff !important;
     }
 
-    /* MEDIA QUERY RESPONSIVE FONT SIZE (DESAIN MOBILE FIGMA) */
+    /* RESPONSIVE FONT SIZE & READ MORE ALIGNMENT */
     @media (max-width: 767.98px) {
         .hero-section {
             height: 480px !important;
@@ -139,8 +139,8 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
             padding-bottom: 55px !important;
         }
         .hero-slide-title {
-            font-size: 22px !important;
-            line-height: 1.25 !important;
+            font-size: 32px !important;
+            line-height: 1.15 !important;
         }
         .hero-carousel-indicators {
             left: 20px !important;
@@ -153,10 +153,27 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
     <!-- ==========================================
          SECTION 2: ABOUT PROGRAM (UNTUK PENDIDIKAN YANG BERKUALITAS)
     =========================================== -->
-    <section class="about-section py-5 bg-white position-relative overflow-hidden">
-        <!-- DECORATIVE WAVE BACKGROUND WATERMARK -->
+    <?php
+    $about_bg = get_theme_mod('about_section_bg', '');
+    if (empty($about_bg)) {
+        if (file_exists(get_template_directory() . '/assets/images/about-bg.png')) {
+            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.png';
+        } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.jpg')) {
+            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.jpg';
+        } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.jpeg')) {
+            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.jpeg';
+        } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.webp')) {
+            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.webp';
+        }
+    }
+    ?>
+    <section class="about-section py-5 position-relative overflow-hidden"
+             style="<?php echo !empty($about_bg) ? 'background-image: url(\'' . esc_url($about_bg) . '\'); background-size: cover; background-position: center center; background-repeat: no-repeat;' : 'background-color: #ffffff;'; ?> min-height: 480px; width: 100%;">
+        <!-- DECORATIVE WAVE BACKGROUND WATERMARK (fallback jika belum ada background image) -->
+        <?php if (empty($about_bg)) : ?>
         <div class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none opacity-25" 
              style="background-image: radial-gradient(circle at 10% 20%, rgba(14, 42, 93, 0.05) 0%, transparent 60%);"></div>
+        <?php endif; ?>
 
         <div class="container py-lg-4 position-relative z-1">
             <div class="row align-items-center gy-4">

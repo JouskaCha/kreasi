@@ -20,7 +20,7 @@ while (have_posts()) :
 
     // Tag Daerah (Kayong Utara, dll)
     $tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag($post_id) : null;
-    $tag_name = $tag_obj ? $tag_obj->name : 'Kayong Utara';
+    $tag_name = $tag_obj ? $tag_obj->name : '';
 
     $share_url   = rawurlencode(get_permalink());
     $share_title = rawurlencode(get_the_title());
@@ -123,6 +123,7 @@ while (have_posts()) :
                                     </span>
 
                                     <!-- BADGE 2: TAG DAERAH (MERAH SOLID CAPSULE) -->
+                                    <?php if (!empty($tag_name)) : ?>
                                     <span class="badge rounded-pill fw-semibold text-white d-inline-flex align-items-center" 
                                           style="background-color: #D8232A; font-family: 'Lato', sans-serif; font-size: 12px; padding: 6px 14px;">
                                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
@@ -131,6 +132,7 @@ while (have_posts()) :
                                         </svg>
                                         <?php echo esc_html($tag_name); ?>
                                     </span>
+                                    <?php endif; ?>
                                 </div>
 
                                 <!-- Sisi Kanan: Tanggal & Views -->
@@ -269,7 +271,7 @@ while (have_posts()) :
                             $rel_cat_obj  = function_exists('kreasi_get_post_child_category') ? kreasi_get_post_child_category(get_the_ID()) : null;
                             $rel_cat_name = $rel_cat_obj ? $rel_cat_obj->name : 'Berita & Perkembangan';
                             $rel_tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag(get_the_ID()) : null;
-                            $rel_tag_name = $rel_tag_obj ? $rel_tag_obj->name : 'Tanggamus';
+                            $rel_tag_name = $rel_tag_obj ? $rel_tag_obj->name : '';
                             $rel_thumb    = has_post_thumbnail() 
                                 ? get_the_post_thumbnail_url(get_the_ID(), 'medium_large') 
                                 : get_template_directory_uri() . '/assets/images/thumbnail-1.png';
@@ -294,6 +296,7 @@ while (have_posts()) :
                                                 </svg>
                                                 <?php echo esc_html($rel_cat_name); ?>
                                             </span>
+                                            <?php if (!empty($rel_tag_name)) : ?>
                                             <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
                                                   style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 4px 10px; border: 1.5px solid #DA291C; color: #DA291C;">
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
@@ -302,6 +305,7 @@ while (have_posts()) :
                                                 </svg>
                                                 <?php echo esc_html($rel_tag_name); ?>
                                             </span>
+                                            <?php endif; ?>
                                         </div>
 
                                         <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 17px; line-height: 1.35;">

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Functions and definitions for customtheme
+ * Functions and definitions for kreasi_redesign_2026
  *
- * @package customtheme
+ * @package kreasi_redesign_2026
  */
 
 if (!defined('ABSPATH')) {
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * 1. Setup Theme Features & Supports
  */
-function customtheme_setup_features()
+function kreasi_redesign_2026_setup_features()
 {
     // Menambahkan dukungan Title Tag dinamis
     add_theme_support('title-tag');
@@ -46,59 +46,59 @@ function customtheme_setup_features()
 
     // Registrasi Menu Navigasi Utama
     register_nav_menus(array(
-        'primary' => __('Primary Menu', 'customtheme'),
+        'primary' => __('Primary Menu', 'kreasi_redesign_2026'),
     ));
 }
 
 
-add_action('after_setup_theme', 'customtheme_setup_features');
+add_action('after_setup_theme', 'kreasi_redesign_2026_setup_features');
 /**
  * Register custom design page routes.
  */
-function customtheme_register_design_routes()
+function kreasi_redesign_2026_register_design_routes()
 {
     add_rewrite_rule(
         '^artikel/?$',
-        'index.php?customtheme_design_page=artikel',
+        'index.php?kreasi_redesign_2026_design_page=artikel',
         'top'
     );
 
     add_rewrite_rule(
         '^pustaka/?$',
-        'index.php?customtheme_design_page=pustaka',
+        'index.php?kreasi_redesign_2026_design_page=pustaka',
         'top'
     );
 
     add_rewrite_rule(
         '^tentang-kami/?$',
-        'index.php?customtheme_design_page=tentang-kami',
+        'index.php?kreasi_redesign_2026_design_page=tentang-kami',
         'top'
     );
 
     add_rewrite_rule(
         '^publikasi/?$',
-        'index.php?customtheme_design_page=publikasi',
+        'index.php?kreasi_redesign_2026_design_page=publikasi',
         'top'
     );
 }
-add_action('init', 'customtheme_register_design_routes');
+add_action('init', 'kreasi_redesign_2026_register_design_routes');
 
 /**
  * Register custom query variable.
  */
-function customtheme_design_query_vars($vars)
+function kreasi_redesign_2026_design_query_vars($vars)
 {
-    $vars[] = 'customtheme_design_page';
+    $vars[] = 'kreasi_redesign_2026_design_page';
     return $vars;
 }
-add_filter('query_vars', 'customtheme_design_query_vars');
+add_filter('query_vars', 'kreasi_redesign_2026_design_query_vars');
 
 /**
  * Load the corresponding template.
  */
-function customtheme_load_design_page($template)
+function kreasi_redesign_2026_load_design_page($template)
 {
-    $design_page = get_query_var('customtheme_design_page');
+    $design_page = get_query_var('kreasi_redesign_2026_design_page');
 
     // Fallback untuk instalasi yang belum menyegarkan rewrite rules.
     if (!$design_page && !empty($_SERVER['REQUEST_URI'])) {
@@ -117,7 +117,7 @@ function customtheme_load_design_page($template)
     $templates = array(
         'artikel'      => 'artikel.php',
         'pustaka'      => 'page-publikasi.php',
-        'tentang-kami' => 'front-page.php',
+        'tentang-kami' => 'page-tentang-kami.php',
         'publikasi'    => 'page-publikasi.php',
     );
 
@@ -132,24 +132,24 @@ function customtheme_load_design_page($template)
         }
 
         error_log(
-            'CustomTheme: Template tidak ditemukan: ' .
+            'kreasi_redesign_2026: Template tidak ditemukan: ' .
                 $file
         );
     }
 
     return $template;
 }
-add_filter('template_include', 'customtheme_load_design_page');
+add_filter('template_include', 'kreasi_redesign_2026_load_design_page');
 
 /**
  * 2. Registrasi WordPress Customizer untuk Upload Logo Kemitraan dari Media Library
  */
-function customtheme_customize_register($wp_customize)
+function kreasi_redesign_2026_customize_register($wp_customize)
 {
     // --- Section 1: Hero Section & Slider (Homepage) ---
-    $wp_customize->add_section('customtheme_hero_section', array(
-        'title'       => __('Hero Section & Slider (Homepage)', 'customtheme'),
-        'description' => __('Unggah gambar atau video (MP4/WebM) dari Media Library untuk Hero Slider.', 'customtheme'),
+    $wp_customize->add_section('kreasi_redesign_2026_hero_section', array(
+        'title'       => __('Hero Section & Slider (Homepage)', 'kreasi_redesign_2026'),
+        'description' => __('Unggah gambar atau video (MP4/WebM) dari Media Library untuk Hero Slider.', 'kreasi_redesign_2026'),
         'priority'    => 30,
     ));
 
@@ -160,8 +160,8 @@ function customtheme_customize_register($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hero_image', array(
-        'label'    => __('Gambar Default Hero (Fallback)', 'customtheme'),
-        'section'  => 'customtheme_hero_section',
+        'label'    => __('Gambar Default Hero', 'kreasi_redesign_2026'),
+        'section'  => 'kreasi_redesign_2026_hero_section',
         'settings' => 'hero_image',
     )));
 
@@ -172,8 +172,8 @@ function customtheme_customize_register($wp_customize)
     ));
 
     $wp_customize->add_control('hero_slider_interval', array(
-        'label'       => __('Durasi Auto-Slide (Milidetik, contoh: 6000)', 'customtheme'),
-        'section'     => 'customtheme_hero_section',
+        'label'       => __('Durasi Auto-Slide (Milidetik, contoh: 6000)', 'kreasi_redesign_2026'),
+        'section'     => 'kreasi_redesign_2026_hero_section',
         'type'        => 'number',
         'input_attrs' => array('min' => 2000, 'step' => 500),
     ));
@@ -187,9 +187,9 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'esc_url_raw',
         ));
         $wp_customize->add_control(new WP_Customize_Upload_Control($wp_customize, $media_setting, array(
-            'label'       => sprintf(__('Slide %d: Media (Gambar / Video MP4)', 'customtheme'), $i),
-            'description' => __('Pilih dari Media Library (file .mp4/.webm akan otomatis diputar sebagai video background).', 'customtheme'),
-            'section'     => 'customtheme_hero_section',
+            'label'       => sprintf(__('Slide %d: Media (Gambar / Video MP4)', 'kreasi_redesign_2026'), $i),
+            'description' => __('Pilih dari Media Library (file .mp4/.webm akan otomatis diputar sebagai video background).', 'kreasi_redesign_2026'),
+            'section'     => 'kreasi_redesign_2026_hero_section',
             'settings'    => $media_setting,
         )));
 
@@ -200,8 +200,8 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'sanitize_text_field',
         ));
         $wp_customize->add_control($title_setting, array(
-            'label'    => sprintf(__('Slide %d: Judul / Heading', 'customtheme'), $i),
-            'section'  => 'customtheme_hero_section',
+            'label'    => sprintf(__('Slide %d: Judul / Heading', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_hero_section',
             'type'     => 'textarea',
         ));
 
@@ -212,8 +212,8 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'esc_url_raw',
         ));
         $wp_customize->add_control($link_setting, array(
-            'label'    => sprintf(__('Slide %d: URL Link (opsional)', 'customtheme'), $i),
-            'section'  => 'customtheme_hero_section',
+            'label'    => sprintf(__('Slide %d: URL Link (opsional)', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_hero_section',
             'type'     => 'url',
         ));
 
@@ -224,16 +224,16 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'sanitize_text_field',
         ));
         $wp_customize->add_control($link_text_setting, array(
-            'label'    => sprintf(__('Slide %d: Teks Tombol Link', 'customtheme'), $i),
-            'section'  => 'customtheme_hero_section',
+            'label'    => sprintf(__('Slide %d: Teks Tombol Link', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_hero_section',
             'type'     => 'text',
         ));
     }
 
     // --- Section 2: Logo Kemitraan (Header Top) ---
-    // $wp_customize->add_section('customtheme_partner_logos_section', array(
-    //     'title'       => __('Logo Kemitraan (Header Top)', 'customtheme'),
-    //     'description' => __('Unggah dan kelola logo mitra/kemitraan langsung dari WordPress Media Library.', 'customtheme'),
+    // $wp_customize->add_section('kreasi_redesign_2026_partner_logos_section', array(
+    //     'title'       => __('Logo Kemitraan (Header Top)', 'kreasi_redesign_2026'),
+    //     'description' => __('Unggah dan kelola logo mitra/kemitraan langsung dari WordPress Media Library.', 'kreasi_redesign_2026'),
     //     'priority'    => 35,
     // ));
 
@@ -247,16 +247,16 @@ function customtheme_customize_register($wp_customize)
     //     ));
 
     //     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, $setting_id, array(
-    //         'label'    => sprintf(__('Logo Mitra %d (Pilih dari Media)', 'customtheme'), $i),
-    //         'section'  => 'customtheme_partner_logos_section',
+    //         'label'    => sprintf(__('Logo Mitra %d (Pilih dari Media)', 'kreasi_redesign_2026'), $i),
+    //         'section'  => 'kreasi_redesign_2026_partner_logos_section',
     //         'settings' => $setting_id,
     //     )));
     // }
 
     // --- Section: Pengaturan Menu Navigasi Header (Pilih Route Halaman / Tambah Slot) ---
-    $wp_customize->add_section('customtheme_nav_section', array(
-        'title'       => __('Pengaturan Menu Navigasi Header', 'customtheme'),
-        'description' => __('Kelola tombol menu navigasi header (Tambah label, pilih Halaman WordPress, atau isi URL kustom). Isi label untuk mengaktifkan slot menu.', 'customtheme'),
+    $wp_customize->add_section('kreasi_redesign_2026_nav_section', array(
+        'title'       => __('Pengaturan Menu Navigasi Header', 'kreasi_redesign_2026'),
+        'description' => __('Kelola tombol menu navigasi header (Tambah label, pilih Halaman WordPress, atau isi URL kustom). Isi label untuk mengaktifkan slot menu.', 'kreasi_redesign_2026'),
         'priority'    => 36,
     ));
 
@@ -277,9 +277,9 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'sanitize_text_field',
         ));
         $wp_customize->add_control($title_setting, array(
-            'label'       => sprintf(__('Slot %d: Label Tombol Menu', 'customtheme'), $i),
-            'description' => __('Isi nama tombol (kosongkan jika slot ini tidak digunakan).', 'customtheme'),
-            'section'     => 'customtheme_nav_section',
+            'label'       => sprintf(__('Slot %d: Label Tombol Menu', 'kreasi_redesign_2026'), $i),
+            'description' => __('Isi nama tombol (kosongkan jika slot ini tidak digunakan).', 'kreasi_redesign_2026'),
+            'section'     => 'kreasi_redesign_2026_nav_section',
             'type'        => 'text',
         ));
 
@@ -290,8 +290,8 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'absint',
         ));
         $wp_customize->add_control($page_setting, array(
-            'label'    => sprintf(__('Slot %d: Pilih Halaman (Page)', 'customtheme'), $i),
-            'section'  => 'customtheme_nav_section',
+            'label'    => sprintf(__('Slot %d: Pilih Halaman (Page)', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_nav_section',
             'type'     => 'dropdown-pages',
         ));
 
@@ -302,48 +302,48 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'esc_url_raw',
         ));
         $wp_customize->add_control($url_setting, array(
-            'label'       => sprintf(__('Slot %d: Atau Input URL Kustom (Opsional)', 'customtheme'), $i),
-            'description' => __('Contoh: /galeri atau https://...', 'customtheme'),
-            'section'     => 'customtheme_nav_section',
+            'label'       => sprintf(__('Slot %d: Atau Input URL Kustom (Opsional)', 'kreasi_redesign_2026'), $i),
+            'description' => __('Contoh: /galeri atau https://...', 'kreasi_redesign_2026'),
+            'section'     => 'kreasi_redesign_2026_nav_section',
             'type'        => 'text',
         ));
     }
 
-    // --- Section 3: Footer & Logo Save the Children ---
-    $wp_customize->add_section('customtheme_footer_section', array(
-        'title'       => __('Pengaturan Footer & Logo', 'customtheme'),
-        'description' => __('Unggah dan kelola logo Footer & Save the Children dari Media Library.', 'customtheme'),
-        'priority'    => 40,
-    ));
+    // // --- Section 3: Footer & Logo Save the Children ---
+    // $wp_customize->add_section('kreasi_redesign_2026_footer_section', array(
+    //     'title'       => __('Pengaturan Footer & Logo', 'kreasi_redesign_2026'),
+    //     'description' => __('Unggah dan kelola logo Footer & Save the Children dari Media Library.', 'kreasi_redesign_2026'),
+    //     'priority'    => 40,
+    // ));
 
-    // Logo Utama Footer
-    $wp_customize->add_setting('footer_logo', array(
-        'default'           => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
+    // // Logo Utama Footer
+    // $wp_customize->add_setting('footer_logo', array(
+    //     'default'           => '',
+    //     'sanitize_callback' => 'esc_url_raw',
+    // ));
 
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'footer_logo', array(
-        'label'    => __('Logo Utama Footer (Pilih dari Media Library)', 'customtheme'),
-        'section'  => 'customtheme_footer_section',
-        'settings' => 'footer_logo',
-    )));
+    // $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'footer_logo', array(
+    //     'label'    => __('Logo Utama Footer (Pilih dari Media Library)', 'kreasi_redesign_2026'),
+    //     'section'  => 'kreasi_redesign_2026_footer_section',
+    //     'settings' => 'footer_logo',
+    // )));
 
-    // Logo Save the Children Footer
-    $wp_customize->add_setting('save_the_children_logo', array(
-        'default'           => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
+    // // Logo Save the Children Footer
+    // $wp_customize->add_setting('save_the_children_logo', array(
+    //     'default'           => '',
+    //     'sanitize_callback' => 'esc_url_raw',
+    // ));
 
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'save_the_children_logo', array(
-        'label'    => __('Logo Save the Children (Pilih dari Media Library)', 'customtheme'),
-        'section'  => 'customtheme_footer_section',
-        'settings' => 'save_the_children_logo',
-    )));
+    // $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'save_the_children_logo', array(
+    //     'label'    => __('Logo Save the Children (Pilih dari Media Library)', 'kreasi_redesign_2026'),
+    //     'section'  => 'kreasi_redesign_2026_footer_section',
+    //     'settings' => 'save_the_children_logo',
+    // )));
 
     // --- Section 4: Kartu Statistik Dampak (Impact Cards) ---
-    $wp_customize->add_section('customtheme_impact_section', array(
-        'title'       => __('Kartu Statistik (Membawa Perubahan)', 'customtheme'),
-        'description' => __('Unggah gambar background dan kelola angka/teks 4 kartu statistik dari Media Library.', 'customtheme'),
+    $wp_customize->add_section('kreasi_redesign_2026_impact_section', array(
+        'title'       => __('Kartu Statistik', 'kreasi_redesign_2026'),
+        'description' => __('Unggah gambar background dan kelola angka/teks 4 kartu statistik dari Media Library.', 'kreasi_redesign_2026'),
         'priority'    => 38,
     ));
 
@@ -378,8 +378,8 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'esc_url_raw',
         ));
         $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, $img_setting, array(
-            'label'    => sprintf(__('Kartu %d: Gambar Background (Media Library)', 'customtheme'), $i),
-            'section'  => 'customtheme_impact_section',
+            'label'    => sprintf(__('Kartu %d: Gambar Background (Media Library)', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_impact_section',
             'settings' => $img_setting,
         )));
 
@@ -390,8 +390,8 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'sanitize_text_field',
         ));
         $wp_customize->add_control($num_setting, array(
-            'label'    => sprintf(__('Kartu %d: Angka / Jumlah', 'customtheme'), $i),
-            'section'  => 'customtheme_impact_section',
+            'label'    => sprintf(__('Kartu %d: Angka / Jumlah', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_impact_section',
             'type'     => 'text',
         ));
 
@@ -402,8 +402,8 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'sanitize_text_field',
         ));
         $wp_customize->add_control($lbl_setting, array(
-            'label'    => sprintf(__('Kartu %d: Label Keterangan', 'customtheme'), $i),
-            'section'  => 'customtheme_impact_section',
+            'label'    => sprintf(__('Kartu %d: Label Keterangan', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_impact_section',
             'type'     => 'text',
         ));
 
@@ -414,48 +414,81 @@ function customtheme_customize_register($wp_customize)
             'sanitize_callback' => 'sanitize_textarea_field',
         ));
         $wp_customize->add_control($desc_setting, array(
-            'label'    => sprintf(__('Kartu %d: Teks Deskripsi Hover (Kotak Biru)', 'customtheme'), $i),
-            'section'  => 'customtheme_impact_section',
+            'label'    => sprintf(__('Kartu %d: Teks Deskripsi Hover (Kotak Biru)', 'kreasi_redesign_2026'), $i),
+            'section'  => 'kreasi_redesign_2026_impact_section',
             'type'     => 'textarea',
         ));
     }
 
     // --- Section 5: Area Intervensi & Mitra Pelaksana ---
-    $wp_customize->add_section('customtheme_map_section', array(
-        'title'       => __('Area Intervensi & Peta Mitra', 'customtheme'),
-        'description' => __('Kelola judul dan unggah gambar peta area intervensi & mitra pelaksana dari Media Library.', 'customtheme'),
+    $wp_customize->add_section('kreasi_redesign_2026_event_section', array(
+        'title'       => __('Event', 'kreasi_redesign_2026'),
+        'description' => __('Kelola judul dan unggah gambar event.', 'kreasi_redesign_2026'),
         'priority'    => 39,
     ));
 
     // Judul Section
-    $wp_customize->add_setting('map_section_title', array(
-        'default'           => 'AREA INTERVENSI & MITRA PELAKSANA',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-    $wp_customize->add_control('map_section_title', array(
-        'label'    => __('Judul Section', 'customtheme'),
-        'section'  => 'customtheme_map_section',
-        'type'     => 'text',
-    ));
+    // $wp_customize->add_setting('event_section_title', array(
+    //     'default'           => 'AREA INTERVENSI & MITRA PELAKSANA',
+    //     'sanitize_callback' => 'sanitize_text_field',
+    // ));
+    // $wp_customize->add_control('event_section_title', array(
+    //     'label'    => __('Judul Section', 'kreasi_redesign_2026'),
+    //     'section'  => 'kreasi_redesign_2026_event_section',
+    //     'type'     => 'text',
+    // ));
 
-    // Gambar Peta Intervensi
-    $wp_customize->add_setting('map_section_image', array(
+    
+    /**
+     * Gambar Event - Desktop
+     */
+    $wp_customize->add_setting('event_section_image_desktop', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
     ));
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'map_section_image', array(
-        'label'       => __('Gambar Peta Intervensi (Pilih dari Media Library)', 'customtheme'),
-        'description' => __('Unggah grafis peta Indonesia & logo mitra pelaksana.', 'customtheme'),
-        'section'     => 'customtheme_map_section',
-        'settings'    => 'map_section_image',
-    )));
+
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'event_section_image_desktop',
+            array(
+                'label'       => __('Gambar Event - Desktop', 'kreasi_redesign_2026'),
+                'description' => __('Upload gambar landscape untuk tampilan desktop.', 'kreasi_redesign_2026'),
+                'section'     => 'kreasi_redesign_2026_event_section',
+                'settings'    => 'event_section_image_desktop',
+            )
+        )
+    );
+
+
+    /**
+     * Gambar Event - Mobile
+     */
+    $wp_customize->add_setting('event_section_image_mobile', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'event_section_image_mobile',
+            array(
+                'label'       => __('Gambar Event - Mobile', 'kreasi_redesign_2026'),
+                'description' => __('Upload gambar portrait untuk tampilan mobile.', 'kreasi_redesign_2026'),
+                'section'     => 'kreasi_redesign_2026_event_section',
+                'settings'    => 'event_section_image_mobile',
+            )
+        )
+    );
+
 }
-add_action('customize_register', 'customtheme_customize_register');
+add_action('customize_register', 'kreasi_redesign_2026_customize_register');
 
 /**
  * Helper Function: Render Logo Kemitraan (Customizer Media / Widget / Fallback)
  */
-// function customtheme_render_partner_logos($is_mobile = false) {
+// function kreasi_redesign_2026_render_partner_logos($is_mobile = false) {
 //     $class = $is_mobile ? 'partner-logo-mobile-img' : 'partner-logo-img';
 
 //     $logo1 = get_theme_mod('partner_logo_1', '');
@@ -482,7 +515,7 @@ add_action('customize_register', 'customtheme_customize_register');
 //     }
 // }
 
-function customtheme_render_partner_logos($is_mobile = false) {
+function kreasi_redesign_2026_render_partner_logos($is_mobile = false) {
 
     $class = $is_mobile
         ? 'partner-logo-mobile-img'
@@ -519,7 +552,7 @@ function customtheme_render_partner_logos($is_mobile = false) {
 /**
  * Helper Function: Render Nav Menu Buttons (Customizer Page Selector / Route URLs)
  */
-function customtheme_render_default_nav_menu()
+function kreasi_redesign_2026_render_default_nav_menu()
 {
     $default_items = array(
         1 => array('title' => 'TENTANG KAMI', 'slug' => '/tentang-kami'),
@@ -556,18 +589,20 @@ function customtheme_render_default_nav_menu()
             $url = '#';
         }
 
-        // Determine active state
+        // Determine active state (tidak ada yang aktif saat di front page)
         $is_active = false;
-        if ($page_id && is_page($page_id)) {
-            $is_active = true;
-        } elseif ($i === 1 && (is_page('tentang-kami') || is_page_template('page-tentang-kami.php'))) {
-            $is_active = true;
-        } elseif ($i === 2 && (is_home() || is_singular('post') || is_category() || is_tag() || is_page('artikel'))) {
-            $is_active = true;
-        } elseif ($i === 3 && (is_page('pustaka') || is_page_template('page-pustaka.php'))) {
-            $is_active = true;
-        } elseif ($i === 4 && (is_page('publikasi') || is_page_template('page-publikasi.php'))) {
-            $is_active = true;
+        if (!is_front_page()) {
+            if ($page_id && is_page($page_id)) {
+                $is_active = true;
+            } elseif ($i === 1 && (is_page('tentang-kami') || is_page_template('page-tentang-kami.php'))) {
+                $is_active = true;
+            } elseif ($i === 2 && (is_home() || is_singular('post') || is_category() || is_tag() || is_page('artikel'))) {
+                $is_active = true;
+            } elseif ($i === 3 && (is_page('pustaka') || is_page_template('page-pustaka.php'))) {
+                $is_active = true;
+            } elseif ($i === 4 && (is_page('publikasi') || is_page_template('page-publikasi.php'))) {
+                $is_active = true;
+            }
         }
 
         $cls = $is_active ? 'current-menu-item active' : '';
@@ -580,7 +615,7 @@ function customtheme_render_default_nav_menu()
 /**
  * Helper Function: Cek apakah URL media adalah file video (MP4, WebM, MOV, dll)
  */
-function customtheme_is_video_url($url)
+function kreasi_redesign_2026_is_video_url($url)
 {
     if (empty($url)) return false;
     $path = parse_url($url, PHP_URL_PATH);
@@ -592,13 +627,13 @@ function customtheme_is_video_url($url)
 /**
  * 3. Registrasi Dynamic Sidebars / Widget Areas
  */
-function customtheme_widgets_init()
+function kreasi_redesign_2026_widgets_init()
 {
     // Area Logo Mitra di Atas Header
     register_sidebar(array(
-        'name'          => __('Logo Kemitraan (Header Top)', 'customtheme'),
+        'name'          => __('Logo Kemitraan (Header Top)', 'kreasi_redesign_2026'),
         'id'            => 'partner-logos-sidebar',
-        'description'   => __('Tambahkan widget gambar/logo mitra di bagian atas header.', 'customtheme'),
+        'description'   => __('Tambahkan widget gambar/logo mitra di bagian atas header.', 'kreasi_redesign_2026'),
         'before_widget' => '<div class="partner-logo-item d-inline-block">',
         'after_widget'  => '</div>',
         'before_title'  => '<span class="d-none">',
@@ -607,9 +642,9 @@ function customtheme_widgets_init()
 
     // Footer Kolom 1 (Branding & Pengelola)
     register_sidebar(array(
-        'name'          => __('Footer Kolom 1 (Branding)', 'customtheme'),
+        'name'          => __('Footer Kolom 1 (Branding)', 'kreasi_redesign_2026'),
         'id'            => 'footer-col-1',
-        'description'   => __('Widget area untuk logo utama dan logo pengelola.', 'customtheme'),
+        'description'   => __('Widget area untuk logo utama dan logo pengelola.', 'kreasi_redesign_2026'),
         'before_widget' => '<div class="footer-widget footer-widget-1 mb-4">',
         'after_widget'  => '</div>',
         'before_title'  => '<h5 class="footer-widget-title fw-bold mb-3">',
@@ -618,9 +653,9 @@ function customtheme_widgets_init()
 
     // Footer Kolom 2 (Kontak & Media Sosial)
     register_sidebar(array(
-        'name'          => __('Footer Kolom 2 (Kontak & Sosmed)', 'customtheme'),
+        'name'          => __('Footer Kolom 2 (Kontak & Sosmed)', 'kreasi_redesign_2026'),
         'id'            => 'footer-col-2',
-        'description'   => __('Widget area untuk informasi kontak, alamat, dan link media sosial.', 'customtheme'),
+        'description'   => __('Widget area untuk informasi kontak, alamat, dan link media sosial.', 'kreasi_redesign_2026'),
         'before_widget' => '<div class="footer-widget footer-widget-2 mb-4">',
         'after_widget'  => '</div>',
         'before_title'  => '<h5 class="footer-widget-title fw-bold mb-3">',
@@ -629,21 +664,21 @@ function customtheme_widgets_init()
 
     // Footer Kolom 3 (Form Newsletter & Laporan)
     register_sidebar(array(
-        'name'          => __('Footer Kolom 3 (Interaktif / Card)', 'customtheme'),
+        'name'          => __('Footer Kolom 3 (Interaktif / Card)', 'kreasi_redesign_2026'),
         'id'            => 'footer-col-3',
-        'description'   => __('Widget area untuk newsletter dan tombol aksi/laporan.', 'customtheme'),
+        'description'   => __('Widget area untuk newsletter dan tombol aksi/laporan.', 'kreasi_redesign_2026'),
         'before_widget' => '<div class="footer-widget footer-widget-3 mb-3">',
         'after_widget'  => '</div>',
         'before_title'  => '<h5 class="footer-widget-title fw-bold mb-3">',
         'after_title'   => '</h5>',
     ));
 }
-add_action('widgets_init', 'customtheme_widgets_init');
+add_action('widgets_init', 'kreasi_redesign_2026_widgets_init');
 
 /**
  * 4. Enqueue Stylesheets & Scripts (Bootstrap 5 CDN, Bootstrap Icons, & Theme Style)
  */
-function customtheme_enqueue_scripts()
+function kreasi_redesign_2026_enqueue_scripts()
 {
     // Bootstrap 5 CSS CDN
     wp_enqueue_style(
@@ -662,15 +697,8 @@ function customtheme_enqueue_scripts()
     );
 
     wp_enqueue_style(
-        'customtheme-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;500;600;700;800&display=swap',
-        array(),
-        null
-    );
-
-    wp_enqueue_style(
-        'customtheme-lato-font',
-        'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap',
+        'kreasi_redesign_2026-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Oswald:wght@400;500;600;700&display=swap',
         array(),
         null
     );
@@ -679,7 +707,7 @@ function customtheme_enqueue_scripts()
 
     // Main Theme Stylesheet (style.css)
     wp_enqueue_style(
-        'customtheme-style',
+        'kreasi_redesign_2026-style',
         get_stylesheet_uri(),
         array('bootstrap-css', 'bootstrap-icons'),
         wp_get_theme()->get('Version')
@@ -694,12 +722,12 @@ function customtheme_enqueue_scripts()
         true
     );
 }
-add_action('wp_enqueue_scripts', 'customtheme_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'kreasi_redesign_2026_enqueue_scripts');
 
 /**
  * Menambah jumlah view artikel satu kali per browser setiap 24 jam.
  */
-function customtheme_track_post_views()
+function kreasi_redesign_2026_track_post_views()
 {
     if (
         is_admin() ||
@@ -711,15 +739,15 @@ function customtheme_track_post_views()
     }
 
     $post_id    = get_queried_object_id();
-    $cookie_key = 'customtheme_viewed_post_' . $post_id;
+    $cookie_key = 'kreasi_redesign_2026_viewed_post_' . $post_id;
 
     // Jangan menghitung refresh berulang dari browser yang sama selama 24 jam.
     if (isset($_COOKIE[$cookie_key])) {
         return;
     }
 
-    $views = (int) get_post_meta($post_id, 'customtheme_post_views', true);
-    update_post_meta($post_id, 'customtheme_post_views', $views + 1);
+    $views = (int) get_post_meta($post_id, 'kreasi_redesign_2026_post_views', true);
+    update_post_meta($post_id, 'kreasi_redesign_2026_post_views', $views + 1);
 
     setcookie(
         $cookie_key,
@@ -734,4 +762,341 @@ function customtheme_track_post_views()
         )
     );
 }
-add_action('template_redirect', 'customtheme_track_post_views');
+add_action('template_redirect', 'kreasi_redesign_2026_track_post_views');
+
+/**
+ * =========================================================================
+ * HELPER KATEGORI, TAG DAERAH, DAN NAVIGASI AKTIF UNTUK KREASI
+ * =========================================================================
+ */
+
+/**
+ * 1. Ambil semua ID kategori di bawah parent 'artikel' (termasuk parent itu sendiri).
+ */
+function kreasi_get_artikel_category_ids()
+{
+    $parent = get_category_by_slug('artikel');
+    if (!$parent) {
+        $parent = get_term_by('name', 'Artikel', 'category');
+    }
+
+    if ($parent && !is_wp_error($parent)) {
+        $children = get_term_children($parent->term_id, 'category');
+        if (!is_wp_error($children) && !empty($children)) {
+            return array_merge(array($parent->term_id), $children);
+        }
+        return array($parent->term_id);
+    }
+
+    return array();
+}
+
+/**
+ * 2. Ambil semua ID kategori di bawah parent 'publikasi' (termasuk parent itu sendiri).
+ */
+function kreasi_get_publikasi_category_ids()
+{
+    $parent = get_category_by_slug('publikasi');
+    if (!$parent) {
+        $parent = get_term_by('name', 'Publikasi', 'category');
+    }
+
+    if ($parent && !is_wp_error($parent)) {
+        $children = get_term_children($parent->term_id, 'category');
+        if (!is_wp_error($children) && !empty($children)) {
+            return array_merge(array($parent->term_id), $children);
+        }
+        return array($parent->term_id);
+    }
+
+    return array();
+}
+
+/**
+ * 3. Ambil daftar child categories di bawah 'artikel' untuk ditampilkan pada filter tab.
+ */
+function kreasi_get_artikel_child_categories()
+{
+    $parent = get_category_by_slug('artikel');
+    if (!$parent) {
+        $parent = get_term_by('name', 'Artikel', 'category');
+    }
+
+    if ($parent && !is_wp_error($parent)) {
+        $terms = get_terms(array(
+            'taxonomy'   => 'category',
+            'parent'     => $parent->term_id,
+            'hide_empty' => false,
+        ));
+        if (!is_wp_error($terms) && !empty($terms)) {
+            return $terms;
+        }
+    }
+
+    // Fallback jika belum ada child categories di database
+    return array(
+        (object) array('term_id' => 0, 'name' => 'Cerita', 'slug' => 'cerita'),
+        (object) array('term_id' => 0, 'name' => 'Berita', 'slug' => 'berita'),
+        (object) array('term_id' => 0, 'name' => 'Liputan Media', 'slug' => 'liputan-media'),
+    );
+}
+
+/**
+ * 3b. Ambil daftar child categories di bawah parent 'publikasi' / 'pustaka'.
+ */
+function kreasi_get_publikasi_child_categories()
+{
+    $parent = get_category_by_slug('publikasi');
+    if (!$parent) {
+        $parent = get_term_by('name', 'Publikasi', 'category');
+    }
+    if (!$parent) {
+        $parent = get_category_by_slug('pustaka');
+        if (!$parent) {
+            $parent = get_term_by('name', 'Pustaka', 'category');
+        }
+    }
+
+    if ($parent && !is_wp_error($parent)) {
+        $terms = get_terms(array(
+            'taxonomy'   => 'category',
+            'parent'     => $parent->term_id,
+            'hide_empty' => false,
+        ));
+        if (!is_wp_error($terms) && !empty($terms)) {
+            return $terms;
+        }
+    }
+
+    // Default categories sesuai desain Figma mockup
+    return array(
+        (object) array('term_id' => 0, 'name' => 'Buletin', 'slug' => 'buletin'),
+        (object) array('term_id' => 0, 'name' => 'Repositori Pengetahuan', 'slug' => 'repositori-pengetahuan'),
+        (object) array('term_id' => 0, 'name' => 'Materi Pembelajaran', 'slug' => 'materi-pembelajaran'),
+    );
+}
+
+/**
+ * 3c. Ambil daftar default publication cards jika belum ada data di WordPress
+ */
+function kreasi_get_default_publications()
+{
+    return array(
+        array(
+            'title' => 'Jejak KREASI – April Mei 2026',
+            'tag'   => 'Buletin',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-1.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => 'Nota Kesepahaman (MoU) Save the Children dan Kementerian Pendidikan D...',
+            'tag'   => 'Dokumen Strategis',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-2.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => 'Jejak KREASI - Februari Maret 2026',
+            'tag'   => 'Buletin',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-3.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => '4 Kata Ajaib - Poster KREASI',
+            'tag'   => 'KIE',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-4.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => 'Laporan Studi Praktik di Tanggamus',
+            'tag'   => 'Laporan',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-5.png',
+            'link'  => '#',
+        ),
+    );
+}
+
+/**
+ * 4. Ambil kategori CHILD untuk kartu artikel / single post.
+ * Jangan pernah menampilkan parent 'Artikel' atau 'Publikasi'. Tampilkan child seperti 'Cerita' / 'Berita'.
+ */
+function kreasi_get_post_child_category($post_id = null)
+{
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $categories = get_the_category($post_id);
+    if (!empty($categories)) {
+        // Cari category yang memiliki parent != 0
+        foreach ($categories as $cat) {
+            if ($cat->parent != 0) {
+                return $cat;
+            }
+        }
+        // Jika tidak ada subkategori, cari yang namanya bukan 'artikel' atau 'publikasi'
+        foreach ($categories as $cat) {
+            if ($cat->slug !== 'artikel' && $cat->slug !== 'publikasi' && strtolower($cat->name) !== 'artikel' && strtolower($cat->name) !== 'publikasi') {
+                return $cat;
+            }
+        }
+    }
+
+    return (object) array(
+        'name'    => 'Cerita',
+        'slug'    => 'cerita',
+        'term_id' => 0,
+    );
+}
+
+/**
+ * 5. Ambil tag daerah / region untuk kartu artikel / single post.
+ */
+function kreasi_get_post_region_tag($post_id = null)
+{
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $tags = get_the_tags($post_id);
+    if (!empty($tags) && !is_wp_error($tags)) {
+        return $tags[0];
+    }
+
+    return null;
+}
+
+/**
+ * 6. Daftar Tag Daerah yang memang sudah di-post beserta jumlah artikel published.
+ */
+function kreasi_get_region_tags_with_counts()
+{
+    $artikel_cat_ids   = kreasi_get_artikel_category_ids();
+    $publikasi_cat_ids = kreasi_get_publikasi_category_ids();
+
+    // Ambil semua tag yang ada di WordPress dan sudah memiliki post
+    $tags = get_terms(array(
+        'taxonomy'   => 'post_tag',
+        'hide_empty' => true,
+    ));
+
+    $result = array();
+
+    if (!empty($tags) && !is_wp_error($tags)) {
+        foreach ($tags as $tag) {
+            // Hitung hanya artikel yang berstatus 'publish'
+            $args = array(
+                'post_type'      => 'post',
+                'post_status'    => 'publish',
+                'posts_per_page' => -1,
+                'fields'         => 'ids',
+                'tag_id'         => $tag->term_id,
+            );
+            if (!empty($artikel_cat_ids)) {
+                $args['category__in'] = $artikel_cat_ids;
+            }
+            if (!empty($publikasi_cat_ids)) {
+                $args['category__not_in'] = $publikasi_cat_ids;
+            }
+            $query = new WP_Query($args);
+            $count = (int) $query->found_posts;
+
+            // HANYA tampilkan tag daerah yang memang sudah di-post dan memiliki artikel berstatus published
+            if ($count > 0) {
+                $result[] = (object) array(
+                    'slug'    => $tag->slug,
+                    'name'    => $tag->name,
+                    'term_id' => $tag->term_id,
+                    'count'   => $count,
+                );
+            }
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * 7. Helper: Deteksi menu navbar yang sedang aktif.
+ */
+function kreasi_get_active_nav_item()
+{
+    // Jika berada di Halaman Utama (Front Page), tidak ada navbar yang aktif
+    if (is_front_page()) {
+        return '';
+    }
+
+    $request_uri = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+    $home_path   = trim((string) wp_parse_url(home_url('/'), PHP_URL_PATH), '/');
+    if ($home_path && strpos($request_uri, $home_path . '/') === 0) {
+        $request_uri = substr($request_uri, strlen($home_path) + 1);
+    } elseif ($home_path && $request_uri === $home_path) {
+        $request_uri = '';
+    }
+
+    // Jika URI kosong, berarti berada di root front-page
+    if (empty($request_uri)) {
+        return '';
+    }
+
+    $design_page = get_query_var('kreasi_redesign_2026_design_page');
+
+    if (
+        is_page('tentang-kami') ||
+        is_page_template('page-tentang-kami.php') ||
+        $request_uri === 'tentang-kami' ||
+        $design_page === 'tentang-kami'
+    ) {
+        return 'tentang-kami';
+    }
+
+    if (
+        is_page(array('pustaka', 'publikasi')) ||
+        is_page_template(array('page-pustaka.php', 'page-publikasi.php')) ||
+        in_array($request_uri, array('pustaka', 'publikasi'), true) ||
+        in_array($design_page, array('pustaka', 'publikasi'), true)
+    ) {
+        return 'pustaka';
+    }
+
+    if (is_category()) {
+        $cat = get_queried_object();
+        $pub_cat_ids = kreasi_get_publikasi_category_ids();
+        if ($cat && !empty($pub_cat_ids)) {
+            if (in_array($cat->term_id, $pub_cat_ids, true) || in_array($cat->parent, $pub_cat_ids, true)) {
+                return 'pustaka';
+            }
+        }
+    }
+
+    if (is_singular('post')) {
+        $cats = get_the_category();
+        $pub_cat_ids = kreasi_get_publikasi_category_ids();
+        if (!empty($cats) && !empty($pub_cat_ids)) {
+            foreach ($cats as $cat) {
+                if (in_array($cat->term_id, $pub_cat_ids, true) || in_array($cat->parent, $pub_cat_ids, true)) {
+                    return 'pustaka';
+                }
+            }
+        }
+        return 'artikel';
+    }
+
+    if (
+        is_page('artikel') ||
+        $request_uri === 'artikel' ||
+        $design_page === 'artikel' ||
+        (!is_front_page() && is_home()) ||
+        is_category() ||
+        is_tag()
+    ) {
+        return 'artikel';
+    }
+
+    return '';
+}
+

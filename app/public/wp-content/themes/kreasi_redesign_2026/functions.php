@@ -842,6 +842,85 @@ function kreasi_get_artikel_child_categories()
 }
 
 /**
+ * 3b. Ambil daftar child categories di bawah parent 'publikasi' / 'pustaka'.
+ */
+function kreasi_get_publikasi_child_categories()
+{
+    $parent = get_category_by_slug('publikasi');
+    if (!$parent) {
+        $parent = get_term_by('name', 'Publikasi', 'category');
+    }
+    if (!$parent) {
+        $parent = get_category_by_slug('pustaka');
+        if (!$parent) {
+            $parent = get_term_by('name', 'Pustaka', 'category');
+        }
+    }
+
+    if ($parent && !is_wp_error($parent)) {
+        $terms = get_terms(array(
+            'taxonomy'   => 'category',
+            'parent'     => $parent->term_id,
+            'hide_empty' => false,
+        ));
+        if (!is_wp_error($terms) && !empty($terms)) {
+            return $terms;
+        }
+    }
+
+    // Default categories sesuai desain Figma mockup
+    return array(
+        (object) array('term_id' => 0, 'name' => 'Buletin', 'slug' => 'buletin'),
+        (object) array('term_id' => 0, 'name' => 'Repositori Pengetahuan', 'slug' => 'repositori-pengetahuan'),
+        (object) array('term_id' => 0, 'name' => 'Materi Pembelajaran', 'slug' => 'materi-pembelajaran'),
+    );
+}
+
+/**
+ * 3c. Ambil daftar default publication cards jika belum ada data di WordPress
+ */
+function kreasi_get_default_publications()
+{
+    return array(
+        array(
+            'title' => 'Jejak KREASI – April Mei 2026',
+            'tag'   => 'Buletin',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-1.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => 'Nota Kesepahaman (MoU) Save the Children dan Kementerian Pendidikan D...',
+            'tag'   => 'Dokumen Strategis',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-2.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => 'Jejak KREASI - Februari Maret 2026',
+            'tag'   => 'Buletin',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-3.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => '4 Kata Ajaib - Poster KREASI',
+            'tag'   => 'KIE',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-4.png',
+            'link'  => '#',
+        ),
+        array(
+            'title' => 'Laporan Studi Praktik di Tanggamus',
+            'tag'   => 'Laporan',
+            'date'  => '26 Juli 2026',
+            'image' => get_template_directory_uri() . '/assets/images/pub-cover-5.png',
+            'link'  => '#',
+        ),
+    );
+}
+
+/**
  * 4. Ambil kategori CHILD untuk kartu artikel / single post.
  * Jangan pernah menampilkan parent 'Artikel' atau 'Publikasi'. Tampilkan child seperti 'Cerita' / 'Berita'.
  */
@@ -884,46 +963,32 @@ function kreasi_get_post_region_tag($post_id = null)
     }
 
     $tags = get_the_tags($post_id);
-    if (!empty($tags)) {
+    if (!empty($tags) && !is_wp_error($tags)) {
         return $tags[0];
     }
 
-    return (object) array(
-        'name'    => 'Kayong Utara',
-        'slug'    => 'kayong-utara',
-        'term_id' => 0,
-    );
+    return null;
 }
 
 /**
- * 6. Daftar 8 Kabupaten Wilayah Intervensi KREASI + Nasional beserta jumlah post artikelnya.
+ * 6. Daftar Tag Daerah yang memang sudah di-post beserta jumlah artikel published.
  */
 function kreasi_get_region_tags_with_counts()
 {
-    $regions = array(
-        'nasional'         => 'Nasional',
-        'nias-utara'       => 'Nias Utara',
-        'nias-selatan'     => 'Nias Selatan',
-        'tanggamus'        => 'Tanggamus',
-        'pesisir-barat'    => 'Pesisir Barat',
-        'ketapang'         => 'Ketapang',
-        'kayong-utara'     => 'Kayong Utara',
-        'halmahera-utara'  => 'Halmahera Utara',
-        'pulau-morotai'    => 'Pulau Morotai',
-    );
-
-    $artikel_cat_ids = kreasi_get_artikel_category_ids();
+    $artikel_cat_ids   = kreasi_get_artikel_category_ids();
     $publikasi_cat_ids = kreasi_get_publikasi_category_ids();
 
-    $result = array();
-    foreach ($regions as $slug => $label) {
-        $tag = get_term_by('slug', $slug, 'post_tag');
-        if (!$tag) {
-            $tag = get_term_by('name', $label, 'post_tag');
-        }
+    // Ambil semua tag yang ada di WordPress dan sudah memiliki post
+    $tags = get_terms(array(
+        'taxonomy'   => 'post_tag',
+        'hide_empty' => true,
+    ));
 
-        $count = 0;
-        if ($tag && !is_wp_error($tag)) {
+    $result = array();
+
+    if (!empty($tags) && !is_wp_error($tags)) {
+        foreach ($tags as $tag) {
+            // Hitung hanya artikel yang berstatus 'publish'
             $args = array(
                 'post_type'      => 'post',
                 'post_status'    => 'publish',
@@ -939,16 +1004,17 @@ function kreasi_get_region_tags_with_counts()
             }
             $query = new WP_Query($args);
             $count = (int) $query->found_posts;
+
+            // HANYA tampilkan tag daerah yang memang sudah di-post dan memiliki artikel berstatus published
+            if ($count > 0) {
+                $result[] = (object) array(
+                    'slug'    => $tag->slug,
+                    'name'    => $tag->name,
+                    'term_id' => $tag->term_id,
+                    'count'   => $count,
+                );
+            }
         }
-
-        // Jika count 0 saat belum ada postingan, tampilkan 24 seperti pada mockup Figma
-        $display_count = ($count > 0) ? $count : 24;
-
-        $result[] = (object) array(
-            'slug'  => $slug,
-            'name'  => $label,
-            'count' => $display_count,
-        );
     }
 
     return $result;
@@ -995,6 +1061,16 @@ function kreasi_get_active_nav_item()
         in_array($design_page, array('pustaka', 'publikasi'), true)
     ) {
         return 'pustaka';
+    }
+
+    if (is_category()) {
+        $cat = get_queried_object();
+        $pub_cat_ids = kreasi_get_publikasi_category_ids();
+        if ($cat && !empty($pub_cat_ids)) {
+            if (in_array($cat->term_id, $pub_cat_ids, true) || in_array($cat->parent, $pub_cat_ids, true)) {
+                return 'pustaka';
+            }
+        }
     }
 
     if (is_singular('post')) {

@@ -12,6 +12,10 @@
 $sticky_posts = get_option('sticky_posts');
 $post_ids     = array();
 
+// Ambil ID Kategori parent 'artikel' & 'publikasi'
+$artikel_cat_ids   = function_exists('kreasi_get_artikel_category_ids') ? kreasi_get_artikel_category_ids() : array();
+$publikasi_cat_ids = function_exists('kreasi_get_publikasi_category_ids') ? kreasi_get_publikasi_category_ids() : array();
+
 // Query 1: Ambil Pinned Posts (jika ada)
 if (!empty($sticky_posts)) {
     $args_pinned = array(
@@ -21,6 +25,12 @@ if (!empty($sticky_posts)) {
         'post_status'         => 'publish',
         'ignore_sticky_posts' => 1,
     );
+    if (!empty($artikel_cat_ids)) {
+        $args_pinned['category__in'] = $artikel_cat_ids;
+    }
+    if (!empty($publikasi_cat_ids)) {
+        $args_pinned['category__not_in'] = $publikasi_cat_ids;
+    }
     $query_pinned = new WP_Query($args_pinned);
     if ($query_pinned->have_posts()) {
         while ($query_pinned->have_posts()) {
@@ -43,6 +53,12 @@ if ($needed_recent > 0) {
         'order'               => 'DESC',
         'ignore_sticky_posts' => 1,
     );
+    if (!empty($artikel_cat_ids)) {
+        $args_recent['category__in'] = $artikel_cat_ids;
+    }
+    if (!empty($publikasi_cat_ids)) {
+        $args_recent['category__not_in'] = $publikasi_cat_ids;
+    }
     $query_recent = new WP_Query($args_recent);
     if ($query_recent->have_posts()) {
         while ($query_recent->have_posts()) {
@@ -92,11 +108,13 @@ if (!empty($post_ids)) {
                         ? get_the_post_thumbnail_url(get_the_ID(), 'medium_large') 
                         : get_template_directory_uri() . '/assets/images/thumbnail-1.png';
 
-                    // Badge 1: Kategori Utama (Border Biru Navy + Speech Bubble Hashtag Icon)
-                    $cat_name = !empty($categories) ? $categories[0]->name : 'Cerita';
+                    // Badge 1: Kategori Child (Cerita, Berita, dll - BUKAN parent 'Artikel')
+                    $cat_obj  = function_exists('kreasi_get_post_child_category') ? kreasi_get_post_child_category(get_the_ID()) : null;
+                    $cat_name = $cat_obj ? $cat_obj->name : (!empty($categories) ? $categories[0]->name : 'Cerita');
                     
-                    // Badge 2: Tag Daerah (Border Merah + Pin Marker Icon)
-                    $tag_name = !empty($tags) ? $tags[0]->name : 'Kayong Utara';
+                    // Badge 2: Tag Daerah (Kayong Utara, dll)
+                    $tag_obj  = function_exists('kreasi_get_post_region_tag') ? kreasi_get_post_region_tag(get_the_ID()) : null;
+                    $tag_name = $tag_obj ? $tag_obj->name : (!empty($tags) ? $tags[0]->name : '');
             ?>
                     <div class="col-10 col-sm-6 col-lg-4 flex-shrink-0 flex-md-shrink-1">
                         <div class="card article-card border-0 rounded-4 overflow-hidden shadow-sm h-100 bg-white">
@@ -133,6 +151,7 @@ if (!empty($post_ids)) {
                                             <?php echo esc_html($cat_name); ?>
                                         </span>
                                         <!-- BADGE TAG DAERAH -->
+                                        <?php if (!empty($tag_name)) : ?>
                                         <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
                                             style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
@@ -141,6 +160,7 @@ if (!empty($post_ids)) {
                                             </svg>
                                             <?php echo esc_html($tag_name); ?>
                                         </span>
+                                        <?php endif; ?>
                                     </div>
                                     <!-- TITLE -->
                                     <h5 class="fw-bold mb-3"
