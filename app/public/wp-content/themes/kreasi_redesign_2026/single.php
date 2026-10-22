@@ -112,26 +112,30 @@ while (have_posts()) :
                                 <!-- Sisi Kiri: Badges (Biru Navy Kategori + Merah Tag Daerah) -->
                                 <div class="d-flex flex-wrap align-items-center gap-2">
                                     <!-- BADGE 1: KATEGORI CHILD (BIRU NAVY SOLID CAPSULE) -->
-                                    <span class="badge rounded-pill fw-semibold text-white d-inline-flex align-items-center" 
+                                    <?php 
+                                    $cat_url_single = $cat_obj ? add_query_arg('kategori', $cat_obj->slug, home_url('/artikel/')) : home_url('/artikel/');
+                                    $tag_url_single = $tag_obj ? add_query_arg('daerah', $tag_obj->slug, home_url('/artikel/')) : home_url('/artikel/');
+                                    ?>
+                                    <a href="<?php echo esc_url($cat_url_single); ?>" class="badge rounded-pill fw-semibold text-white d-inline-flex align-items-center text-decoration-none" 
                                           style="background-color: #062172; font-family: 'Lato', sans-serif; font-size: 12px; padding: 6px 14px;">
                                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                                             <line x1="9" y1="9" x2="15" y2="9" stroke-width="1.8" />
                                             <line x1="9" y1="13" x2="15" y2="13" stroke-width="1.8" />
                                         </svg>
-                                        <?php echo esc_html($cat_name); ?>
-                                    </span>
+                                        <?php echo esc_html(kreasi_translate_term($cat_name)); ?>
+                                    </a>
 
                                     <!-- BADGE 2: TAG DAERAH (MERAH SOLID CAPSULE) -->
                                     <?php if (!empty($tag_name)) : ?>
-                                    <span class="badge rounded-pill fw-semibold text-white d-inline-flex align-items-center" 
+                                    <a href="<?php echo esc_url($tag_url_single); ?>" class="badge rounded-pill fw-semibold text-white d-inline-flex align-items-center text-decoration-none" 
                                           style="background-color: #D8232A; font-family: 'Lato', sans-serif; font-size: 12px; padding: 6px 14px;">
                                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                             <circle cx="12" cy="10" r="3"></circle>
                                         </svg>
-                                        <?php echo esc_html($tag_name); ?>
-                                    </span>
+                                        <?php echo esc_html(kreasi_translate_term($tag_name)); ?>
+                                    </a>
                                     <?php endif; ?>
                                 </div>
 
@@ -143,7 +147,7 @@ while (have_posts()) :
                                     </span>
                                     <span>
                                         <i class="bi bi-eye me-1"></i>
-                                        <?php echo esc_html(number_format_i18n($views)); ?> views
+                                        <?php echo esc_html(number_format_i18n($views)); ?> <?php echo esc_html(kreasi_t('views', 'views', 'views')); ?>
                                     </span>
                                 </div>
 
@@ -165,7 +169,7 @@ while (have_posts()) :
                         <div class="kreasi-disclaimer-box p-3 p-md-4 rounded-3 mb-4" 
                              style="background-color: #F8F9FA; border: 1px solid #E5E7EB;">
                             <p class="mb-0 text-secondary" style="font-family: 'Lato', sans-serif; font-size: 13px; line-height: 1.65;">
-                                <em>KREASI (Kolaborasi untuk Edukasi Anak Indonesia) adalah program peningkatan kualitas pendidikan dengan memperkuat literasi, numerasi, dan pendidikan karakter di delapan kabupaten di empat provinsi di Indonesia. KREASI dikelola Save the Children, diimplementasi mitra pelaksana lokal, dengan pendanaan Global Partnership for Education (GPE) dan didukung Mitra Pendidikan Indonesia yang dipimpin Kementerian Pendidikan Dasar dan Menengah (Kemendikdasmen) dan Kementerian Agama (Kemenag).</em>
+                                <em><?php echo wp_kses_post(kreasi_t('about_description')); ?></em>
                             </p>
                         </div>
 
@@ -174,24 +178,26 @@ while (have_posts()) :
                              KREDIT PENULIS, EDITOR & FOTOGRAFER
                         =========================================== -->
                         <div class="article-credits text-secondary mb-4 pb-2" style="font-family: 'Lato', sans-serif; font-size: 13px;">
-                            <span><strong>Penulis:</strong> <?php echo esc_html(get_the_author()); ?></span>
+                            <span><strong><?php echo esc_html(kreasi_t('author_label', 'Penulis:', 'Author:')); ?></strong> <?php echo esc_html(get_the_author()); ?></span>
                             <span class="mx-2">|</span>
-                            <span><strong>Editor:</strong> Tim Komunikasi KREASI</span>
+                            <span><strong><?php echo esc_html(kreasi_t('editor_label', 'Editor:', 'Editor:')); ?></strong> <?php echo esc_html(kreasi_t('editor_val', 'Tim Komunikasi KREASI', 'KREASI Communications Team')); ?></span>
                             <span class="mx-2">|</span>
-                            <span><strong>Foto:</strong> Dok. KREASI / Save the Children</span>
+                            <span><strong><?php echo esc_html(kreasi_t('photo_label', 'Foto:', 'Photo:')); ?></strong> <?php echo esc_html(kreasi_t('photo_val', 'Dok. KREASI / Save the Children', 'Doc. KREASI / Save the Children')); ?></span>
                         </div>
 
 
                         <!-- ==========================================
-                             TAGS PILLS (RADAR, KEPRIHALUAN, DLL)
+                             TAGS PILLS (RADAR, KEPRIHALUAN, DLL) - Mengarahkan ke Filter
                         =========================================== -->
                         <?php if (!empty($tags)) : ?>
                             <div class="article-tags-wrap mb-4 pb-2 d-flex flex-wrap gap-2">
-                                <?php foreach ($tags as $tag) : ?>
-                                    <a href="<?php echo esc_url(get_tag_link($tag)); ?>" 
+                                <?php foreach ($tags as $tag) : 
+                                    $tag_search_url = add_query_arg('daerah', $tag->slug, home_url('/artikel/'));
+                                ?>
+                                    <a href="<?php echo esc_url($tag_search_url); ?>" 
                                        class="btn btn-sm rounded-pill px-3 py-1 text-uppercase text-decoration-none"
                                        style="font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 600; color: #4B5563; border: 1px solid #D1D5DB; background-color: #fff;">
-                                        <?php echo esc_html($tag->name); ?>
+                                        <?php echo esc_html(kreasi_translate_term($tag->name)); ?>
                                     </a>
                                 <?php endforeach; ?>
                             </div>

@@ -11,15 +11,15 @@
             <!-- SISI KIRI: TITLE, SUBTITLE & CTA BUTTON -->
             <div class="col-lg-4 col-md-12">
                 <h2 class="text-white text-uppercase mb-3" style="font-size: 64px; letter-spacing: 2px;">
-                    PUBLIKASI
+                    <?php echo esc_html(kreasi_t('publications_title', 'PUBLIKASI', 'PUBLICATIONS')); ?>
                 </h2>
                 <p class="text-white mb-4" style="font-family: 'Lato', sans-serif; font-size: 14px; opacity: 0.95;">
-                    Dari buletin bulanan, hingga berbagai bahan ajar seperti poster, dan permainan, terus kami buat untuk mendukung implementasi program.
+                    <?php echo esc_html(kreasi_t('publications_subtitle', 'Dari buletin bulanan, hingga berbagai bahan ajar seperti poster, dan permainan, terus kami buat untuk mendukung implementasi program.', 'From monthly bulletins to learning materials such as posters and games, we continuously create them to support program implementation.')); ?>
                 </p>
                 <a href="<?php echo esc_url(home_url('/pustaka')); ?>" 
                    class="btn text-white px-4 py-3 text-uppercase shadow-sm publications-cta-btn d-inline-flex align-items-center justify-content-center" 
                    style="background-color: #0E2A5D; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
-                    <span>LIHAT PUBLIKASI LAINNYA</span>
+                    <span><?php echo esc_html(kreasi_t('view_all_publications', 'LIHAT PUBLIKASI LAINNYA', 'VIEW ALL PUBLICATIONS')); ?></span>
                     <span class="btn-arrow ms-2">→</span>
                 </a>
             </div>

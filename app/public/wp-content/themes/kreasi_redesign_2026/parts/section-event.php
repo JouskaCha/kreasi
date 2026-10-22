@@ -7,30 +7,33 @@
 
 $event_title = get_theme_mod(
     'event_section_title',
-    'EVENT'
+    function_exists('kreasi_t') ? kreasi_t('event_title', 'AREA INTERVENSI & MITRA PELAKSANA', 'INTERVENTION AREAS & IMPLEMENTING PARTNERS') : 'AREA INTERVENSI & MITRA PELAKSANA'
 );
 
-// Gambar Desktop (Landscape)
+// Gambar Desktop (Landscape) dari Customizer
 $event_image_desktop = get_theme_mod(
     'event_section_image_desktop',
     ''
 );
 
-// Gambar Mobile (Portrait)
+// Gambar Mobile (Portrait) dari Customizer
 $event_image_mobile = get_theme_mod(
     'event_section_image_mobile',
     ''
 );
 
-// Fallback jika gambar belum diunggah di Customizer
-$event_fallback = get_template_directory_uri() . '/assets/images/event.png';
+// Fallback otomatis ke aset tema jika belum diunggah di Customizer
+$event_fallback_desktop = get_template_directory_uri() . '/assets/images/event.png';
+$event_fallback_mobile  = get_template_directory_uri() . '/assets/images/event-mobile.png';
 
 if (empty($event_image_desktop)) {
-    $event_image_desktop = $event_image_mobile ?: $event_fallback;
+    $event_image_desktop = $event_fallback_desktop;
 }
 
 if (empty($event_image_mobile)) {
-    $event_image_mobile = $event_image_desktop;
+    $event_image_mobile = file_exists(get_template_directory() . '/assets/images/event-mobile.png')
+        ? $event_fallback_mobile
+        : $event_image_desktop;
 }
 ?>
 

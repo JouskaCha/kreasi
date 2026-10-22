@@ -25,7 +25,7 @@
 
                     <!-- Dikelola oleh: Hardcode -->
                     <div class="managed-by-wrap mt-lg-4 pt-2">
-                        <p class="footer-managed-label mb-2">Dikelola oleh</p>
+                        <p class="footer-managed-label mb-2"><?php echo esc_html(kreasi_t('managed_by', 'Dikelola oleh', 'Managed by')); ?></p>
 
                         <a href="https://savethechildren.or.id"
                         target="_blank"
@@ -55,7 +55,7 @@
                                 <i class="bi bi-geo-alt-fill"></i>
                             </span>
                             <span class="contact-text">
-                                Kantor Nasional Jalan Bangka IX Nomor 40A&B, Pela Mampang, Mampang Prapatan, Jakarta Selatan, DKI Jakarta 12720
+                                <?php echo esc_html(kreasi_t('contact_address', 'Kantor Nasional Jalan Bangka IX Nomor 40A&B, Pela Mampang, Mampang Prapatan, Jakarta Selatan, DKI Jakarta 12720', 'National Office Jalan Bangka IX No. 40A&B, Pela Mampang, Mampang Prapatan, South Jakarta, DKI Jakarta 12720')); ?>
                             </span>
                         </li>
 
@@ -114,15 +114,15 @@
                         <!-- Card 1: Newsletter -->
                         <div class="card footer-card border-0 shadow-sm">
                             <div class="card-body p-2 p-xl-4">
-                                <h6 class="card-title fw-bold text-navy mb-3">Ikuti Kabar Terkini</h6>
+                                <h6 class="card-title fw-bold text-navy mb-3"><?php echo esc_html(kreasi_t('follow_latest_news', 'Ikuti Kabar Terkini', 'Follow the Latest News')); ?></h6>
                                 <form action="#" method="post" class="newsletter-form d-flex gap-2" onsubmit="event.preventDefault(); alert('Terima kasih telah berlangganan!');">
                                     <input type="email" 
                                            name="subscriber_email" 
                                            class="form-control form-control-sm footer-input" 
-                                           placeholder="Masukkan Email Anda" 
+                                           placeholder="<?php echo esc_attr(kreasi_t('enter_email', 'Masukkan Email Anda', 'Enter Your Email')); ?>" 
                                            required>
                                     <button type="submit" class="btn btn-danger btn-sm btn-subscribe px-3 flex-shrink-0">
-                                        BERLANGGANAN
+                                        <?php echo esc_html(kreasi_t('subscribe', 'BERLANGGANAN', 'SUBSCRIBE')); ?>
                                     </button>
                                 </form>
                             </div>
@@ -132,10 +132,10 @@
                         <div class="card footer-card border-0 shadow-sm">
                             <div class="card-body p-2 p-xl-4">
                                 <p class="card-text text-secondary small mb-3">
-                                    Laporkan pelanggaran <em>safeguarding</em>, atau sampaikan kritik dan saran.
+                                    <?php echo wp_kses_post(kreasi_t('safeguarding_text', 'Laporkan pelanggaran <em>safeguarding</em>, atau sampaikan kritik dan saran.', 'Report safeguarding violations, or provide feedback and suggestions.')); ?>
                                 </p>
                                 <a href="<?php echo esc_url(home_url('/safeguarding')); ?>" class="btn btn-navy btn-sm btn-report w-100 py-2 text-center text-decoration-none">
-                                    SELENGKAPNYA
+                                    <?php echo esc_html(kreasi_t('read_more', 'SELENGKAPNYA', 'READ MORE')); ?>
                                 </a>
                             </div>
                         </div>
@@ -154,13 +154,62 @@
         <div class="row">
             <div class="col-12 text-center">
                 <p class="footer-copyright text-secondary small mb-0">
-                    Hak Cipta &copy; <?php echo date('Y'); ?> Save the Children Indonesia
+                    <?php echo esc_html(kreasi_t('copyright_prefix', 'Hak Cipta', 'Copyright')); ?> &copy; <?php echo date('Y'); ?> Save the Children Indonesia
                 </p>
             </div>
         </div>
 
     </div>
 </footer>
+
+<!-- Integrasi Otomatis Penerjemah Konten Artikel (EN / ID) -->
+<?php $is_en_mode = function_exists('kreasi_is_en') && kreasi_is_en(); ?>
+<div id="google_translate_element" style="display:none;"></div>
+<script>
+function googleTranslateElementInit() {
+    if (typeof google !== 'undefined' && google.translate) {
+        new google.translate.TranslateElement({
+            pageLanguage: 'id',
+            includedLanguages: 'en,id',
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var isEn = <?php echo $is_en_mode ? 'true' : 'false'; ?>;
+    if (isEn) {
+        document.cookie = "googtrans=/id/en; path=/";
+        document.cookie = "googtrans=/id/en; path=/; domain=" + location.hostname;
+    } else {
+        document.cookie = "googtrans=/id/id; path=/";
+        document.cookie = "googtrans=/id/id; path=/; domain=" + location.hostname;
+    }
+});
+</script>
+<style>
+/* Sembunyikan banner dan widget bawaan agar tampilan tetap rapi sesuai desain Figma */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+}
+body {
+    top: 0px !important;
+}
+.goog-tooltip, .goog-tooltip:hover {
+    display: none !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+</style>
 
 <?php wp_footer(); ?>
 </body>

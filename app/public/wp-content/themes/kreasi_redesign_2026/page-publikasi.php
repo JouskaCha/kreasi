@@ -66,7 +66,7 @@ if ($is_category_view) {
             <div class="container">
                 <h1 class="page-title text-white fw-bold mb-0 text-uppercase" 
                     style="font-family: 'Oswald', 'Bebas Neue', sans-serif; font-size: clamp(48px, 5.5vw, 76px); letter-spacing: 1px;">
-                    PUSTAKA
+                    <?php echo esc_html(kreasi_t('pustaka_title', 'PUSTAKA', 'LIBRARY')); ?>
                 </h1>
             </div>
         </section>
@@ -98,13 +98,13 @@ if ($is_category_view) {
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h2 class="section-category-title mb-0 text-uppercase" 
                             style="font-family: 'Oswald', 'Bebas Neue', sans-serif; font-size: clamp(26px, 3vw, 36px); font-weight: 700; color: #111111; letter-spacing: 0.5px;">
-                            <?php echo esc_html($cat_name); ?>
+                            <?php echo esc_html(kreasi_translate_term($cat_name)); ?>
                         </h2>
                         
                         <a href="<?php echo esc_url($cat_url); ?>" 
                            class="btn btn-lihat-semua px-3 py-2 text-white text-uppercase fw-bold shadow-sm"
                            style="background-color: #D8232A; font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: 0.5px; border-radius: 4px; transition: all 0.25s ease;">
-                            LIHAT SEMUA
+                            <?php echo esc_html(kreasi_t('view_all', 'LIHAT SEMUA', 'VIEW ALL')); ?>
                         </a>
                     </div>
 
@@ -150,7 +150,7 @@ if ($is_category_view) {
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                                                 </svg>
-                                                <?php echo esc_html($tag_label); ?>
+                                                <?php echo esc_html(kreasi_translate_term($tag_label)); ?>
                                             </span>
                                             <span class="text-muted d-inline-flex align-items-center" style="font-family: 'Lato', sans-serif; font-size: 11px;">
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1 text-secondary">
@@ -237,7 +237,7 @@ if ($is_category_view) {
             <div class="container">
                 <h1 class="page-title text-white fw-bold mb-0 text-uppercase" 
                     style="font-family: 'Oswald', 'Bebas Neue', sans-serif; font-size: clamp(48px, 5.5vw, 76px); letter-spacing: 1px;">
-                    <?php echo esc_html($cat_title_display); ?>
+                    <?php echo esc_html(kreasi_translate_term($cat_title_display)); ?>
                 </h1>
             </div>
         </section>
@@ -258,14 +258,14 @@ if ($is_category_view) {
                                 </span>
                                 <input type="text" name="q" value="<?php echo esc_attr($search_keyword); ?>" 
                                        class="form-control border-start-0 py-2 ps-2" 
-                                       placeholder="Kata kunci..." 
+                                       placeholder="<?php echo esc_attr(kreasi_t('keywords_placeholder', 'Kata kunci...', 'keywords...')); ?>" 
                                        style="font-family: 'Lato', sans-serif; font-size: 14px;">
                             </div>
                         </div>
                         <div class="col-4 col-md-3 col-lg-2">
                             <button type="submit" class="btn w-100 py-2 text-white text-uppercase fw-semibold"
                                     style="background-color: #062172; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 13px; letter-spacing: 0.5px;">
-                                TELUSURI
+                                <?php echo esc_html(kreasi_t('telusuri', 'TELUSURI', 'SEARCH')); ?>
                             </button>
                         </div>
                     </div>
@@ -338,7 +338,7 @@ if ($is_category_view) {
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                                         </svg>
-                                        <?php echo esc_html($tag_label); ?>
+                                        <?php echo esc_html(kreasi_translate_term($tag_label)); ?>
                                     </span>
                                     <span class="text-muted d-inline-flex align-items-center" style="font-family: 'Lato', sans-serif; font-size: 11px;">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1 text-secondary">

@@ -89,10 +89,10 @@ if (!empty($post_ids)) {
         <!-- HEADER SECTION -->
         <div class="text-center mb-5">
             <h2 class="text-dark text-uppercase mb-2" style="font-size: 64px; letter-spacing: 0.5px; color: #1A202C;">
-                ARTIKEL TERKINI
+                <?php echo esc_html(kreasi_t('latest_articles_title', 'ARTIKEL TERKINI', 'LATEST ARTICLES')); ?>
             </h2>
             <p class="mb-0" style="font-family: 'Lato', sans-serif; font-size: 18px; font-weight: 500; opacity: 0.9; margin-left: auto; margin-right: auto;">
-                Ikuti berita perkembangan dan cerita dari delapan kabupaten dampingan KREASI.
+                <?php echo esc_html(kreasi_t('latest_articles_subtitle', 'Ikuti berita perkembangan dan cerita dari delapan kabupaten dampingan KREASI.', 'Follow the latest news and stories from everyday life and programs in KREASI.')); ?>
             </p>
         </div>
 
@@ -138,8 +138,12 @@ if (!empty($post_ids)) {
                                 <div>
                                     <!-- BADGES (BADGE 1: KATEGORI, BADGE 2: TAG DAERAH - SESUAI FIGMA) -->
                                     <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                                        <!-- BADGE KATEGORI -->
-                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
+                                        <?php 
+                                        $cat_url_home = $cat_obj ? add_query_arg('kategori', $cat_obj->slug, home_url('/artikel/')) : home_url('/artikel/');
+                                        $tag_url_home = $tag_obj ? add_query_arg('daerah', $tag_obj->slug, home_url('/artikel/')) : home_url('/artikel/');
+                                        ?>
+                                        <!-- BADGE KATEGORI (KLIK UNTUK FILTER) -->
+                                        <a href="<?php echo esc_url($cat_url_home); ?>" class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center text-decoration-none"
                                             style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #163d6b; color: #163d6b;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
@@ -148,18 +152,18 @@ if (!empty($post_ids)) {
                                                 <line x1="10.5" y1="7" x2="10.5" y2="15" stroke-width="1.8"/>
                                                 <line x1="13.5" y1="7" x2="13.5" y2="15" stroke-width="1.8"/>
                                             </svg>
-                                            <?php echo esc_html($cat_name); ?>
-                                        </span>
-                                        <!-- BADGE TAG DAERAH -->
+                                            <?php echo esc_html(kreasi_translate_term($cat_name)); ?>
+                                        </a>
+                                        <!-- BADGE TAG DAERAH (KLIK UNTUK FILTER) -->
                                         <?php if (!empty($tag_name)) : ?>
-                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
+                                        <a href="<?php echo esc_url($tag_url_home); ?>" class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center text-decoration-none"
                                             style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                                 <circle cx="12" cy="10" r="3"></circle>
                                             </svg>
-                                            <?php echo esc_html($tag_name); ?>
-                                        </span>
+                                            <?php echo esc_html(kreasi_translate_term($tag_name)); ?>
+                                        </a>
                                         <?php endif; ?>
                                     </div>
                                     <!-- TITLE -->
@@ -180,7 +184,7 @@ if (!empty($post_ids)) {
                                         <?php echo get_the_date('j F Y'); ?>
                                     </span>
                                     <a href="<?php the_permalink(); ?>" class="text-decoration-none fw-bold text-uppercase article-hover-link" style="color: #D8232A; font-size: 11px; letter-spacing: 0.5px;">
-                                        SELENGKAPNYA →
+                                        <?php echo esc_html(kreasi_t('read_more', 'SELENGKAPNYA', 'READ MORE')); ?> →
                                     </a>
                                 </div>
                             </div>
@@ -272,7 +276,7 @@ if (!empty($post_ids)) {
             <a href="<?php echo esc_url($artikel_url); ?>"
             class="btn text-white fw-bold px-4 py-3 text-uppercase shadow-sm articles-more-btn d-inline-flex align-items-center justify-content-center"
             style="font-family: 'Oswald', sans-serif; background-color: #D8232A; border-radius: 6px; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
-                <span style="font-family: 'Oswald', sans-serif;">BACA ARTIKEL LAINNYA</span>
+                <span style="font-family: 'Oswald', sans-serif;"><?php echo esc_html(kreasi_t('see_all_articles', 'BACA ARTIKEL LAINNYA', 'SEE ALL ARTICLES')); ?></span>
                 <span class="btn-arrow ms-2">→</span>
             </a>
         </div>

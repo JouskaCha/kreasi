@@ -482,6 +482,47 @@ function kreasi_redesign_2026_customize_register($wp_customize)
         )
     );
 
+    // --- Section 6: Banner Header Halaman Artikel ---
+    $wp_customize->add_section('kreasi_redesign_2026_artikel_section', array(
+        'title'       => __('Banner Header Artikel', 'kreasi_redesign_2026'),
+        'description' => __('Unggah gambar background banner untuk halaman artikel versi Desktop dan Mobile.', 'kreasi_redesign_2026'),
+        'priority'    => 40,
+    ));
+
+    $wp_customize->add_setting('artikel_header_bg_desktop', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'artikel_header_bg_desktop',
+            array(
+                'label'       => __('Background Header Artikel - Desktop', 'kreasi_redesign_2026'),
+                'description' => __('Upload gambar background untuk layar desktop (landscape).', 'kreasi_redesign_2026'),
+                'section'     => 'kreasi_redesign_2026_artikel_section',
+                'settings'    => 'artikel_header_bg_desktop',
+            )
+        )
+    );
+
+    $wp_customize->add_setting('artikel_header_bg_mobile', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'artikel_header_bg_mobile',
+            array(
+                'label'       => __('Background Header Artikel - Mobile', 'kreasi_redesign_2026'),
+                'description' => __('Upload gambar background untuk layar mobile (portrait/compact).', 'kreasi_redesign_2026'),
+                'section'     => 'kreasi_redesign_2026_artikel_section',
+                'settings'    => 'artikel_header_bg_mobile',
+            )
+        )
+    );
+
 }
 add_action('customize_register', 'kreasi_redesign_2026_customize_register');
 
@@ -1017,6 +1058,29 @@ function kreasi_get_region_tags_with_counts()
         }
     }
 
+    // Jika database belum memiliki tag daerah berstatus publish, fallback ke 9 daerah dari desain Figma
+    if (empty($result)) {
+        $default_regions = array(
+            'Nasional'        => 'nasional',
+            'Nias Utara'      => 'nias-utara',
+            'Nias Selatan'    => 'nias-selatan',
+            'Tanggamus'       => 'tanggamus',
+            'Pesisir Barat'   => 'pesisir-barat',
+            'Ketapang'        => 'ketapang',
+            'Kayong Utara'    => 'kayong-utara',
+            'Halmahera Utara' => 'halmahera-utara',
+            'Pulau Morotai'   => 'pulau-morotai',
+        );
+        foreach ($default_regions as $name => $slug) {
+            $result[] = (object) array(
+                'slug'    => $slug,
+                'name'    => $name,
+                'term_id' => 0,
+                'count'   => 24,
+            );
+        }
+    }
+
     return $result;
 }
 
@@ -1092,11 +1156,216 @@ function kreasi_get_active_nav_item()
         $design_page === 'artikel' ||
         (!is_front_page() && is_home()) ||
         is_category() ||
-        is_tag()
+        is_tag() ||
+        is_search()
     ) {
         return 'artikel';
     }
 
     return '';
+}
+
+/**
+ * =============================================================
+ * 10. Fitur Bilingual (ID & EN) Sesuai Tata Bahasa Desain Figma
+ * =============================================================
+ */
+
+/**
+ * Simpan cookie bahasa ketika parameter ?lang=id atau ?lang=en diterima.
+ */
+function kreasi_init_language_session()
+{
+    if (isset($_GET['lang'])) {
+        $lang = strtolower(sanitize_text_field($_GET['lang']));
+        if (in_array($lang, array('id', 'en'), true)) {
+            if (!headers_sent()) {
+                setcookie('kreasi_lang', $lang, time() + (30 * 86400), COOKIEPATH, COOKIE_DOMAIN);
+            }
+            $_COOKIE['kreasi_lang'] = $lang;
+        }
+    }
+}
+add_action('init', 'kreasi_init_language_session', 1);
+
+/**
+ * Ambil bahasa aktif saat ini ('id' atau 'en')
+ */
+function kreasi_get_current_language()
+{
+    static $lang = null;
+    if ($lang !== null) {
+        return $lang;
+    }
+
+    if (isset($_GET['lang'])) {
+        $get_lang = strtolower(sanitize_text_field($_GET['lang']));
+        if (in_array($get_lang, array('id', 'en'), true)) {
+            $lang = $get_lang;
+            return $lang;
+        }
+    }
+
+    if (isset($_COOKIE['kreasi_lang'])) {
+        $cookie_lang = strtolower(sanitize_text_field($_COOKIE['kreasi_lang']));
+        if (in_array($cookie_lang, array('id', 'en'), true)) {
+            $lang = $cookie_lang;
+            return $lang;
+        }
+    }
+
+    $lang = 'id';
+    return $lang;
+}
+
+/**
+ * Cek apakah sedang dalam mode bahasa Inggris
+ */
+function kreasi_is_en()
+{
+    return kreasi_get_current_language() === 'en';
+}
+
+/**
+ * Fungsi penerjemah string tema kreasi (ID <-> EN)
+ */
+function kreasi_t($key, $default_id = '', $en = '')
+{
+    $is_en = kreasi_is_en();
+
+    $dictionary = array(
+        // Header & Navigasi
+        'nav_tentang_kami' => array('id' => 'TENTANG KAMI', 'en' => 'ABOUT US'),
+        'nav_artikel'      => array('id' => 'ARTIKEL', 'en' => 'ARTICLE'),
+        'nav_pustaka'      => array('id' => 'PUSTAKA', 'en' => 'LIBRARY'),
+        'search'           => array('id' => 'Cari', 'en' => 'Search'),
+        'search_placeholder' => array('id' => 'CARI', 'en' => 'SEARCH'),
+
+        // Homepage Section 2
+        'quality_edu_title' => array('id' => 'UNTUK PENDIDIKAN<br>YANG <span style="color: #D8232A;">BERKUALITAS</span>', 'en' => 'FOR QUALITY<br><span style="color: #D8232A;">EDUCATION</span>'),
+        'more_about_us'     => array('id' => 'SELENGKAPNYA TENTANG KAMI', 'en' => "LET'S READ MORE"),
+        'about_description' => array(
+            'id' => '<strong>KREASI</strong> atau <strong>Kolaborasi untuk Edukasi Anak Indonesia</strong> adalah program peningkatan kualitas pendidikan dengan memperkuat literasi, numerasi, dan pendidikan karakter di delapan kabupaten di empat provinsi di Indonesia. KREASI dikelola Save the Children, diimplementasi mitra pelaksana lokal, dengan pendanaan Global Partnership for Education (GPE) dan didukung Mitra Pendidikan Indonesia yang dipimpin Kementerian Pendidikan Dasar dan Menengah (Kemendikdasmen) dan Kementerian Agama (Kemenag).',
+            'en' => '<strong>KREASI</strong> or <strong>Collaboration for Indonesian Children’s Education</strong> is an education quality improvement program aimed at improving the quality of education by strengthening literacy, numeracy, and character education in eight districts across four provinces in Indonesia. KREASI is managed by Save the Children, implemented by local partners, funded by the Global Partnership for Education (GPE) and supported by the Indonesian Education Partners led by the Ministry of Primary and Secondary Education (Kemendikdasmen) and the Ministry of Religious Affairs (Kemenag).'
+        ),
+
+        // Homepage Section 3 (Impact)
+        'impact_title'    => array('id' => 'MEMBAWA PERUBAHAN KE PELOSOK', 'en' => 'BRINGING CHANGE TO REMOTE AREAS'),
+        'impact_subtitle' => array('id' => 'Dari advokasi untuk kebijakan pendidikan yang lebih baik, hingga ke ruang kelas yang menyenangkan.', 'en' => 'From advocacy for better education policies to enjoyable classrooms.'),
+        'student'         => array('id' => 'Murid', 'en' => 'Students'),
+        'teacher'         => array('id' => 'Guru', 'en' => 'Teachers'),
+        'school_principal'=> array('id' => 'Kepala Sekolah', 'en' => 'School Principals'),
+        'school'          => array('id' => 'Sekolah', 'en' => 'Schools'),
+
+        // Homepage Section 4 (Latest Articles)
+        'latest_articles_title'    => array('id' => 'ARTIKEL TERKINI', 'en' => 'LATEST ARTICLES'),
+        'latest_articles_subtitle' => array('id' => 'Ikuti berita perkembangan dan cerita dari delapan kabupaten dampingan KREASI.', 'en' => 'Follow the latest news and stories from everyday life and programs in KREASI.'),
+        'see_all_articles'         => array('id' => 'LIHAT SEMUA ARTIKEL', 'en' => 'SEE ALL ARTICLES'),
+        'read_more'                => array('id' => 'SELENGKAPNYA', 'en' => 'READ MORE'),
+
+        // Homepage Section 5 (Publications)
+        'publications_title'       => array('id' => 'PUBLIKASI', 'en' => 'PUBLICATIONS'),
+        'publications_subtitle'    => array('id' => 'Dari buletin bulanan, hingga berbagai bahan ajar seperti poster, dan permainan, terus kami buat untuk mendukung implementasi program.', 'en' => 'From monthly bulletins to learning materials such as posters and games, we continuously create them to support program implementation.'),
+        'view_all_publications'    => array('id' => 'LIHAT PUBLIKASI LAINNYA', 'en' => 'VIEW ALL PUBLICATIONS'),
+        'view_all'                 => array('id' => 'LIHAT SEMUA', 'en' => 'VIEW ALL'),
+
+        // Section 6 Event / Partner
+        'event_title'              => array('id' => 'AREA INTERVENSI & MITRA PELAKSANA', 'en' => 'INTERVENTION AREAS & IMPLEMENTING PARTNERS'),
+
+        // Artikel Archive
+        'all_articles'             => array('id' => 'Semua Artikel', 'en' => 'All Articles'),
+        'all_regions'              => array('id' => 'Semua Daerah', 'en' => 'All Regions'),
+        'keywords_placeholder'     => array('id' => 'kata kunci...', 'en' => 'keywords...'),
+        'telusuri'                 => array('id' => 'TELUSURI', 'en' => 'SEARCH'),
+
+        // Pustaka Archive
+        'pustaka_title'            => array('id' => 'PUSTAKA', 'en' => 'LIBRARY'),
+        'bulletin'                 => array('id' => 'BULETIN', 'en' => 'BULLETIN'),
+        'knowledge_repo'           => array('id' => 'REPOSITORI PENGETAHUAN', 'en' => 'KNOWLEDGE REPOSITORY'),
+        'learning_materials'       => array('id' => 'MATERI PEMBELAJARAN', 'en' => 'LEARNING MATERIALS'),
+
+        // Single Artikel
+        'author_label'             => array('id' => 'Penulis:', 'en' => 'Author:'),
+        'editor_label'             => array('id' => 'Editor:', 'en' => 'Editor:'),
+        'editor_val'               => array('id' => 'Tim Komunikasi KREASI', 'en' => 'KREASI Communications Team'),
+        'photo_label'              => array('id' => 'Foto:', 'en' => 'Photo:'),
+        'photo_val'                => array('id' => 'Dok. KREASI / Save the Children', 'en' => 'Doc. KREASI / Save the Children'),
+        'views'                    => array('id' => 'views', 'en' => 'views'),
+
+        // Footer
+        'managed_by'               => array('id' => 'Dikelola oleh', 'en' => 'Managed by'),
+        'contact_address'          => array(
+            'id' => 'Kantor Nasional Jalan Bangka IX Nomor 40A&B, Pela Mampang, Mampang Prapatan, Jakarta Selatan, DKI Jakarta 12720',
+            'en' => 'National Office Jalan Bangka IX No. 40A&B, Pela Mampang, Mampang Prapatan, South Jakarta, DKI Jakarta 12720'
+        ),
+        'follow_latest_news'       => array('id' => 'Ikuti Kabar Terkini', 'en' => 'Follow the Latest News'),
+        'enter_email'              => array('id' => 'Masukkan Email Anda', 'en' => 'Enter Your Email'),
+        'subscribe'                => array('id' => 'BERLANGGANAN', 'en' => 'SUBSCRIBE'),
+        'safeguarding_text'        => array('id' => 'Laporkan pelanggaran <em>safeguarding</em>, atau sampaikan kritik dan saran.', 'en' => 'Report safeguarding violations, or provide feedback and suggestions.'),
+        'copyright_prefix'         => array('id' => 'Hak Cipta', 'en' => 'Copyright'),
+    );
+
+    if (isset($dictionary[$key])) {
+        return $is_en ? $dictionary[$key]['en'] : $dictionary[$key]['id'];
+    }
+
+    if (!empty($en) && $is_en) {
+        return $en;
+    }
+
+    return !empty($default_id) ? $default_id : $key;
+}
+
+/**
+ * Terjemahan nama Kategori dan Tag Daerah sesuai desain Figma
+ */
+function kreasi_translate_term($term_name)
+{
+    if (!kreasi_is_en()) {
+        return $term_name;
+    }
+
+    $map = array(
+        // Kategori Artikel
+        'Cerita'                 => 'Story',
+        'cerita'                 => 'Story',
+        'Berita'                 => 'News',
+        'berita'                 => 'News',
+        'Liputan Media'          => 'Media Coverage',
+        'liputan-media'          => 'Media Coverage',
+        'Berita & Perkembangan'  => 'News & Updates',
+
+        // Kategori Pustaka / Publikasi
+        'Buletin'                => 'Bulletin',
+        'buletin'                => 'Bulletin',
+        'Dokumen Strategis'      => 'Strategic Documents',
+        'dokumen-strategis'      => 'Strategic Documents',
+        'KIE'                    => 'KIE',
+        'kie'                    => 'KIE',
+        'Laporan'                => 'Report',
+        'laporan'                => 'Report',
+
+        // Tag Daerah
+        'Nasional'               => 'National',
+        'nasional'               => 'National',
+        'Nias Utara'             => 'North Nias',
+        'nias-utara'             => 'North Nias',
+        'Nias Selatan'           => 'South Nias',
+        'nias-selatan'           => 'South Nias',
+        'Tanggamus'              => 'Tanggamus',
+        'tanggamus'              => 'Tanggamus',
+        'Pesisir Barat'          => 'West Coast',
+        'pesisir-barat'          => 'West Coast',
+        'Ketapang'               => 'Ketapang',
+        'ketapang'               => 'Ketapang',
+        'Kayong Utara'           => 'Kayong Utara',
+        'kayong-utara'           => 'Kayong Utara',
+        'Halmahera Utara'        => 'North Halmahera',
+        'halmahera-utara'        => 'North Halmahera',
+        'Pulau Morotai'          => 'Morotai Island',
+        'pulau-morotai'          => 'Morotai Island',
+    );
+
+    return isset($map[$term_name]) ? $map[$term_name] : $term_name;
 }
 

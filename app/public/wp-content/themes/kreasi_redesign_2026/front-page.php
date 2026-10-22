@@ -154,23 +154,38 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
          SECTION 2: ABOUT PROGRAM (UNTUK PENDIDIKAN YANG BERKUALITAS)
     =========================================== -->
     <?php
-    $about_bg = get_theme_mod('about_section_bg', '');
-    if (empty($about_bg)) {
+    $about_bg_desktop = get_theme_mod('about_section_bg', '');
+    if (empty($about_bg_desktop)) {
         if (file_exists(get_template_directory() . '/assets/images/bg-section2.png')) {
-            $about_bg = get_template_directory_uri() . '/assets/images/bg-section2.png';
+            $about_bg_desktop = get_template_directory_uri() . '/assets/images/bg-section2.png';
         } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.jpg')) {
-            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.jpg';
-        } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.jpeg')) {
-            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.jpeg';
-        } elseif (file_exists(get_template_directory() . '/assets/images/about-bg.webp')) {
-            $about_bg = get_template_directory_uri() . '/assets/images/about-bg.webp';
+            $about_bg_desktop = get_template_directory_uri() . '/assets/images/about-bg.jpg';
         }
+    }
+    $about_bg_mobile = '';
+    if (file_exists(get_template_directory() . '/assets/images/bg-section2-mobile.png')) {
+        $about_bg_mobile = get_template_directory_uri() . '/assets/images/bg-section2-mobile.png';
+    } else {
+        $about_bg_mobile = $about_bg_desktop;
     }
     ?>
     <section class="about-section py-5 position-relative overflow-hidden"
-             style="<?php echo !empty($about_bg) ? 'background-image: url(\'' . esc_url($about_bg) . '\'); background-size: cover; background-position: center center; background-repeat: no-repeat;' : 'background-color: #ffffff;'; ?> min-height: 480px; width: 100%;">
+             style="min-height: 480px; width: 100%;">
+        <style>
+            .about-section {
+                background-image: url('<?php echo esc_url($about_bg_desktop); ?>');
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+            @media (max-width: 767.98px) {
+                .about-section {
+                    background-image: url('<?php echo esc_url($about_bg_mobile); ?>') !important;
+                }
+            }
+        </style>
         <!-- DECORATIVE WAVE BACKGROUND WATERMARK (fallback jika belum ada background image) -->
-        <?php if (empty($about_bg)) : ?>
+        <?php if (empty($about_bg_desktop)) : ?>
         <div class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none opacity-25" 
              style="background-image: radial-gradient(circle at 10% 20%, rgba(14, 42, 93, 0.05) 0%, transparent 60%);"></div>
         <?php endif; ?>
@@ -181,26 +196,20 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                 <!-- SISI KIRI: HEADING & CTA BUTTON -->
                 <div class="col-lg-5 col-md-12">
                     <h2 class="mb-4" style="color: #0E2A5D; font-size: 56px; line-height: 1.15; letter-spacing: -0.5px;">
-                        UNTUK PENDIDIKAN<br>YANG <span style="color: #D8232A;">BERKUALITAS</span>
+                        <?php echo wp_kses_post(kreasi_t('quality_edu_title', 'UNTUK PENDIDIKAN<br>YANG <span style="color: #D8232A;">BERKUALITAS</span>', 'FOR QUALITY<br><span style="color: #D8232A;">EDUCATION</span>')); ?>
                     </h2>
                     
                     <a href="<?php echo esc_url(home_url('/tentang-kami')); ?>" 
                        class="btn text-white px-4 py-3 text-uppercase shadow-sm about-cta-btn" 
                        style="background-color: #D8232A; border-radius: 6px; font-size: 13px; letter-spacing: 0.5px; transition: all 0.3s ease;">
-                        SELENGKAPNYA TENTANG KAMI
+                        <?php echo esc_html(kreasi_t('more_about_us', 'SELENGKAPNYA TENTANG KAMI', "LET'S READ MORE")); ?>
                     </a>
                 </div>
 
                 <!-- SISI KANAN: PARAGRAF DESKRIPSI -->
                 <div class="col-lg-7 col-md-12">
                     <p class="about-description mb-0" style="font-size: 18px;">
-                        <strong>KREASI</strong> atau <strong>Kolaborasi untuk Edukasi Anak Indonesia</strong>
-                        adalah program peningkatan kualitas pendidikan dengan memperkuat literasi,
-                        numerasi, dan pendidikan karakter di delapan kabupaten di empat provinsi di Indonesia.
-                        KREASI dikelola Save the Children, diimplementasi mitra pelaksana lokal, dengan
-                        pendanaan Global Partnership for Education (GPE) dan didukung Mitra Pendidikan
-                        Indonesia yang dipimpin Kementerian Pendidikan Dasar dan Menengah (Kemendikdasmen)
-                        dan Kementerian Agama (Kemenag).
+                        <?php echo wp_kses_post(kreasi_t('about_description')); ?>
                     </p>
                 </div>
 
@@ -218,10 +227,10 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
             <!-- HEADER SECTION -->
             <div class="text-center mb-5">
                 <h2 class="text-white text-uppercase mb-2" style="font-size: 64px; letter-spacing: 0.5px;">
-                    MEMBAWA PERUBAHAN KE PELOSOK
+                    <?php echo esc_html(kreasi_t('impact_title', 'MEMBAWA PERUBAHAN KE PELOSOK', 'BRINGING CHANGE TO REMOTE AREAS')); ?>
                 </h2>
                 <p class="text-white mb-0" style="font-family: 'Lato', sans-serif; font-size: 18px; font-weight: 700; opacity: 0.9; margin-left: auto; margin-right: auto;">
-                    Dari advokasi untuk kebijakan pendidikan yang lebih baik, hingga ke ruang kelas yang menyenangkan.
+                    <?php echo esc_html(kreasi_t('impact_subtitle', 'Dari advokasi untuk kebijakan pendidikan yang lebih baik, hingga ke ruang kelas yang menyenangkan.', 'From advocacy for better education policies to enjoyable classrooms.')); ?>
                 </p>
             </div>
 
@@ -232,28 +241,28 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                 $default_cards = array(
                     array(
                         'number'   => '50,000',
-                        'label'    => 'Murid',
+                        'label'    => kreasi_t('student', 'Murid', 'Students'),
                         'desc'     => 'Mendapatkan akses buku berkualitas dan ruang baca yang nyaman untuk menumbuhkan kecintaan pada literasi sejak dini.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-murid.png',
                         'fallback' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '4,000',
-                        'label'    => 'Guru',
+                        'label'    => kreasi_t('teacher', 'Guru', 'Teachers'),
                         'desc'     => 'Mendapatkan pelatihan metode pembelajaran kreatif dan efektif untuk meningkatkan kualitas pengajaran di kelas.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-guru.png',
                         'fallback' => 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '560',
-                        'label'    => 'Kepala Sekolah',
+                        'label'    => kreasi_t('school_principal', 'Kepala Sekolah', 'School Principals'),
                         'desc'     => 'Mendapatkan pendampingan manajemen kepemimpinan sekolah dan tata kelola pendidikan yang inklusif.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-kepala-sekolah.png',
                         'fallback' => 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '560',
-                        'label'    => 'Sekolah',
+                        'label'    => kreasi_t('school', 'Sekolah', 'Schools'),
                         'desc'     => 'Menerima perbaikan fasilitas perpustakaan, sarana belajar, dan ruang kelas yang kondusif untuk siswa.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-sekolah.png',
                         'fallback' => 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=600&auto=format&fit=crop'

@@ -82,22 +82,28 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center py-2 gap-3 gap-md-0">
 
                         <!-- SISI KIRI: Navigasi Menu Utama (Pills Capsule) -->
-                        <?php $active_nav = function_exists('kreasi_get_active_nav_item') ? kreasi_get_active_nav_item() : ''; ?>
+                        <?php 
+                        $active_nav   = function_exists('kreasi_get_active_nav_item') ? kreasi_get_active_nav_item() : ''; 
+                        $current_lang = function_exists('kreasi_get_current_language') ? kreasi_get_current_language() : 'id';
+                        $url_in       = add_query_arg('lang', 'id');
+                        $url_en       = add_query_arg('lang', 'en');
+                        $search_val   = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : (isset($_GET['s']) ? sanitize_text_field($_GET['s']) : get_search_query());
+                        ?>
                         <nav class="main-navigation kreasi-nav-menu">
                             <ul class="d-flex flex-wrap align-items-center m-0 p-0 gap-2 list-unstyled">
                                 <li class="<?php echo ($active_nav === 'tentang-kami') ? 'current-menu-item' : ''; ?>">
                                     <a href="<?php echo esc_url(home_url('/tentang-kami/')); ?>" class="<?php echo ($active_nav === 'tentang-kami') ? 'active' : ''; ?>">
-                                        TENTANG KAMI
+                                        <?php echo esc_html(kreasi_t('nav_tentang_kami', 'TENTANG KAMI', 'ABOUT US')); ?>
                                     </a>
                                 </li>
                                 <li class="<?php echo ($active_nav === 'artikel') ? 'current-menu-item' : ''; ?>">
                                     <a href="<?php echo esc_url(home_url('/artikel/')); ?>" class="<?php echo ($active_nav === 'artikel') ? 'active' : ''; ?>">
-                                        ARTIKEL
+                                        <?php echo esc_html(kreasi_t('nav_artikel', 'ARTIKEL', 'ARTICLE')); ?>
                                     </a>
                                 </li>
                                 <li class="<?php echo ($active_nav === 'pustaka') ? 'current-menu-item' : ''; ?>">
                                     <a href="<?php echo esc_url(home_url('/pustaka/')); ?>" class="<?php echo ($active_nav === 'pustaka') ? 'active' : ''; ?>">
-                                        PUSTAKA
+                                        <?php echo esc_html(kreasi_t('nav_pustaka', 'PUSTAKA', 'LIBRARY')); ?>
                                     </a>
                                 </li>
                             </ul>
@@ -106,18 +112,18 @@
                         <!-- SISI KANAN: Form Pencarian & Switcher Bahasa -->
                         <div class="header-right-actions d-flex align-items-center gap-3">
 
-                            <!-- Form Pencarian Capsule -->
-                            <form method="get" action="<?php echo esc_url(home_url('/')); ?>" class="header-search-form">
-                                <button type="submit" aria-label="Search">
+                            <!-- Form Pencarian Capsule (Mencari dan langsung mengarahkan ke halaman Artikel) -->
+                            <form method="get" action="<?php echo esc_url(home_url('/artikel/')); ?>" class="header-search-form">
+                                <button type="submit" aria-label="<?php echo esc_attr(kreasi_t('search', 'Cari', 'Search')); ?>">
                                     <i class="bi bi-search"></i>
                                 </button>
-                                <input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="CARI" class="ms-2">
+                                <input type="search" name="q" value="<?php echo esc_attr($search_val); ?>" placeholder="<?php echo esc_attr(kreasi_t('search_placeholder', 'CARI', 'SEARCH')); ?>" class="ms-2">
                             </form>
 
-                            <!-- Switcher Bahasa (IN [Aktif - Merah] | EN) -->
+                            <!-- Switcher Bahasa (IN [Merah jika Aktif] | EN [Merah jika Aktif]) -->
                             <div class="language-switcher d-flex align-items-center gap-1">
-                                <a href="#" class="lang-btn active" title="Bahasa Indonesia">IN</a>
-                                <a href="#" class="lang-btn" title="English">EN</a>
+                                <a href="<?php echo esc_url($url_in); ?>" class="lang-btn <?php echo ($current_lang === 'id') ? 'active' : ''; ?>" title="Bahasa Indonesia">IN</a>
+                                <a href="<?php echo esc_url($url_en); ?>" class="lang-btn <?php echo ($current_lang === 'en') ? 'active' : ''; ?>" title="English">EN</a>
                             </div>
 
                         </div>
