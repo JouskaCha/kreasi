@@ -1512,6 +1512,4 @@ img {
 /* Event Section CTA */
 .btn-event-cta:hover {
   background-color: #D8232A !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(216, 35, 42, 0.4) !important;
 }

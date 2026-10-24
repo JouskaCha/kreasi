@@ -97,9 +97,7 @@ if (!empty($current_kategori) && $current_kategori !== 'semua') {
 }
 $all_articles_query = new WP_Query($all_articles_args);
 $total_all_daerah_count = (int) $all_articles_query->found_posts;
-if ($total_all_daerah_count === 0) {
-    $total_all_daerah_count = 34; // Sesuai desain Figma mockup
-}
+// Jumlah artikel aktual yang published
 
 // URL Dasar untuk Filter
 $base_artikel_url = home_url('/artikel/');
@@ -120,110 +118,7 @@ if (empty($artikel_bg_mobile)) {
         : $artikel_bg_desktop;
 }
 
-// 4. Data Fallback / Mockup Sesuai Desain Figma (9 Kartu Lengkap)
-$sample_articles = array(
-    array(
-        'title'     => 'KREASI Nias Utara Perkuat Kapasitas Penggerak Pendidikan melalui Pelatihan Fasilitator Daerah dan Kepala Sekolah',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Cerita',
-        'cat_slug'  => 'cerita',
-        'tag_name'  => 'Nias Utara',
-        'tag_slug'  => 'nias-utara',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => 'Sejak mulai mengabdi sebagai guru pada tahun 2007, Karnawati selalu memegang satu keyakinan: setiap anak berhak mendapatkan pendidikan yang layak. Baginya, menjadi pendidik bukan hanya tentang mengajar di ruang kelas, tetapi juga tentang menumbuhkan harapan, terutama bagi anak-anak yang belum sepenuhnya memiliki kesempatan dan dukungan untuk belajar. Semangat itulah yang terus ia bawa hingga kini, ketika ia menjalankan peran sebagai guru sekaligus kepala sekolah dampingan Program KREASI di Kabupaten Kayong Utara.',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail-1.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail-2.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail3.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail-1.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail-2.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail3.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail-1.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail-2.png',
-    ),
-    array(
-        'title'     => 'Melihat Sekolah Melalui Mata Anak: Menyiapkan Fasilitator Daerah untuk Budaya Sekolah Aman dan Nyaman',
-        'permalink' => home_url('/artikel/'),
-        'cat_name'  => 'Berita & Perkembangan',
-        'cat_slug'  => 'berita',
-        'tag_name'  => 'Tanggamus',
-        'tag_slug'  => 'tanggamus',
-        'date'      => '26 Juli 2026',
-        'excerpt'   => '',
-        'image'     => get_template_directory_uri() . '/assets/images/thumbnail3.png',
-    ),
-);
-
-// Gabungkan artikel nyata dari WP_Query
+// Ambil artikel nyata dari WP_Query (Tanpa Dummy Cards)
 $article_items = array();
 if ($artikel_query->have_posts()) {
     foreach ($artikel_query->posts as $p) {
@@ -237,8 +132,8 @@ if ($artikel_query->have_posts()) {
             'id'        => $p->ID,
             'title'     => get_the_title($p->ID),
             'permalink' => get_permalink($p->ID),
-            'cat_name'  => $cat_obj ? $cat_obj->name : 'Cerita',
-            'cat_slug'  => $cat_obj ? $cat_obj->slug : 'cerita',
+            'cat_name'  => $cat_obj ? $cat_obj->name : 'Artikel',
+            'cat_slug'  => $cat_obj ? $cat_obj->slug : 'artikel',
             'tag_name'  => $tag_obj ? $tag_obj->name : '',
             'tag_slug'  => $tag_obj ? $tag_obj->slug : '',
             'date'      => get_the_date('j F Y', $p->ID),
@@ -252,14 +147,6 @@ if ($artikel_query->have_posts()) {
 $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua') 
             || (!empty($current_daerah) && $current_daerah !== 'semua') 
             || !empty($search_keyword);
-
-// Jika tidak sedang difilter dan artikel di DB kurang dari 9, lengkapi dengan sample cards
-if (!$is_filtered && count($article_items) < 9) {
-    $existing_count = count($article_items);
-    for ($i = $existing_count; $i < 9; $i++) {
-        $article_items[] = $sample_articles[$i];
-    }
-}
 ?>
 
 <main id="primary" class="site-main page-artikel bg-light pb-5">
@@ -426,13 +313,15 @@ if (!$is_filtered && count($article_items) < 9) {
             $item_side_1   = isset($article_items[1]) ? $article_items[1] : null;
             $item_side_2   = isset($article_items[2]) ? $article_items[2] : null;
             $items_grid    = array_slice($article_items, 3);
+            $has_side_items = ($item_side_1 !== null || $item_side_2 !== null);
+            $featured_col_class = $has_side_items ? 'col-12 col-lg-8' : 'col-12';
         ?>
 
-            <!-- BARIS ATAS: 1 BESAR (COL-LG-8) + 2 TERTUMPUK VERTIKAL (COL-LG-4) -->
+            <!-- BARIS ATAS: 1 BESAR (+ SIDE CARDS JIKA ADA) -->
             <div class="row g-4 mb-4 align-items-stretch">
                 
                 <!-- KOLOM KIRI (FEATURED POST BESAR) -->
-                <div class="col-12 col-lg-8 d-flex flex-column">
+                <div class="<?php echo esc_attr($featured_col_class); ?> d-flex flex-column">
                     <?php 
                     $cat_url_featured = !empty($item_featured['cat_slug']) 
                         ? add_query_arg('kategori', $item_featured['cat_slug'], $base_artikel_url) 
@@ -506,7 +395,8 @@ if (!$is_filtered && count($article_items) < 9) {
                     </article>
                 </div>
 
-                <!-- KOLOM KANAN (2 POST STACKED SECARA VERTIKAL) -->
+                <?php if ($has_side_items) : ?>
+                <!-- KOLOM KANAN (POST STACKED SECARA VERTIKAL) -->
                 <div class="col-12 col-lg-4 d-flex flex-column gap-4">
                     
                     <!-- Side Card 1 -->
@@ -618,6 +508,7 @@ if (!$is_filtered && count($article_items) < 9) {
                     <?php endif; ?>
 
                 </div>
+                <?php endif; ?>
 
             </div>
 

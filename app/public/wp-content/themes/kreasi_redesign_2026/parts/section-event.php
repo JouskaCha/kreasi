@@ -134,19 +134,9 @@ $cta_url  = !empty($event_settings['cta_url']) ? $event_settings['cta_url'] : ''
     height: auto;
     margin: 0;
     padding: 0;
-    transition: transform 0.35s ease;
-}
-
-/* Hover effect */
-@media (hover: hover) and (pointer: fine) {
-    .event-graphic-full-wrap:hover .event-full-image {
-        transform: scale(1.008);
-    }
 }
 
 .btn-event-cta:hover {
     background-color: #D8232A !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(216, 35, 42, 0.4) !important;
 }
 </style>
