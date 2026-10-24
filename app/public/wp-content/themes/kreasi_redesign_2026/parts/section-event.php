@@ -1,77 +1,100 @@
-
 <?php
 /**
- * Template Part: Event
- * Responsive Full Width Image: Desktop & Mobile
+ * Template Part: Section Event Homepage
+ * Sesuai PRD FR-07: Membaca pengaturan dari WordPress Admin (kreasi_get_event_settings()),
+ * mendukung Banner Gambar Responsif (Desktop/Mobile), Embed YouTube Responsif, dan Tombol CTA.
+ *
+ * @package kreasi_redesign_2026
  */
 
-$event_title = get_theme_mod(
-    'event_section_title',
-    function_exists('kreasi_t') ? kreasi_t('event_title', 'AREA INTERVENSI & MITRA PELAKSANA', 'INTERVENTION AREAS & IMPLEMENTING PARTNERS') : 'AREA INTERVENSI & MITRA PELAKSANA'
-);
+$event_settings = function_exists('kreasi_get_event_settings') ? kreasi_get_event_settings(true) : array();
 
-// Gambar Desktop (Landscape) dari Customizer
-$event_image_desktop = get_theme_mod(
-    'event_section_image_desktop',
-    ''
-);
-
-// Gambar Mobile (Portrait) dari Customizer
-$event_image_mobile = get_theme_mod(
-    'event_section_image_mobile',
-    ''
-);
-
-// Fallback otomatis ke aset tema jika belum diunggah di Customizer
-$event_fallback_desktop = get_template_directory_uri() . '/assets/images/event.png';
-$event_fallback_mobile  = get_template_directory_uri() . '/assets/images/event-mobile.png';
-
-if (empty($event_image_desktop)) {
-    $event_image_desktop = $event_fallback_desktop;
+// 1. Cek apakah section diaktifkan oleh admin
+if (isset($event_settings['show_section']) && empty($event_settings['show_section'])) {
+    return; // Sembunyikan section jika dinonaktifkan
 }
 
-if (empty($event_image_mobile)) {
-    $event_image_mobile = file_exists(get_template_directory() . '/assets/images/event-mobile.png')
-        ? $event_fallback_mobile
-        : $event_image_desktop;
-}
+$event_title = function_exists('kreasi_t') 
+    ? kreasi_t('event_title', 'AREA INTERVENSI & MITRA PELAKSANA', 'INTERVENTION AREAS & IMPLEMENTING PARTNERS') 
+    : 'AREA INTERVENSI & MITRA PELAKSANA';
+
+$event_image_desktop = !empty($event_settings['image_desktop']) ? $event_settings['image_desktop'] : '';
+$event_image_mobile  = !empty($event_settings['image_mobile']) ? $event_settings['image_mobile'] : $event_image_desktop;
+
+$show_video  = !empty($event_settings['show_video']);
+$youtube_url = !empty($event_settings['youtube_url']) ? $event_settings['youtube_url'] : '';
+$youtube_id  = function_exists('kreasi_extract_youtube_id') ? kreasi_extract_youtube_id($youtube_url) : '';
+
+$show_cta = !empty($event_settings['show_cta']);
+$cta_text = !empty($event_settings['cta_text']) ? $event_settings['cta_text'] : '';
+$cta_url  = !empty($event_settings['cta_url']) ? $event_settings['cta_url'] : '';
 ?>
 
-<!-- SECTION AREA INTERVENSI -->
-<section class="intervention-event-section">
+<!-- SECTION AREA INTERVENSI & EVENT -->
+<section class="intervention-event-section position-relative overflow-hidden bg-white">
 
-    <!-- JUDUL (saat ini disembunyikan sesuai template lama) -->
-    <?php if (!empty($event_title)) : ?>
-        <!--
-        <div class="event-section-title">
-            <h2 class="fw-bold text-uppercase mb-0">
-                <?php echo esc_html($event_title); ?>
-            </h2>
+    <!-- GAMBAR RESPONSIVE FULL WIDTH (DESKTOP & MOBILE) -->
+    <?php if (!empty($event_image_desktop)) : ?>
+        <div class="event-graphic-full-wrap position-relative">
+            <picture class="event-picture">
+                <!-- Khusus layar mobile: portrait / compact -->
+                <?php if (!empty($event_image_mobile) && $event_image_mobile !== $event_image_desktop) : ?>
+                    <source media="(max-width: 767.98px)" srcset="<?php echo esc_url($event_image_mobile); ?>">
+                <?php endif; ?>
+                <!-- Desktop: landscape -->
+                <img src="<?php echo esc_url($event_image_desktop); ?>"
+                     alt="<?php echo esc_attr($event_title); ?>"
+                     class="event-full-image"
+                     loading="lazy"
+                     decoding="async">
+            </picture>
+
+            <!-- OVERLAY CTA BUTTON (JIKA DIAKTIFKAN) -->
+            <?php if ($show_cta && !empty($cta_url) && !empty($cta_text)) : ?>
+                <div class="event-cta-overlay position-absolute bottom-0 start-50 translate-middle-x mb-4 mb-md-5 text-center" style="z-index: 5;">
+                    <a href="<?php echo esc_url($cta_url); ?>" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="btn btn-event-cta text-white px-4 py-2 text-uppercase fw-bold shadow-lg"
+                       style="background-color: #062172; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 14px; letter-spacing: 0.5px; transition: all 0.3s ease;">
+                        <?php echo esc_html($cta_text); ?> &rarr;
+                    </a>
+                </div>
+            <?php endif; ?>
         </div>
-        -->
+    <?php elseif ($show_cta && !empty($cta_url) && !empty($cta_text)) : ?>
+        <!-- CTA BUTTON JIKA BANNER GAMBAR DIKOSONGKAN -->
+        <div class="event-cta-standalone py-5 text-center bg-light">
+            <div class="container">
+                <a href="<?php echo esc_url($cta_url); ?>" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="btn btn-event-cta text-white px-4 py-3 text-uppercase fw-bold shadow"
+                   style="background-color: #062172; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.5px; transition: all 0.3s ease;">
+                    <?php echo esc_html($cta_text); ?> &rarr;
+                </a>
+            </div>
+        </div>
     <?php endif; ?>
 
-    <!-- GAMBAR RESPONSIVE FULL WIDTH -->
-    <div class="event-graphic-full-wrap">
-        <picture class="event-picture">
-
-            <!-- Khusus layar mobile: portrait -->
-            <source
-                media="(max-width: 767.98px)"
-                srcset="<?php echo esc_url($event_image_mobile); ?>"
-            >
-
-            <!-- Desktop: landscape -->
-            <img
-                src="<?php echo esc_url($event_image_desktop); ?>"
-                alt="<?php echo esc_attr($event_title); ?>"
-                class="event-full-image"
-                loading="lazy"
-                decoding="async"
-            >
-
-        </picture>
-    </div>
+    <!-- EMBED VIDEO YOUTUBE RESPONSIVE (JIKA DIAKTIFKAN OLEH ADMIN) -->
+    <?php if ($show_video && !empty($youtube_id)) : ?>
+        <div class="event-video-section py-5" style="background-color: #0B2055;">
+            <div class="container px-4 px-lg-5">
+                <div class="row justify-content-center">
+                    <div class="col-xl-9 col-lg-10">
+                        <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-lg border border-secondary">
+                            <iframe src="https://www.youtube-nocookie.com/embed/<?php echo esc_attr($youtube_id); ?>" 
+                                    title="Video Event KREASI" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen
+                                    loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
 </section>
 
@@ -85,21 +108,6 @@ if (empty($event_image_mobile)) {
     padding: 0 !important;
     overflow: hidden;
     background: #fff;
-}
-
-/* Judul overlay */
-.intervention-event-section .event-section-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    padding: 24px 0 0 48px;
-}
-
-.intervention-event-section .event-section-title h2 {
-    font-size: 34px;
-    letter-spacing: 0.5px;
-    color: #1A202C;
 }
 
 /* Wrapper gambar */
@@ -129,21 +137,16 @@ if (empty($event_image_mobile)) {
     transition: transform 0.35s ease;
 }
 
-/* Efek hover hanya untuk perangkat dengan mouse */
+/* Hover effect */
 @media (hover: hover) and (pointer: fine) {
     .event-graphic-full-wrap:hover .event-full-image {
         transform: scale(1.008);
     }
 }
 
-/* Mobile */
-@media (max-width: 767.98px) {
-    .intervention-event-section .event-section-title {
-        padding: 12px 0 0 16px;
-    }
-
-    .intervention-event-section .event-section-title h2 {
-        font-size: 20px;
-    }
+.btn-event-cta:hover {
+    background-color: #D8232A !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(216, 35, 42, 0.4) !important;
 }
 </style>

@@ -162,55 +162,6 @@
     </div>
 </footer>
 
-<!-- Integrasi Otomatis Penerjemah Konten Artikel (EN / ID) -->
-<?php $is_en_mode = function_exists('kreasi_is_en') && kreasi_is_en(); ?>
-<div id="google_translate_element" style="display:none;"></div>
-<script>
-function googleTranslateElementInit() {
-    if (typeof google !== 'undefined' && google.translate) {
-        new google.translate.TranslateElement({
-            pageLanguage: 'id',
-            includedLanguages: 'en,id',
-            autoDisplay: false
-        }, 'google_translate_element');
-    }
-}
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var isEn = <?php echo $is_en_mode ? 'true' : 'false'; ?>;
-    if (isEn) {
-        document.cookie = "googtrans=/id/en; path=/";
-        document.cookie = "googtrans=/id/en; path=/; domain=" + location.hostname;
-    } else {
-        document.cookie = "googtrans=/id/id; path=/";
-        document.cookie = "googtrans=/id/id; path=/; domain=" + location.hostname;
-    }
-});
-</script>
-<style>
-/* Sembunyikan banner dan widget bawaan agar tampilan tetap rapi sesuai desain Figma */
-.goog-te-banner-frame.skiptranslate,
-.goog-te-banner-frame,
-iframe.goog-te-banner-frame,
-#goog-gt-tt,
-.goog-te-balloon-frame {
-    display: none !important;
-}
-body {
-    top: 0px !important;
-}
-.goog-tooltip, .goog-tooltip:hover {
-    display: none !important;
-}
-.goog-text-highlight {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-</style>
-
 <?php wp_footer(); ?>
 </body>
 </html>

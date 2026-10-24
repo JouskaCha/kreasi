@@ -684,14 +684,14 @@ if (!$is_filtered && count($article_items) < 9) {
 
 
             <!-- ==========================================
-                 PAGINATION ANGKA FIGMA (< 1 2 3 ... 20 21 >)
+                 PAGINATION ARTIKEL
             =========================================== -->
             <?php
-            $total_pages = $artikel_query->max_num_pages;
+            $total_pages = (int) $artikel_query->max_num_pages;
             if ($total_pages > 1) :
                 $pagination_links = paginate_links(array(
-                    'base'      => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
-                    'format'    => '?paged=%#%',
+                    'base'      => add_query_arg('paged', '%#%'),
+                    'format'    => '',
                     'current'   => max(1, $paged),
                     'total'     => $total_pages,
                     'type'      => 'array',
@@ -700,53 +700,40 @@ if (!$is_filtered && count($article_items) < 9) {
                     'end_size'  => 2,
                     'mid_size'  => 2,
                 ));
+                if (!empty($pagination_links)) :
             ?>
                 <nav class="d-flex justify-content-center my-5" aria-label="Navigasi Halaman Artikel">
                     <ul class="pagination custom-artikel-pagination d-flex align-items-center gap-1 list-unstyled m-0">
+                        <?php if ($paged <= 1) : ?>
+                            <li class="page-item disabled" aria-disabled="true">
+                                <span class="page-link rounded-circle d-inline-flex align-items-center justify-content-center text-muted" style="opacity: 0.45; cursor: default;">
+                                    <i class="bi bi-chevron-left"></i>
+                                </span>
+                            </li>
+                        <?php endif; ?>
+
                         <?php foreach ($pagination_links as $link) : 
                             $is_active = strpos($link, 'current') !== false;
+                            $is_dots   = strpos($link, 'dots') !== false;
                         ?>
-                            <li class="page-item <?php echo $is_active ? 'active' : ''; ?>">
+                            <li class="page-item <?php echo $is_active ? 'active' : ''; ?> <?php echo $is_dots ? 'disabled' : ''; ?>">
                                 <?php echo str_replace('page-numbers', 'page-link rounded-circle d-inline-flex align-items-center justify-content-center', $link); ?>
                             </li>
                         <?php endforeach; ?>
+
+                        <?php if ($paged >= $total_pages) : ?>
+                            <li class="page-item disabled" aria-disabled="true">
+                                <span class="page-link rounded-circle d-inline-flex align-items-center justify-content-center text-muted" style="opacity: 0.45; cursor: default;">
+                                    <i class="bi bi-chevron-right"></i>
+                                </span>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
-            <?php else : ?>
-                <!-- Fallback pagination mockup jika artikel masih statis / 1 halaman -->
-                <nav class="d-flex justify-content-center my-5" aria-label="Navigasi Halaman Artikel">
-                    <ul class="pagination custom-artikel-pagination d-flex align-items-center gap-1 list-unstyled m-0">
-                        <li class="page-item">
-                            <span class="page-link rounded-circle d-inline-flex align-items-center justify-content-center text-muted">
-                                <i class="bi bi-chevron-left"></i>
-                            </span>
-                        </li>
-                        <li class="page-item active">
-                            <span class="page-link rounded-circle d-inline-flex align-items-center justify-content-center">1</span>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-circle d-inline-flex align-items-center justify-content-center" href="<?php echo esc_url(add_query_arg('paged', 2, $base_artikel_url)); ?>">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-circle d-inline-flex align-items-center justify-content-center" href="<?php echo esc_url(add_query_arg('paged', 3, $base_artikel_url)); ?>">3</a>
-                        </li>
-                        <li class="page-item disabled">
-                            <span class="page-link border-0 bg-transparent text-muted">...</span>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-circle d-inline-flex align-items-center justify-content-center" href="<?php echo esc_url(add_query_arg('paged', 20, $base_artikel_url)); ?>">20</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-circle d-inline-flex align-items-center justify-content-center" href="<?php echo esc_url(add_query_arg('paged', 21, $base_artikel_url)); ?>">21</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link rounded-circle d-inline-flex align-items-center justify-content-center" href="<?php echo esc_url(add_query_arg('paged', 2, $base_artikel_url)); ?>">
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            <?php endif; ?>
+            <?php 
+                endif;
+            endif; 
+            ?>
 
         <?php else : ?>
             

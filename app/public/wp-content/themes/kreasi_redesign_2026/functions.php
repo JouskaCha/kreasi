@@ -10,6 +10,10 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
+// Module Includes: Event Settings & Meta Boxes (PRD FR-05, FR-06, FR-07)
+require_once get_template_directory() . '/inc/admin-event.php';
+require_once get_template_directory() . '/inc/meta-boxes.php';
+
 /**
  * 1. Setup Theme Features & Supports
  */
@@ -80,6 +84,12 @@ function kreasi_redesign_2026_register_design_routes()
         'index.php?kreasi_redesign_2026_design_page=publikasi',
         'top'
     );
+
+    add_rewrite_rule(
+        '^foto-kegiatan/?$',
+        'index.php?kreasi_redesign_2026_design_page=foto-kegiatan',
+        'top'
+    );
 }
 add_action('init', 'kreasi_redesign_2026_register_design_routes');
 
@@ -109,7 +119,7 @@ function kreasi_redesign_2026_load_design_page($template)
             $request_path = substr($request_path, strlen($home_path) + 1);
         }
 
-        if (in_array($request_path, array('artikel', 'pustaka', 'tentang-kami', 'publikasi'), true)) {
+        if (in_array($request_path, array('artikel', 'pustaka', 'tentang-kami', 'publikasi', 'foto-kegiatan'), true)) {
             $design_page = $request_path;
         }
     }
@@ -119,6 +129,7 @@ function kreasi_redesign_2026_load_design_page($template)
         'pustaka'      => 'page-publikasi.php',
         'tentang-kami' => 'page-tentang-kami.php',
         'publikasi'    => 'page-publikasi.php',
+        'foto-kegiatan' => 'archive-foto-kegiatan.php',
     );
 
     if (isset($templates[$design_page])) {
@@ -1119,6 +1130,15 @@ function kreasi_get_active_nav_item()
     }
 
     if (
+        is_page('foto-kegiatan') ||
+        is_page_template(array('archive-foto-kegiatan.php', 'page-foto-kegiatan.php')) ||
+        $request_uri === 'foto-kegiatan' ||
+        $design_page === 'foto-kegiatan'
+    ) {
+        return 'foto-kegiatan';
+    }
+
+    if (
         is_page(array('pustaka', 'publikasi')) ||
         is_page_template(array('page-pustaka.php', 'page-publikasi.php')) ||
         in_array($request_uri, array('pustaka', 'publikasi'), true) ||
@@ -1303,6 +1323,15 @@ function kreasi_t($key, $default_id = '', $en = '')
         'subscribe'                => array('id' => 'BERLANGGANAN', 'en' => 'SUBSCRIBE'),
         'safeguarding_text'        => array('id' => 'Laporkan pelanggaran <em>safeguarding</em>, atau sampaikan kritik dan saran.', 'en' => 'Report safeguarding violations, or provide feedback and suggestions.'),
         'copyright_prefix'         => array('id' => 'Hak Cipta', 'en' => 'Copyright'),
+
+        // Foto Kegiatan & Detail Publikasi
+        'foto_kegiatan_title'      => array('id' => 'FOTO KEGIATAN', 'en' => 'ACTIVITY PHOTOS'),
+        'foto_kegiatan_subtitle'   => array('id' => 'Pelajari langkah strategis, laporan dampak, dan materi edukasi kami yang dirancang khusus untuk mendukung pemerataan pendidikan anak Indonesia.', 'en' => 'Explore our strategic steps, impact reports, and educational materials specifically designed to support equal education for Indonesian children.'),
+        'unduh'                    => array('id' => 'UNDUH', 'en' => 'DOWNLOAD'),
+        'baca'                     => array('id' => 'BACA', 'en' => 'READ'),
+        'bagikan'                  => array('id' => 'Bagikan', 'en' => 'Share'),
+        'bagikan_ke'               => array('id' => 'Bagikan ke...', 'en' => 'Share to...'),
+        'filter'                   => array('id' => 'FILTER', 'en' => 'FILTER'),
     );
 
     if (isset($dictionary[$key])) {
@@ -1364,8 +1393,157 @@ function kreasi_translate_term($term_name)
         'halmahera-utara'        => 'North Halmahera',
         'Pulau Morotai'          => 'Morotai Island',
         'pulau-morotai'          => 'Morotai Island',
+        'Foto Kegiatan'          => 'Activity Photos',
+        'foto-kegiatan'          => 'Activity Photos',
     );
 
     return isset($map[$term_name]) ? $map[$term_name] : $term_name;
 }
 
+
+
+/**
+ * =============================================================
+ * 11. Helper Kategori & Post Type Checker untuk Publikasi & Foto Kegiatan
+ * =============================================================
+ */
+
+/**
+ * Cek apakah sebuah post termasuk dalam kategori Publikasi
+ */
+function kreasi_is_publikasi_post($post_id = null)
+{
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    if (!$post_id) {
+        return false;
+    }
+
+    $pub_cat_ids = kreasi_get_publikasi_category_ids();
+    $categories  = get_the_category($post_id);
+
+    if (!empty($categories)) {
+        foreach ($categories as $cat) {
+            if (!empty($pub_cat_ids) && (in_array($cat->term_id, $pub_cat_ids, true) || in_array($cat->parent, $pub_cat_ids, true))) {
+                return true;
+            }
+            if (in_array($cat->slug, array('publikasi', 'pustaka', 'buletin', 'dokumen-strategis', 'kie', 'laporan', 'repositori-pengetahuan', 'materi-pembelajaran'), true)) {
+                return true;
+            }
+        }
+    }
+
+    $has_pdf = get_post_meta($post_id, '_kreasi_pub_pdf_url', true) || get_post_meta($post_id, '_kreasi_pub_pdf_id', true);
+    $has_read = get_post_meta($post_id, '_kreasi_pub_read_source', true);
+    if ($has_pdf || $has_read) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Cek apakah sebuah post termasuk dalam kategori Foto Kegiatan
+ */
+function kreasi_is_foto_kegiatan_post($post_id = null)
+{
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    if (!$post_id) {
+        return false;
+    }
+
+    $categories = get_the_category($post_id);
+    if (!empty($categories)) {
+        foreach ($categories as $cat) {
+            if (in_array($cat->slug, array('foto-kegiatan', 'kegiatan'), true)) {
+                return true;
+            }
+            if (stripos($cat->name, 'foto kegiatan') !== false) {
+                return true;
+            }
+        }
+    }
+
+    $gallery = get_post_meta($post_id, '_kreasi_gallery_images', true);
+    $credit  = get_post_meta($post_id, '_kreasi_photo_credit', true);
+    if (!empty($gallery) || !empty($credit)) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Pastikan kategori default Artikel, Publikasi & Foto Kegiatan tersedia
+ */
+function kreasi_ensure_default_categories()
+{
+    if (!is_admin()) {
+        return;
+    }
+
+    $artikel_parent = get_category_by_slug('artikel');
+    if (!$artikel_parent) {
+        $artikel_id = wp_insert_category(array(
+            'cat_name' => 'Artikel',
+            'category_nicename' => 'artikel',
+        ));
+    } else {
+        $artikel_id = $artikel_parent->term_id;
+    }
+
+    if ($artikel_id && !is_wp_error($artikel_id)) {
+        $artikel_children = array('Cerita' => 'cerita', 'Berita' => 'berita', 'Liputan Media' => 'liputan-media');
+        foreach ($artikel_children as $name => $slug) {
+            if (!get_category_by_slug($slug)) {
+                wp_insert_category(array(
+                    'cat_name' => $name,
+                    'category_nicename' => $slug,
+                    'category_parent' => $artikel_id,
+                ));
+            }
+        }
+    }
+
+    $pub_parent = get_category_by_slug('publikasi');
+    if (!$pub_parent) {
+        $pub_id = wp_insert_category(array(
+            'cat_name' => 'Publikasi',
+            'category_nicename' => 'publikasi',
+        ));
+    } else {
+        $pub_id = $pub_parent->term_id;
+    }
+
+    if ($pub_id && !is_wp_error($pub_id)) {
+        $pub_children = array(
+            'Buletin' => 'buletin',
+            'Repositori Pengetahuan' => 'repositori-pengetahuan',
+            'Materi Pembelajaran' => 'materi-pembelajaran',
+            'Dokumen Strategis' => 'dokumen-strategis',
+            'KIE' => 'kie',
+            'Laporan' => 'laporan',
+        );
+        foreach ($pub_children as $name => $slug) {
+            if (!get_category_by_slug($slug)) {
+                wp_insert_category(array(
+                    'cat_name' => $name,
+                    'category_nicename' => $slug,
+                    'category_parent' => $pub_id,
+                ));
+            }
+        }
+    }
+
+    if (!get_category_by_slug('foto-kegiatan')) {
+        wp_insert_category(array(
+            'cat_name' => 'Foto Kegiatan',
+            'category_nicename' => 'foto-kegiatan',
+        ));
+    }
+}
+add_action('admin_init', 'kreasi_ensure_default_categories');
+add_action('after_switch_theme', 'kreasi_ensure_default_categories');

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template single artikel.
+ * Template single artikel, publikasi, dan foto kegiatan.
  *
  * @package kreasi_redesign_2026
  */
@@ -10,7 +10,20 @@ get_header();
 while (have_posts()) :
     the_post();
 
-    $post_id    = get_the_ID();
+    $post_id = get_the_ID();
+
+    // 1. Cek apakah ini post Publikasi (sesuai Desain Image 4 & PRD FR-05)
+    if (function_exists('kreasi_is_publikasi_post') && kreasi_is_publikasi_post($post_id)) {
+        get_template_part('parts/single', 'publikasi');
+        continue;
+    }
+
+    // 2. Cek apakah ini post Foto Kegiatan (sesuai Desain Image 3)
+    if (function_exists('kreasi_is_foto_kegiatan_post') && kreasi_is_foto_kegiatan_post($post_id)) {
+        get_template_part('parts/single', 'foto-kegiatan');
+        continue;
+    }
+
     $author_id  = (int) get_the_author_meta('ID');
     $tags       = get_the_tags($post_id);
 
@@ -287,10 +300,10 @@ while (have_posts()) :
                                     <div>
                                         <div class="position-relative overflow-hidden rounded-3 mb-3" style="aspect-ratio: 16/9; max-height: 200px;">
                                             <a href="<?php the_permalink(); ?>">
-                                                <img src="<?php echo esc_url($rel_thumb); ?>" 
-                                                     alt="<?php the_title_attribute(); ?>" 
-                                                     class="w-100 h-100 object-fit-cover article-card-img" 
-                                                     style="transition: transform 0.4s ease;">
+                                                 <img src="<?php echo esc_url($rel_thumb); ?>" 
+                                                      alt="<?php the_title_attribute(); ?>" 
+                                                      class="w-100 h-100 object-fit-cover article-card-img" 
+                                                      style="transition: transform 0.4s ease;">
                                             </a>
                                         </div>
 

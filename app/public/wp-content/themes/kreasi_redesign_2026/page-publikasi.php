@@ -29,7 +29,7 @@ $search_keyword = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
 $is_category_view = !empty($current_cat_slug);
 
 // URL dasar
-$base_page_url = home_url(is_page('publikasi') ? '/publikasi/' : '/pustaka/');
+$base_page_url = home_url('/publikasi/');
 $child_categories = function_exists('kreasi_get_publikasi_child_categories') ? kreasi_get_publikasi_child_categories() : array();
 $default_publications = function_exists('kreasi_get_default_publications') ? kreasi_get_default_publications() : array();
 
@@ -406,36 +406,24 @@ if ($is_category_view) {
                 <?php endfor; endif; ?>
             </div>
 
+            <?php if ($has_grid_posts && $cat_grid_query->max_num_pages > 1) : ?>
             <!-- PAGINATION -->
             <div class="d-flex justify-content-center align-items-center mt-5 pagination-wrapper">
-                <?php if ($has_grid_posts && $cat_grid_query->max_num_pages > 1) : ?>
-                    <nav aria-label="Page navigation">
-                        <?php
-                        echo paginate_links(array(
-                            'base'      => add_query_arg('paged', '%#%'),
-                            'format'    => '',
-                            'current'   => $paged,
-                            'total'     => $cat_grid_query->max_num_pages,
-                            'prev_text' => '&lsaquo;',
-                            'next_text' => '&rsaquo;',
-                            'type'      => 'list',
-                        ));
-                        ?>
-                    </nav>
-                <?php else : ?>
-                    <!-- Mock Pagination persis seperti Gambar 2 (< 1 2 3 ... 20 21 >) -->
-                    <ul class="pagination pagination-custom d-flex align-items-center gap-1 m-0 list-unstyled">
-                        <li class="page-item disabled"><span class="page-link">&lsaquo;</span></li>
-                        <li class="page-item active"><span class="page-link">1</span></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item disabled"><span class="page-link">...</span></li>
-                        <li class="page-item"><a class="page-link" href="#">20</a></li>
-                        <li class="page-item"><a class="page-link" href="#">21</a></li>
-                        <li class="page-item"><a class="page-link" href="#">&rsaquo;</a></li>
-                    </ul>
-                <?php endif; ?>
+                <nav aria-label="Page navigation">
+                    <?php
+                    echo paginate_links(array(
+                        'base'      => add_query_arg('paged', '%#%'),
+                        'format'    => '',
+                        'current'   => $paged,
+                        'total'     => $cat_grid_query->max_num_pages,
+                        'prev_text' => '&lsaquo;',
+                        'next_text' => '&rsaquo;',
+                        'type'      => 'list',
+                    ));
+                    ?>
+                </nav>
             </div>
+            <?php endif; ?>
 
         </div>
 
