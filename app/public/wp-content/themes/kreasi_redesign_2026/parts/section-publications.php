@@ -26,6 +26,17 @@ if (!empty($pub_cat_ids)) {
 $pub_query = new WP_Query($pub_query_args);
 $has_dynamic_publications = $pub_query->have_posts();
 
+// =========================================================================
+// PENGATURAN HANDLE KETIKA 0 POST / KOSONG (PUBLIKASI HOMEPAGE)
+// =========================================================================
+// OPSI A (AKTIF): Sembunyikan seluruh section publikasi jika belum ada post di database
+if (!$has_dynamic_publications) {
+    return;
+}
+
+// OPSI B (NONAKTIF / COMMENT): Jika ingin tetap menampilkan section ini saat 0 post,
+// beri komentar (//) pada baris OPSI A di atas, lalu tentukan Opsi pada bagian kartu di bawah.
+
 // Sample fallback data dari tema jika belum ada post di WordPress
 $default_publications = function_exists('kreasi_get_default_publications') ? kreasi_get_default_publications() : array(
     array(
@@ -135,7 +146,25 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
                         endwhile; 
                         wp_reset_postdata(); 
                     else : 
-                        // Fallback sample publikasi jika belum ada post di database
+                        // =========================================================================
+                        // HANDLE KETIKA 0 POST PADA SISI KARTU PUBLIKASI
+                        // =========================================================================
+
+                        // -------------------------------------------------------------------------
+                        // OPSI 1 (AKTIF): Pesan bersih bahwa publikasi belum tersedia
+                        // -------------------------------------------------------------------------
+                    ?>
+                        <div class="col-12 py-4">
+                            <p class="text-white-50 fst-italic mb-0" style="font-family: 'Lato', sans-serif; font-size: 14px;">
+                                <?php echo esc_html(kreasi_t('no_publications', 'Belum ada publikasi yang tersedia saat ini.', 'No publications available at this time.')); ?>
+                            </p>
+                        </div>
+                    <?php
+                        // -------------------------------------------------------------------------
+                        // OPSI 2 (NONAKTIF / COMMENT): Contoh Fallback Sample Mockup dari Desain
+                        // Buka tanda komentar (/* ... */) jika ingin menampilkan kartu contoh.
+                        // -------------------------------------------------------------------------
+                        /*
                         foreach (array_slice($default_publications, 0, 4) as $pub) :
                             $sample_tag = isset($pub['tag']) ? $pub['tag'] : 'Buletin';
                             $sample_img = isset($pub['image']) ? $pub['image'] : (isset($pub['img']) ? $pub['img'] : '');
@@ -172,7 +201,11 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
                                 </div>
                             </a>
                         </div>
-                    <?php endforeach; endif; ?>
+                    <?php 
+                        endforeach; 
+                        */
+                    endif; 
+                    ?>
 
                 </div>
             </div>

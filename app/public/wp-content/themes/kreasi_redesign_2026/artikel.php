@@ -118,7 +118,10 @@ if (empty($artikel_bg_mobile)) {
         : $artikel_bg_desktop;
 }
 
-// Ambil artikel nyata dari WP_Query (Tanpa Dummy Cards)
+// =========================================================================
+// PENGATURAN HANDLE KETIKA 0 POST / KOSONG (HALAMAN ARTIKEL)
+// =========================================================================
+// OPSI 1 (AKTIF): Ambil hanya artikel nyata dari database (jika 0 post, tampilkan state kosong bersih)
 $article_items = array();
 if ($artikel_query->have_posts()) {
     foreach ($artikel_query->posts as $p) {
@@ -142,6 +145,29 @@ if ($artikel_query->have_posts()) {
         );
     }
 }
+
+// -------------------------------------------------------------------------
+// OPSI 2 (NONAKTIF / COMMENT): Mockup Dummy Articles jika ingin menampilkan contoh desain saat database kosong
+// Buka tanda komentar (/* ... */) di bawah jika ingin menyalakan artikel dummy.
+// -------------------------------------------------------------------------
+/*
+if (empty($article_items) && !$is_filtered) {
+    for ($i = 1; $i <= 9; $i++) {
+        $article_items[] = array(
+            'id'        => 0,
+            'title'     => 'KREASI Dorong Penguatan Ekosistem Pendidikan Daerah ' . $i,
+            'permalink' => '#',
+            'cat_name'  => ($i % 2 === 0) ? 'Berita' : 'Cerita',
+            'cat_slug'  => ($i % 2 === 0) ? 'berita' : 'cerita',
+            'tag_name'  => 'Kayong Utara',
+            'tag_slug'  => 'kayong-utara',
+            'date'      => '26 Juli 2026',
+            'excerpt'   => 'Program KREASI terus mendampingi sekolah dan guru untuk menciptakan ruang kelas yang menyenangkan dan pembelajaran yang berdampak...',
+            'image'     => get_template_directory_uri() . '/assets/images/thumbnail-' . (($i % 2) + 1) . '.png',
+        );
+    }
+}
+*/
 
 // Cek apakah user sedang melakukan pencarian / filter aktif
 $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua') 

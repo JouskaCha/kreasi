@@ -28,6 +28,21 @@ $youtube_id  = function_exists('kreasi_extract_youtube_id') ? kreasi_extract_you
 $show_cta = !empty($event_settings['show_cta']);
 $cta_text = !empty($event_settings['cta_text']) ? $event_settings['cta_text'] : '';
 $cta_url  = !empty($event_settings['cta_url']) ? $event_settings['cta_url'] : '';
+
+$has_event_content = !empty($event_image_desktop) 
+    || ($show_cta && !empty($cta_url) && !empty($cta_text)) 
+    || ($show_video && !empty($youtube_id));
+
+// =========================================================================
+// PENGATURAN HANDLE KETIKA KONTEN EVENT KOSONG (HOMEPAGE EVENT)
+// =========================================================================
+// OPSI A (AKTIF): Sembunyikan seluruh section jika belum ada banner/konten event yang diisi
+if (!$has_event_content) {
+    return;
+}
+
+// OPSI B (NONAKTIF / COMMENT): Jika ingin tetap menampilkan wrapper section saat belum ada konten,
+// beri tanda komentar (//) pada baris OPSI A di atas.
 ?>
 
 <!-- SECTION AREA INTERVENSI & EVENT -->

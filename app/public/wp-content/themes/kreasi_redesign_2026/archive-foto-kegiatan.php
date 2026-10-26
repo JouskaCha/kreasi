@@ -271,7 +271,35 @@ $base_url  = home_url('/foto-kegiatan/');
                     </div>
 
             <?php endwhile; wp_reset_postdata(); else : 
-                // Tampilkan data default mock sesuai desain Gambar 1
+                // =========================================================================
+                // HANDLE KETIKA 0 POST PADA FOTO KEGIATAN / DOKUMENTASI
+                // =========================================================================
+
+                // -------------------------------------------------------------------------
+                // OPSI 1 (AKTIF): Pesan kosong bersih informatif ketika belum ada postingan
+                // -------------------------------------------------------------------------
+            ?>
+                <div class="col-12 py-5 text-center">
+                    <div class="p-5 rounded-4 bg-white shadow-sm border border-light">
+                        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-3">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #1E293B;">
+                            <?php echo esc_html(kreasi_t('no_photos_found', 'Belum Ada Dokumentasi Foto', 'No Photos Found')); ?>
+                        </h4>
+                        <p class="text-muted mb-0" style="font-family: 'Lato', sans-serif; font-size: 14.5px;">
+                            <?php echo esc_html(kreasi_t('no_photos_desc', 'Belum ada dokumentasi foto kegiatan yang diunggah saat ini.', 'There are no event photo documentations uploaded yet.')); ?>
+                        </p>
+                    </div>
+                </div>
+            <?php
+                // -------------------------------------------------------------------------
+                // OPSI 2 (NONAKTIF / COMMENT): Tampilkan data default mock sesuai desain Gambar 1
+                // Buka tanda komentar (/* ... */) jika ingin mengaktifkan kartu contoh foto.
+                // -------------------------------------------------------------------------
+                /*
                 foreach ($default_photos as $k => $item) : 
                     $tilt_angle = ($k % 2 === 0) ? '-1.8deg' : '1.8deg';
             ?>
@@ -316,7 +344,11 @@ $base_url  = home_url('/foto-kegiatan/');
                             </h3>
                         </div>
                     </div>
-            <?php endforeach; endif; ?>
+            <?php 
+                endforeach; 
+                */
+            endif; 
+            ?>
 
         </div>
 

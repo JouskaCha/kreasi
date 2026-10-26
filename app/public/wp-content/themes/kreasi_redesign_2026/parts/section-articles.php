@@ -80,6 +80,19 @@ if (!empty($post_ids)) {
 } else {
     $final_query = false;
 }
+
+$has_articles = ($final_query && $final_query->have_posts());
+
+// =========================================================================
+// PENGATURAN HANDLE KETIKA 0 POST / KOSONG (ARTIKEL TERKINI HOMEPAGE)
+// =========================================================================
+// OPSI A (AKTIF): Sembunyikan seluruh section Artikel Terkini jika belum ada post di database
+if (!$has_articles) {
+    return;
+}
+
+// OPSI B (NONAKTIF / COMMENT): Jika ingin tetap menampilkan section ini saat post kosong,
+// beri komentar (//) pada baris OPSI A di atas, lalu tentukan Opsi pada bagian kartu di bawah.
 ?>
 
 <!-- SECTION ARTIKEL TERKINI -->
@@ -194,7 +207,25 @@ if (!empty($post_ids)) {
                 endwhile;
                 wp_reset_postdata();
             else :
-                // FALLBACK PLACEHOLDER CARDS (Jika Belum Ada Post di Database)
+                // =========================================================================
+                // HANDLE KETIKA 0 POST PADA KARTU ARTIKEL TERKINI
+                // =========================================================================
+
+                // -------------------------------------------------------------------------
+                // OPSI 1 (AKTIF): Pesan bersih bahwa belum ada artikel
+                // -------------------------------------------------------------------------
+            ?>
+                <div class="col-12 py-4 text-center">
+                    <p class="text-muted fst-italic mb-0" style="font-family: 'Lato', sans-serif; font-size: 15px;">
+                        <?php echo esc_html(kreasi_t('no_articles', 'Belum ada artikel yang diterbitkan saat ini.', 'No articles published yet.')); ?>
+                    </p>
+                </div>
+            <?php
+                // -------------------------------------------------------------------------
+                // OPSI 2 (NONAKTIF / COMMENT): Fallback Placeholder Cards (Contoh Desain Figma)
+                // Buka tanda komentar (/* ... */) jika ingin menampilkan kartu contoh.
+                // -------------------------------------------------------------------------
+                /*
                 $dummy_articles = array(
                     array(
                         'title' => 'KREASI Kayong Utara Dorong Penguatan Ekosistem Pendidikan Daerah',
@@ -263,6 +294,7 @@ if (!empty($post_ids)) {
                     </div>
             <?php
                 endforeach;
+                */
             endif;
             ?>
         </div>

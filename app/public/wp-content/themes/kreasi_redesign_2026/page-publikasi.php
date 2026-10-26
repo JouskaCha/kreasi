@@ -73,6 +73,7 @@ if ($is_category_view) {
 
         <!-- SECTIONS PER KATEGORI (BULETIN, REPOSITORI PENGETAHUAN, MATERI PEMBELAJARAN) -->
         <?php 
+        $rendered_categories_count = 0;
         foreach ($child_categories as $idx => $cat) : 
             $section_bg = ($idx % 2 === 1) ? '#F8F9FA' : '#FFFFFF';
             $cat_slug   = $cat->slug;
@@ -90,6 +91,19 @@ if ($is_category_view) {
             );
             $cat_query = new WP_Query($cat_query_args);
             $has_wp_posts = $cat_query->have_posts();
+
+            // =========================================================================
+            // PENGATURAN HANDLE KETIKA KATEGORI INI KOSONG (0 POST)
+            // =========================================================================
+            // OPSI A (AKTIF): Sembunyikan section kategori jika belum ada postingan di kategori ini
+            if (!$has_wp_posts) {
+                continue;
+            }
+
+            // OPSI B (NONAKTIF / COMMENT): Jika ingin tetap menampilkan section kategori dengan contoh mockup / pesan kosong,
+            // beri komentar (//) pada baris OPSI A ("continue;") di atas dan tentukan opsi kartu di bawah.
+
+            $rendered_categories_count++;
         ?>
             <section class="pustaka-category-section py-5" style="background-color: <?php echo esc_attr($section_bg); ?>;">
                 <div class="container px-4 px-lg-5">
@@ -176,7 +190,25 @@ if ($is_category_view) {
                                     </div>
                                 </div>
                         <?php endwhile; wp_reset_postdata(); else : 
-                            // Tampilkan data sampel sesuai desain Figma jika belum ada postingan
+                            // =========================================================================
+                            // HANDLE KETIKA 0 POST PADA SLIDER KATEGORI
+                            // =========================================================================
+
+                            // -------------------------------------------------------------------------
+                            // OPSI 1 (AKTIF): Pesan bersih bahwa belum ada publikasi pada kategori ini
+                            // -------------------------------------------------------------------------
+                        ?>
+                            <div class="col-12 py-3">
+                                <p class="text-muted fst-italic mb-0" style="font-family: 'Lato', sans-serif; font-size: 14px;">
+                                    <?php echo esc_html(kreasi_t('no_publications_cat', 'Belum ada publikasi pada kategori ini.', 'No publications in this category yet.')); ?>
+                                </p>
+                            </div>
+                        <?php
+                            // -------------------------------------------------------------------------
+                            // OPSI 2 (NONAKTIF / COMMENT): Tampilkan data sampel sesuai desain Figma
+                            // Buka tanda komentar (/* ... */) jika ingin mengaktifkan kartu contoh.
+                            // -------------------------------------------------------------------------
+                            /*
                             foreach ($default_publications as $pub) : 
                         ?>
                                 <div class="col-9 col-sm-6 col-md-4 col-lg-3 flex-shrink-0 flex-lg-shrink-1">
@@ -224,13 +256,35 @@ if ($is_category_view) {
                                         </h3>
                                     </div>
                                 </div>
-                        <?php endforeach; endif; ?>
+                        <?php 
+                            endforeach; 
+                            */
+                        endif; 
+                        ?>
 
                     </div>
 
                 </div>
             </section>
         <?php endforeach; ?>
+
+        <?php if ($rendered_categories_count === 0) : ?>
+            <!-- STATE KETIKA SEMUA KATEGORI MASIH KOSONG -->
+            <div class="container py-5 text-center">
+                <div class="p-5 my-4 rounded-4 bg-white shadow-sm border">
+                    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-3">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <h3 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #1E293B;">
+                        <?php echo esc_html(kreasi_t('no_publications_all', 'Belum Ada Publikasi yang Diterbitkan', 'No Publications Published Yet')); ?>
+                    </h3>
+                    <p class="text-muted mb-0" style="font-family: 'Lato', sans-serif; font-size: 15px;">
+                        <?php echo esc_html(kreasi_t('no_publications_all_desc', 'Publikasi dan dokumen materi belajar akan segera tersedia di halaman ini.', 'Publications and learning materials will be available here soon.')); ?>
+                    </p>
+                </div>
+            </div>
+        <?php endif; ?>
 
     <?php else : ?>
         <!-- =========================================================
@@ -370,7 +424,34 @@ if ($is_category_view) {
                             </div>
                         </div>
                 <?php endwhile; wp_reset_postdata(); else : 
-                    // Tampilkan 12 item grid mock sesuai tampilan persis di Gambar 2
+                    // =========================================================================
+                    // HANDLE KETIKA 0 POST PADA GRID KATEGORI
+                    // =========================================================================
+
+                    // -------------------------------------------------------------------------
+                    // OPSI 1 (AKTIF): Pesan kosong bersih informatif ketika belum ada postingan
+                    // -------------------------------------------------------------------------
+                ?>
+                    <div class="col-12 py-5 text-center">
+                        <div class="p-5 rounded-4 bg-white shadow-sm border border-light">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-3">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                            <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #1E293B;">
+                                <?php echo esc_html(kreasi_t('no_publications_found', 'Belum Ada Publikasi', 'No Publications Found')); ?>
+                            </h4>
+                            <p class="text-muted mb-0" style="font-family: 'Lato', sans-serif; font-size: 14.5px;">
+                                <?php echo esc_html(kreasi_t('no_publications_desc', 'Belum ada publikasi yang diterbitkan pada kategori ini.', 'There are no publications published in this category yet.')); ?>
+                            </p>
+                        </div>
+                    </div>
+                <?php
+                    // -------------------------------------------------------------------------
+                    // OPSI 2 (NONAKTIF / COMMENT): Tampilkan 12 item grid mock sesuai desain Gambar 2
+                    // Buka tanda komentar (/* ... */) jika ingin mengaktifkan kartu contoh.
+                    // -------------------------------------------------------------------------
+                    /*
                     for ($m = 0; $m < 12; $m++) :
                         $pub = $default_publications[$m % count($default_publications)];
                 ?>
@@ -417,7 +498,11 @@ if ($is_category_view) {
                                 </h3>
                             </div>
                         </div>
-                <?php endfor; endif; ?>
+                <?php 
+                    endfor; 
+                    */
+                endif; 
+                ?>
             </div>
 
             <?php if ($has_grid_posts && $cat_grid_query->max_num_pages > 1) : ?>
