@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Part: Section Publikasi Homepage (Red Background + Dynamic WP_Query Publication Cards + 3D Hover Effect)
- * Sesuai PRD FR-03: Konten publikasi dinamis dari WordPress, kartu terhubung ke single, CTA ke kanonis /publikasi/.
+ * Template Part: Section Publikasi Homepage (Red Background + 4 Dynamic Latest Publications + 3D Hover Effect)
+ * Sesuai PRD FR-03: Menampilkan 4 publikasi terbaru dari WordPress, kartu terhubung ke single publikasi, CTA ke kanonis /publikasi/.
  *
  * @package kreasi_redesign_2026
  */
@@ -57,28 +57,28 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
 
 <section class="publications-section py-5 text-white position-relative overflow-hidden" style="background-color: #D8232A;">
     <div class="container py-lg-4">
-        <div class="row align-items-center gy-4">
+        <div class="row align-items-center gy-4 gy-lg-0">
 
             <!-- SISI KIRI: TITLE, SUBTITLE & CTA BUTTON (FIGMA) -->
-            <div class="col-lg-4 col-md-12">
-                <h2 class="text-white text-uppercase mb-3" style="font-family: 'Oswald', 'Bebas Neue', sans-serif; font-size: clamp(42px, 4.5vw, 64px); letter-spacing: 2px;">
+            <div class="col-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                <h2 class="text-white text-uppercase mb-3" style="font-family: 'Oswald', 'Bebas Neue', sans-serif; font-size: clamp(38px, 4vw, 56px); letter-spacing: 1.5px; line-height: 1.1;">
                     <?php echo esc_html(kreasi_t('publications_title', 'PUBLIKASI', 'PUBLICATIONS')); ?>
                 </h2>
-                <p class="text-white mb-4" style="font-family: 'Lato', sans-serif; font-size: 14.5px; opacity: 0.95; line-height: 1.6;">
+                <p class="text-white mb-4" style="font-family: 'Lato', sans-serif; font-size: 14px; opacity: 0.95; line-height: 1.6;">
                     <?php echo esc_html(kreasi_t('publications_subtitle', 'Dari buletin bulanan, hingga berbagai bahan ajar seperti poster, dan permainan, terus kami buat untuk mendukung implementasi program.', 'From monthly bulletins to learning materials such as posters and games, we continuously create them to support program implementation.')); ?>
                 </p>
                 <!-- CTA Button menuju kanonis /publikasi/ -->
                 <a href="<?php echo esc_url(home_url('/publikasi/')); ?>" 
-                   class="btn text-white px-4 py-3 text-uppercase shadow-sm publications-cta-btn d-inline-flex align-items-center justify-content-center" 
+                   class="btn text-white px-4 py-2.5 text-uppercase shadow-sm publications-cta-btn d-inline-flex align-items-center justify-content-center" 
                    style="background-color: #0E2A5D; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
                     <span><?php echo esc_html(kreasi_t('view_all_publications', 'LIHAT PUBLIKASI LAINNYA', 'VIEW ALL PUBLICATIONS')); ?></span>
                     <span class="btn-arrow ms-2">→</span>
                 </a>
             </div>
 
-            <!-- SISI KANAN: 4 CARDS PUBLIKASI GRID (DINAMIS DARI WP_QUERY ATAU FALLBACK TEMA) -->
-            <div class="col-lg-8 col-md-12">
-                <div class="row row-cols-2 row-cols-md-4 g-3 flex-nowrap overflow-x-auto flex-md-wrap pb-3 pb-md-0 mobile-horizontal-scroll">
+            <!-- SISI KANAN: 4 CARDS PUBLIKASI TERBARU (PROPORSIONAL DENGAN GAP OPTIMAL) -->
+            <div class="col-12 col-lg-9 col-xl-9">
+                <div class="row g-3 g-xl-4 flex-nowrap overflow-x-auto flex-md-wrap pt-2 pt-md-3 pb-3 pb-md-0 mobile-horizontal-scroll">
                     
                     <?php if ($has_dynamic_publications) : 
                         while ($pub_query->have_posts()) : $pub_query->the_post();
@@ -98,37 +98,36 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
                                 $card_image = $default_publications[$idx]['image'];
                             }
                     ?>
-                        <div class="col-7 col-sm-4 col-md-3 flex-shrink-0 flex-md-shrink-1">
-                            <a href="<?php echo esc_url($card_link); ?>" class="text-decoration-none">
+                        <div class="col-8 col-sm-6 col-md-3 flex-shrink-0 flex-md-shrink-1">
+                            <a href="<?php echo esc_url($card_link); ?>" class="text-decoration-none d-block h-100">
                                 <div class="publication-card d-flex flex-column h-100 position-relative">
 
-                                    <!-- COVER IMAGE CONTAINER WITH 3D LAYER SHADOW -->
-                                    <div class="publication-cover-wrap position-relative mb-2" style="height: 220px;">
+                                    <!-- COVER IMAGE CONTAINER WITH 3D LAYER SHADOW (ASPECT RATIO 1 / 1.38) -->
+                                    <div class="publication-cover-wrap position-relative mb-3" style="aspect-ratio: 1 / 1.38; width: 100%;">
                                         <!-- 3D RED/WHITE STACKED SHADOW LAYER -->
                                         <div class="pub-cover-shadow position-absolute rounded-3" 
-                                             style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #ffffff; opacity: 30%; border: 1px solid rgba(0,0,0,0.15); z-index: 1; transition: all 0.3s ease;"></div>
+                                             style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #ffffff; opacity: 30%; border: 1px solid rgba(255,255,255,0.3); z-index: 1;"></div>
                                         
                                         <!-- MAIN COVER IMAGE -->
                                         <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm"
-                                            style="background-color: #ffffff; z-index: 2; transition: all 0.3s ease;">
+                                            style="background-color: #ffffff; z-index: 2;">
                                             <img src="<?php echo esc_url($card_image); ?>"
                                                 alt="<?php echo esc_attr($card_title); ?>"
-                                                class="w-100 h-100 object-fit-cover pub-cover-img"
-                                                style="transition: transform 0.4s ease;">
+                                                class="w-100 h-100 object-fit-cover pub-cover-img">
                                         </div>
                                     </div>
 
                                     <!-- TAG BADGE -->
-                                    <div class="mb-1">
-                                        <span class="badge border border-white text-white rounded-pill fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10px; padding: 3px 8px;">
+                                    <div class="mb-2">
+                                        <span class="badge border border-white text-white rounded-pill fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10.5px; padding: 3px 10px; background-color: rgba(255,255,255,0.12);">
                                             📁 <?php echo esc_html(kreasi_translate_term($tag_label)); ?>
                                         </span>
                                     </div>
 
-                                    <!-- TITLE -->
-                                    <p class="text-white small fw-medium mb-0" style="font-family: 'Oswald', sans-serif; font-size: 13px; line-height: 1.35; display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <!-- TITLE (2 BARIS DENGAN KETINGGIAN KONSISTEN) -->
+                                    <h3 class="text-white fw-medium mb-0" style="font-family: 'Oswald', sans-serif; font-size: 13.5px; line-height: 1.4; display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; letter-spacing: 0.2px;">
                                         <?php echo esc_html($card_title); ?>
-                                    </p>
+                                    </h3>
                                 </div>
                             </a>
                         </div>
@@ -142,35 +141,34 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
                             $sample_img = isset($pub['image']) ? $pub['image'] : (isset($pub['img']) ? $pub['img'] : '');
                             $sample_url = isset($pub['link']) ? $pub['link'] : home_url('/publikasi/');
                     ?>
-                        <div class="col-7 col-sm-4 col-md-3 flex-shrink-0 flex-md-shrink-1">
-                            <a href="<?php echo esc_url($sample_url); ?>" class="text-decoration-none">
+                        <div class="col-8 col-sm-6 col-md-3 flex-shrink-0 flex-md-shrink-1">
+                            <a href="<?php echo esc_url($sample_url); ?>" class="text-decoration-none d-block h-100">
                                 <div class="publication-card d-flex flex-column h-100 position-relative">
 
-                                    <!-- COVER IMAGE CONTAINER WITH 3D LAYER SHADOW -->
-                                    <div class="publication-cover-wrap position-relative mb-2" style="height: 220px;">
+                                    <!-- COVER IMAGE CONTAINER WITH 3D LAYER SHADOW (ASPECT RATIO 1 / 1.38) -->
+                                    <div class="publication-cover-wrap position-relative mb-3" style="aspect-ratio: 1 / 1.38; width: 100%;">
                                         <div class="pub-cover-shadow position-absolute rounded-3" 
-                                             style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #ffffff; opacity: 30%; border: 1px solid rgba(0,0,0,0.15); z-index: 1; transition: all 0.3s ease;"></div>
+                                             style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #ffffff; opacity: 30%; border: 1px solid rgba(255,255,255,0.3); z-index: 1;"></div>
                                         
                                         <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm"
-                                            style="background-color: #ffffff; z-index: 2; transition: all 0.3s ease;">
+                                            style="background-color: #ffffff; z-index: 2;">
                                             <img src="<?php echo esc_url($sample_img); ?>"
                                                 alt="<?php echo esc_attr($pub['title']); ?>"
-                                                class="w-100 h-100 object-fit-cover pub-cover-img"
-                                                style="transition: transform 0.4s ease;">
+                                                class="w-100 h-100 object-fit-cover pub-cover-img">
                                         </div>
                                     </div>
 
                                     <!-- TAG BADGE -->
-                                    <div class="mb-1">
-                                        <span class="badge border border-white text-white rounded-pill fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10px; padding: 3px 8px;">
+                                    <div class="mb-2">
+                                        <span class="badge border border-white text-white rounded-pill fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10.5px; padding: 3px 10px; background-color: rgba(255,255,255,0.12);">
                                             📁 <?php echo esc_html(kreasi_translate_term($sample_tag)); ?>
                                         </span>
                                     </div>
 
                                     <!-- TITLE -->
-                                    <p class="text-white small fw-medium mb-0" style="font-family: 'Oswald', sans-serif; font-size: 13px; line-height: 1.35; display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <h3 class="text-white fw-medium mb-0" style="font-family: 'Oswald', sans-serif; font-size: 13.5px; line-height: 1.4; display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; letter-spacing: 0.2px;">
                                         <?php echo esc_html($pub['title']); ?>
-                                    </p>
+                                    </h3>
                                 </div>
                             </a>
                         </div>
@@ -227,7 +225,7 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
 
     .publication-card:hover .pub-cover-main {
         transform: translate(-5px, -6px) rotate(-3deg);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35) !important;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35) !important;
     }
 
     .publication-card:hover .pub-cover-shadow {

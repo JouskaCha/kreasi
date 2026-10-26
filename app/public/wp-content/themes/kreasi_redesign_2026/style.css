@@ -1513,3 +1513,51 @@ img {
 .btn-event-cta:hover {
   background-color: #D8232A !important;
 }
+
+/* 3D Publication Cover & Hover Animation */
+.publication-card,
+.publication-item {
+  cursor: pointer;
+}
+
+.publication-card .pub-cover-main,
+.publication-item .pub-cover-main {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: center center;
+}
+
+.publication-card .pub-cover-shadow,
+.publication-item .pub-cover-shadow {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, background-color 0.4s ease;
+  transform-origin: center center;
+}
+
+.publication-card .pub-cover-img,
+.publication-item .pub-cover-img,
+.publication-item .publication-cover-img {
+  transition: transform 0.4s ease;
+}
+
+.publication-card:hover .pub-cover-main,
+.publication-item:hover .pub-cover-main {
+  transform: translate(-5px, -6px) rotate(-3deg);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22) !important;
+}
+
+.publication-card:hover .pub-cover-shadow,
+.publication-item:hover .pub-cover-shadow {
+  transform: translate(6px, 8px) rotate(3.5deg);
+  opacity: 0.95;
+  background-color: #E2E8F0 !important;
+}
+
+.publication-card:hover .pub-cover-img,
+.publication-item:hover .pub-cover-img,
+.publication-item:hover .publication-cover-img {
+  transform: scale(1.04);
+}
+
+.publication-item:hover .publication-title-link {
+  color: #D8232A !important;
+}
+

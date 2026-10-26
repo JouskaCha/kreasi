@@ -109,7 +109,7 @@ if ($is_category_view) {
                     </div>
 
                     <!-- ROW PUBLICATION CARDS (4 KOLOM DENGAN HORIZONTAL SCROLL PEEK) -->
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 flex-nowrap overflow-x-auto flex-lg-wrap pb-3 pb-lg-0 publication-cards-scroll">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 flex-nowrap overflow-x-auto flex-lg-wrap pb-3 pb-lg-0 publication-cards-scroll pt-2">
                         
                         <?php if ($has_wp_posts) : 
                             while ($cat_query->have_posts()) : $cat_query->the_post(); 
@@ -132,15 +132,18 @@ if ($is_category_view) {
                         ?>
                                 <div class="col-9 col-sm-6 col-md-4 col-lg-3 flex-shrink-0 flex-lg-shrink-1">
                                     <div class="publication-item d-flex flex-column h-100">
-                                        <!-- Cover Image -->
-                                        <div class="publication-cover-container position-relative mb-3 rounded-3 overflow-hidden" 
-                                             style="aspect-ratio: 1 / 1.38; background-color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #ECECEC;">
-                                            <a href="<?php echo esc_url($card_link); ?>" class="d-block w-100 h-100">
-                                                <img src="<?php echo esc_url($card_image); ?>" 
-                                                     alt="<?php echo esc_attr($card_title); ?>" 
-                                                     class="w-100 h-100 object-fit-cover publication-cover-img" 
-                                                     style="transition: transform 0.35s ease;">
-                                            </a>
+                                        <!-- Cover Image with 3D Stacked Shadow (Identik Front-Page) -->
+                                        <div class="publication-cover-wrap position-relative mb-3" style="aspect-ratio: 1 / 1.38;">
+                                            <div class="pub-cover-shadow position-absolute rounded-3" 
+                                                 style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #E2E8F0; opacity: 0.8; border: 1px solid #CBD5E1; z-index: 1;"></div>
+                                            <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm"
+                                                 style="background-color: #ffffff; z-index: 2;">
+                                                <a href="<?php echo esc_url($card_link); ?>" class="d-block w-100 h-100">
+                                                    <img src="<?php echo esc_url($card_image); ?>" 
+                                                         alt="<?php echo esc_attr($card_title); ?>" 
+                                                         class="w-100 h-100 object-fit-cover pub-cover-img publication-cover-img">
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <!-- Metadata Bar (Tag + Date) -->
@@ -178,15 +181,18 @@ if ($is_category_view) {
                         ?>
                                 <div class="col-9 col-sm-6 col-md-4 col-lg-3 flex-shrink-0 flex-lg-shrink-1">
                                     <div class="publication-item d-flex flex-column h-100">
-                                        <!-- Cover Image -->
-                                        <div class="publication-cover-container position-relative mb-3 rounded-3 overflow-hidden" 
-                                             style="aspect-ratio: 1 / 1.38; background-color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #ECECEC;">
-                                            <a href="<?php echo esc_url($pub['link']); ?>" class="d-block w-100 h-100">
-                                                <img src="<?php echo esc_url($pub['image']); ?>" 
-                                                     alt="<?php echo esc_attr($pub['title']); ?>" 
-                                                     class="w-100 h-100 object-fit-cover publication-cover-img" 
-                                                     style="transition: transform 0.35s ease;">
-                                            </a>
+                                        <!-- Cover Image with 3D Stacked Shadow (Identik Front-Page) -->
+                                        <div class="publication-cover-wrap position-relative mb-3" style="aspect-ratio: 1 / 1.38;">
+                                            <div class="pub-cover-shadow position-absolute rounded-3" 
+                                                 style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #E2E8F0; opacity: 0.8; border: 1px solid #CBD5E1; z-index: 1;"></div>
+                                            <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm"
+                                                 style="background-color: #ffffff; z-index: 2;">
+                                                <a href="<?php echo esc_url($pub['link']); ?>" class="d-block w-100 h-100">
+                                                    <img src="<?php echo esc_url($pub['image']); ?>" 
+                                                         alt="<?php echo esc_attr($pub['title']); ?>" 
+                                                         class="w-100 h-100 object-fit-cover pub-cover-img publication-cover-img">
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <!-- Metadata Bar (Tag + Date) -->
@@ -322,14 +328,18 @@ if ($is_category_view) {
                 ?>
                         <div class="col">
                             <div class="publication-item d-flex flex-column h-100">
-                                <div class="publication-cover-container position-relative mb-3 rounded-3 overflow-hidden" 
-                                     style="aspect-ratio: 1 / 1.38; background-color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #ECECEC;">
-                                    <a href="<?php echo esc_url($card_link); ?>" class="d-block w-100 h-100">
-                                        <img src="<?php echo esc_url($card_image); ?>" 
-                                             alt="<?php echo esc_attr($card_title); ?>" 
-                                             class="w-100 h-100 object-fit-cover publication-cover-img" 
-                                             style="transition: transform 0.35s ease;">
-                                    </a>
+                                <!-- Cover Image with 3D Stacked Shadow (Identik Front-Page) -->
+                                <div class="publication-cover-wrap position-relative mb-3" style="aspect-ratio: 1 / 1.38;">
+                                    <div class="pub-cover-shadow position-absolute rounded-3" 
+                                         style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #E2E8F0; opacity: 0.8; border: 1px solid #CBD5E1; z-index: 1;"></div>
+                                    <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm"
+                                         style="background-color: #ffffff; z-index: 2;">
+                                        <a href="<?php echo esc_url($card_link); ?>" class="d-block w-100 h-100">
+                                            <img src="<?php echo esc_url($card_image); ?>" 
+                                                 alt="<?php echo esc_attr($card_title); ?>" 
+                                                 class="w-100 h-100 object-fit-cover pub-cover-img publication-cover-img">
+                                        </a>
+                                    </div>
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between mb-2">
@@ -366,14 +376,18 @@ if ($is_category_view) {
                 ?>
                         <div class="col">
                             <div class="publication-item d-flex flex-column h-100">
-                                <div class="publication-cover-container position-relative mb-3 rounded-3 overflow-hidden" 
-                                     style="aspect-ratio: 1 / 1.38; background-color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #ECECEC;">
-                                    <a href="<?php echo esc_url($pub['link']); ?>" class="d-block w-100 h-100">
-                                        <img src="<?php echo esc_url($pub['image']); ?>" 
-                                             alt="<?php echo esc_attr($pub['title']); ?>" 
-                                             class="w-100 h-100 object-fit-cover publication-cover-img" 
-                                             style="transition: transform 0.35s ease;">
-                                    </a>
+                                <!-- Cover Image with 3D Stacked Shadow (Identik Front-Page) -->
+                                <div class="publication-cover-wrap position-relative mb-3" style="aspect-ratio: 1 / 1.38;">
+                                    <div class="pub-cover-shadow position-absolute rounded-3" 
+                                         style="top: 6px; left: 6px; width: 100%; height: 100%; background-color: #E2E8F0; opacity: 0.8; border: 1px solid #CBD5E1; z-index: 1;"></div>
+                                    <div class="pub-cover-main position-absolute top-0 start-0 w-100 h-100 rounded-3 overflow-hidden shadow-sm"
+                                         style="background-color: #ffffff; z-index: 2;">
+                                        <a href="<?php echo esc_url($pub['link']); ?>" class="d-block w-100 h-100">
+                                            <img src="<?php echo esc_url($pub['image']); ?>" 
+                                                 alt="<?php echo esc_attr($pub['title']); ?>" 
+                                                 class="w-100 h-100 object-fit-cover pub-cover-img publication-cover-img">
+                                        </a>
+                                    </div>
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between mb-2">
@@ -442,9 +456,45 @@ if ($is_category_view) {
     display: none !important;
 }
 
-/* Hover cover zoom effect */
-.publication-cover-container:hover .publication-cover-img {
+/* 3D PUBLICATION COVER & HOVER ANIMATION (IDENTIK DENGAN FRONT-PAGE SECTION PUBLIKASI) */
+.publication-item {
+    cursor: pointer;
+}
+
+.publication-item .pub-cover-main {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-origin: center center;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.publication-item .pub-cover-shadow {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, background-color 0.4s ease;
+    transform-origin: center center;
+}
+
+.publication-item .pub-cover-img,
+.publication-item .publication-cover-img {
+    transition: transform 0.4s ease;
+}
+
+.publication-item:hover .pub-cover-main {
+    transform: translate(-5px, -6px) rotate(-3deg);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22) !important;
+}
+
+.publication-item:hover .pub-cover-shadow {
+    transform: translate(6px, 8px) rotate(3.5deg);
+    opacity: 0.95;
+    background-color: #E2E8F0 !important;
+}
+
+.publication-item:hover .pub-cover-img,
+.publication-item:hover .publication-cover-img {
     transform: scale(1.04);
+}
+
+.publication-item:hover .publication-title-link {
+    color: #D8232A !important;
 }
 
 .publication-title-link:hover {
