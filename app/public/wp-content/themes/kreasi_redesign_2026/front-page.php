@@ -195,13 +195,13 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                 
                 <!-- SISI KIRI: HEADING & CTA BUTTON -->
                 <div class="col-lg-5 col-md-12">
-                    <h2 class="mb-4" style="color: #0E2A5D; font-size: 56px; line-height: 1.15; letter-spacing: -0.5px;">
+                    <h2 class="mb-4" style="color: #0E2A5D; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 56px; line-height: 1.15; letter-spacing: -0.5px;">
                         <?php echo wp_kses_post(kreasi_t('quality_edu_title', 'UNTUK PENDIDIKAN<br>YANG <span style="color: #D8232A;">BERKUALITAS</span>', 'FOR QUALITY<br><span style="color: #D8232A;">EDUCATION</span>')); ?>
                     </h2>
                     
                     <a href="<?php echo esc_url(home_url('/tentang-kami')); ?>" 
                        class="btn text-white px-4 py-3 text-uppercase shadow-sm about-cta-btn" 
-                       style="background-color: #D8232A; border-radius: 6px; font-size: 13px; letter-spacing: 0.5px; transition: all 0.3s ease;">
+                       style="background-color: #D8232A; border-radius: 6px; font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 16px; letter-spacing: 0.5px; transition: all 0.3s ease;">
                         <?php echo esc_html(kreasi_t('more_about_us', 'SELENGKAPNYA TENTANG KAMI', "LET'S READ MORE")); ?>
                     </a>
                 </div>
@@ -226,7 +226,7 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
             
             <!-- HEADER SECTION -->
             <div class="text-center mb-5">
-                <h2 class="text-white text-uppercase mb-2" style="font-size: 64px; letter-spacing: 0.5px;">
+                <h2 class="text-white text-uppercase mb-2" style="font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 64px; letter-spacing: 0.5px;">
                     <?php echo esc_html(kreasi_t('impact_title', 'MEMBAWA PERUBAHAN KE PELOSOK', 'BRINGING CHANGE TO REMOTE AREAS')); ?>
                 </h2>
                 <p class="text-white mb-0" style="font-family: 'Lato', sans-serif; font-size: 18px; font-weight: 700; opacity: 0.9; margin-left: auto; margin-right: auto;">
@@ -241,28 +241,28 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
                 $default_cards = array(
                     array(
                         'number'   => '50,000',
-                        'label'    => kreasi_t('student', 'Murid', 'Students'),
+                        'label'    => kreasi_t('student', 'MURID', 'SSTUDENTS'),
                         'desc'     => 'Mendapatkan akses buku berkualitas dan ruang baca yang nyaman untuk menumbuhkan kecintaan pada literasi sejak dini.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-murid.png',
                         'fallback' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '4,000',
-                        'label'    => kreasi_t('teacher', 'Guru', 'Teachers'),
+                        'label'    => kreasi_t('teacher', 'GURU', 'TEACHERS'),
                         'desc'     => 'Mendapatkan pelatihan metode pembelajaran kreatif dan efektif untuk meningkatkan kualitas pengajaran di kelas.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-guru.png',
                         'fallback' => 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '560',
-                        'label'    => kreasi_t('school_principal', 'Kepala Sekolah', 'School Principals'),
+                        'label'    => kreasi_t('school_principal', 'KEPALA SEKOLAH', 'SCHOOL PRINCIPALS'),
                         'desc'     => 'Mendapatkan pendampingan manajemen kepemimpinan sekolah dan tata kelola pendidikan yang inklusif.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-kepala-sekolah.png',
                         'fallback' => 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=600&auto=format&fit=crop'
                     ),
                     array(
                         'number'   => '560',
-                        'label'    => kreasi_t('school', 'Sekolah', 'Schools'),
+                        'label'    => kreasi_t('school', 'SEKOLAH', 'SCHOOLS'),
                         'desc'     => 'Menerima perbaikan fasilitas perpustakaan, sarana belajar, dan ruang kelas yang kondusif untuk siswa.',
                         'image'    => get_template_directory_uri() . '/assets/images/impact-sekolah.png',
                         'fallback' => 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=600&auto=format&fit=crop'
@@ -297,10 +297,10 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
 
                             <!-- KONTEN ANGKA & LABEL (BERGESER KE ATAS SAAT HOVER) -->
                             <div class="card-body position-relative z-2 d-flex flex-column justify-content-end align-items-center p-3 p-md-4 text-white h-100 impact-card-main-content">
-                                <h3 class="text-white mb-0 text-center impact-card-num" style="line-height: 1.0; letter-spacing: -0.5px;">
+                                <h3 class="text-white mb-0 text-center impact-card-num" style="font-family: 'Bebas Neue', sans-serif; font-weight: 400; line-height: 1.0; letter-spacing: -0.5px;">
                                     <?php echo esc_html($card_num); ?>
                                 </h3>
-                                <p class="text-white mb-0 mt-1 text-center impact-card-lbl">
+                                <p class="text-white mb-0 mt-1 text-center impact-card-lbl text-uppercase" style="font-family: 'Oswald', sans-serif;">
                                     <?php echo esc_html($card_lbl); ?>
                                 </p>
                             </div>
@@ -339,9 +339,13 @@ $interval = get_theme_mod('hero_slider_interval', 6000);
         cursor: pointer;
     }
     .impact-card-num {
+        font-family: 'Bebas Neue', sans-serif !important;
+        font-weight: 400 !important;
         font-size: 80px;
     }
     .impact-card-lbl {
+        font-family: 'Oswald', sans-serif !important;
+        text-transform: uppercase !important;
         font-size: 16px;
     }
     .impact-card .impact-card-main-content {

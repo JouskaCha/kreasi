@@ -81,9 +81,9 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
                 <!-- CTA Button menuju kanonis /publikasi/ -->
                 <a href="<?php echo esc_url(home_url('/publikasi/')); ?>" 
                    class="btn text-white px-4 py-2.5 text-uppercase shadow-sm publications-cta-btn d-inline-flex align-items-center justify-content-center" 
-                   style="background-color: #0E2A5D; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
+                   style="background-color: #0E2A5D; border-radius: 6px; font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 16px; padding: 12px 28px; letter-spacing: 0.5px; transition: all 0.35s ease;">
                     <span><?php echo esc_html(kreasi_t('view_all_publications', 'LIHAT PUBLIKASI LAINNYA', 'VIEW ALL PUBLICATIONS')); ?></span>
-                    <span class="btn-arrow ms-2">→</span>
+                    <span class="btn-arrow">→</span>
                 </a>
             </div>
 
@@ -130,7 +130,7 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
 
                                     <!-- TAG BADGE -->
                                     <div class="mb-2">
-                                        <span class="badge border border-white text-white rounded-pill fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10.5px; padding: 3px 10px; background-color: rgba(255,255,255,0.12);">
+                                        <span class="badge border border-white text-white rounded-2 fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10px; padding: 2px 7px; border-radius: 4px; background-color: rgba(255,255,255,0.12); display: inline-flex; align-items: center; width: fit-content; max-width: fit-content;">
                                             📁 <?php echo esc_html(kreasi_translate_term($tag_label)); ?>
                                         </span>
                                     </div>
@@ -189,7 +189,7 @@ $default_publications = function_exists('kreasi_get_default_publications') ? kre
 
                                     <!-- TAG BADGE -->
                                     <div class="mb-2">
-                                        <span class="badge border border-white text-white rounded-pill fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10.5px; padding: 3px 10px; background-color: rgba(255,255,255,0.12);">
+                                        <span class="badge border border-white text-white rounded-2 fw-normal" style="font-family: 'Lato', sans-serif; font-size: 10px; padding: 2px 7px; border-radius: 4px; background-color: rgba(255,255,255,0.12); display: inline-flex; align-items: center; width: fit-content; max-width: fit-content;">
                                             📁 <?php echo esc_html(kreasi_translate_term($sample_tag)); ?>
                                         </span>
                                     </div>

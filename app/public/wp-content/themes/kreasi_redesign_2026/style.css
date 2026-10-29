@@ -136,7 +136,7 @@ img {
 
 .kreasi-nav-menu ul li a {
     font-family: 'Oswald', sans-serif;
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 400 !important;
     letter-spacing: 0.4px;
 }
@@ -159,12 +159,12 @@ img {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 30px;
-    padding: 0 16px;
+    min-height: 36px;
+    padding: 4px 18px;
     border-radius: 20px;
     background-color: #f1f3f7;
     color: #163d6b;
-    font-size: 11px;
+    font-size: 16px !important;
     font-weight: 400;
     text-decoration: none;
     letter-spacing: 0.4px;
@@ -258,7 +258,7 @@ img {
 
 /* Search input */
 .header-search-form input[type="search"] {
-    font-size: 11px;
+    font-size: 16px !important;
     font-weight: 400;
 }
 
@@ -1561,3 +1561,77 @@ img {
   color: #D8232A !important;
 }
 
+
+/* =========================================
+   REVISI BUTTONS, BADGES, SHADOW & TYPOGRAPHY
+========================================= */
+/* All buttons: Oswald Regular, Font-weight 400, 16px */
+.btn,
+button.btn,
+a.btn,
+.about-cta-btn,
+.articles-more-btn,
+.publications-cta-btn,
+.btn-navy-download,
+.btn-red-read,
+.btn-event-cta,
+.btn-subscribe,
+.btn-report {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+}
+
+/* Badges: sedikit kotak tidak full oval */
+.badge-slightly-rounded,
+.badge-cat-outline,
+.badge-tag-outline,
+.single-article-meta .badge,
+.article-card .badge,
+.single-article-related .badge {
+    border-radius: 4px !important;
+}
+
+/* Card article shadow & background #F6F6F6 */
+.article-card {
+    background-color: #F6F6F6 !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+.article-card:hover {
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16) !important;
+}
+
+/* Cegah bayangan hover terpotong */
+.latest-articles-section,
+.latest-articles-section .container,
+.single-article-related,
+.single-article-related .container {
+    overflow: visible !important;
+}
+@media (min-width: 768px) {
+    .mobile-horizontal-scroll {
+        overflow: visible !important;
+        padding-top: 10px;
+        padding-bottom: 15px;
+    }
+}
+
+/* Button Arrow Hover Animation & Perfect Balanced Padding */
+.articles-more-btn .btn-arrow,
+.publications-cta-btn .btn-arrow {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(10px);
+    max-width: 0;
+    margin-left: 0;
+    white-space: nowrap;
+    transition: opacity 0.35s ease, transform 0.35s ease, max-width 0.35s ease, margin-left 0.35s ease;
+}
+.articles-more-btn:hover .btn-arrow,
+.publications-cta-btn:hover .btn-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    max-width: 20px;
+    margin-left: 8px;
+}

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Footer template for kreasi_redesign_2026
  *
@@ -10,7 +10,7 @@
     <div class="container-fluid px-4 px-lg-5">
         <div class="row gx-lg-5 gy-4 align-items-start">
             <!-- KOLOM 1: Branding & Organisasi Pengelola -->
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-5 col-md-12">
                 <div class="footer-branding-wrap d-flex flex-column h-100 justify-content-between">
 
                     <!-- Logo KREASI: Hardcode -->
@@ -52,7 +52,7 @@
                         <!-- Alamat Kantor -->
                         <li class="d-flex align-items-start mb-3">
                             <span class="contact-icon me-3 mt-1 flex-shrink-0">
-                                <i class="bi bi-geo-alt-fill"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-footer/maps.png'); ?>" alt="Alamat" width="20" height="20" style="object-fit: contain;">
                             </span>
                             <span class="contact-text">
                                 <?php echo esc_html(kreasi_t('contact_address', 'Kantor Nasional Jalan Bangka IX Nomor 40A&B, Pela Mampang, Mampang Prapatan, Jakarta Selatan, DKI Jakarta 12720', 'National Office Jalan Bangka IX No. 40A&B, Pela Mampang, Mampang Prapatan, South Jakarta, DKI Jakarta 12720')); ?>
@@ -62,7 +62,7 @@
                         <!-- Telepon -->
                         <li class="d-flex align-items-center mb-3">
                             <span class="contact-icon me-3 flex-shrink-0">
-                                <i class="bi bi-telephone-fill"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-footer/phone.png'); ?>" alt="Telepon" width="20" height="20" style="object-fit: contain;">
                             </span>
                             <a href="tel:+62217824415" class="contact-link">
                                 (+62) 217824415
@@ -72,7 +72,7 @@
                         <!-- Email -->
                         <li class="d-flex align-items-center mb-3">
                             <span class="contact-icon me-3 flex-shrink-0">
-                                <i class="bi bi-envelope-fill"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-footer/email.png'); ?>" alt="Email" width="20" height="20" style="object-fit: contain;">
                             </span>
                             <a href="mailto:indonesia.kreasi@savethechildren.org" class="contact-link text-break">
                                 indonesia.kreasi@savethechildren.org
@@ -82,7 +82,7 @@
                         <!-- Instagram -->
                         <li class="d-flex align-items-center mb-3">
                             <span class="contact-icon me-3 flex-shrink-0">
-                                <i class="bi bi-instagram"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-footer/instagram.png'); ?>" alt="Instagram" width="20" height="20" style="object-fit: contain;">
                             </span>
                             <a href="https://instagram.com/kreasinasional" target="_blank" rel="noopener noreferrer" class="contact-link">
                                 @kreasinasional
@@ -92,7 +92,7 @@
                         <!-- YouTube -->
                         <li class="d-flex align-items-center mb-0">
                             <span class="contact-icon me-3 flex-shrink-0">
-                                <i class="bi bi-youtube"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-footer/youtube.png'); ?>" alt="YouTube" width="20" height="20" style="object-fit: contain;">
                             </span>
                             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="contact-link">
                                 KREASI (Kolaborasi untuk Edukasi Anak Indonesia)
@@ -105,7 +105,7 @@
             <!-- =========================================================
                  KOLOM 3: Widget Interaktif (Newsletter & Laporan)
             ========================================================== -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <?php if (is_active_sidebar('footer-col-3')) : ?>
                     <?php dynamic_sidebar('footer-col-3'); ?>
                 <?php else : ?>

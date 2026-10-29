@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Template Name: Artikel
  * The template for displaying the article archive and search page.
@@ -356,7 +356,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                         ? add_query_arg('daerah', $item_featured['tag_slug'], $base_artikel_url) 
                         : $base_artikel_url;
                     ?>
-                    <article class="card article-card featured-main-card border-0 rounded-4 shadow-sm p-4 bg-white h-100 d-flex flex-column justify-content-between">
+                    <article class="card article-card featured-main-card border-0 rounded-4 shadow-sm p-4" style="background-color: #F6F6F6;" h-100 d-flex flex-column justify-content-between">
                         <div>
                             <!-- Thumbnail Besar 16:9 -->
                             <div class="position-relative overflow-hidden rounded-3 mb-3" style="aspect-ratio: 16/9; width: 100%;">
@@ -371,7 +371,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                             <!-- Badges (Kategori Child + Daerah) - Klik untuk Filter/Cari -->
                             <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                                 <a href="<?php echo esc_url($cat_url_featured); ?>" 
-                                   class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
+                                   class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                                     </svg>
@@ -379,7 +379,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                                 </a>
                                 <?php if (!empty($item_featured['tag_name'])) : ?>
                                 <a href="<?php echo esc_url($tag_url_featured); ?>" 
-                                   class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
+                                   class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                         <circle cx="12" cy="10" r="3"></circle>
@@ -391,7 +391,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
 
                             <!-- Judul Besar -->
                             <h2 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: clamp(20px, 2.3vw, 26px); line-height: 1.3;">
-                                <a href="<?php echo esc_url($item_featured['permalink']); ?>" class="text-decoration-none text-dark article-title-link">
+                                <a href="<?php echo esc_url($item_featured['permalink']); ?>" class="text-decoration-none text-dark article-title-link" style="text-transform: none !important;">
                                     <?php echo esc_html($item_featured['title']); ?>
                                 </a>
                             </h2>
@@ -434,7 +434,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                             ? add_query_arg('daerah', $item_side_1['tag_slug'], $base_artikel_url) 
                             : $base_artikel_url;
                     ?>
-                        <article class="card article-card border-0 rounded-4 shadow-sm p-3 bg-white flex-fill d-flex flex-column justify-content-between">
+                        <article class="card article-card border-0 rounded-4 shadow-sm p-3 flex-fill" style="background-color: #F6F6F6;" d-flex flex-column justify-content-between">
                             <div>
                                 <div class="position-relative overflow-hidden rounded-3 mb-2" style="aspect-ratio: 16/9; width: 100%;">
                                     <a href="<?php echo esc_url($item_side_1['permalink']); ?>">
@@ -447,7 +447,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
 
                                 <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                                     <a href="<?php echo esc_url($cat_url_side1); ?>" 
-                                       class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
+                                       class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                                         </svg>
@@ -455,7 +455,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                                     </a>
                                     <?php if (!empty($item_side_1['tag_name'])) : ?>
                                     <a href="<?php echo esc_url($tag_url_side1); ?>" 
-                                       class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
+                                       class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                             <circle cx="12" cy="10" r="3"></circle>
@@ -466,7 +466,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                                 </div>
 
                                 <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 16px; line-height: 1.35;">
-                                    <a href="<?php echo esc_url($item_side_1['permalink']); ?>" class="text-decoration-none text-dark article-title-link">
+                                    <a href="<?php echo esc_url($item_side_1['permalink']); ?>" class="text-decoration-none text-dark article-title-link" style="text-transform: none !important;">
                                         <?php echo esc_html($item_side_1['title']); ?>
                                     </a>
                                 </h4>
@@ -488,7 +488,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                             ? add_query_arg('daerah', $item_side_2['tag_slug'], $base_artikel_url) 
                             : $base_artikel_url;
                     ?>
-                        <article class="card article-card border-0 rounded-4 shadow-sm p-3 bg-white flex-fill d-flex flex-column justify-content-between">
+                        <article class="card article-card border-0 rounded-4 shadow-sm p-3 flex-fill" style="background-color: #F6F6F6;" d-flex flex-column justify-content-between">
                             <div>
                                 <div class="position-relative overflow-hidden rounded-3 mb-2" style="aspect-ratio: 16/9; width: 100%;">
                                     <a href="<?php echo esc_url($item_side_2['permalink']); ?>">
@@ -501,7 +501,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
 
                                 <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                                     <a href="<?php echo esc_url($cat_url_side2); ?>" 
-                                       class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
+                                       class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                                         </svg>
@@ -509,7 +509,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                                     </a>
                                     <?php if (!empty($item_side_2['tag_name'])) : ?>
                                     <a href="<?php echo esc_url($tag_url_side2); ?>" 
-                                       class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
+                                       class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                             <circle cx="12" cy="10" r="3"></circle>
@@ -520,7 +520,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                                 </div>
 
                                 <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 16px; line-height: 1.35;">
-                                    <a href="<?php echo esc_url($item_side_2['permalink']); ?>" class="text-decoration-none text-dark article-title-link">
+                                    <a href="<?php echo esc_url($item_side_2['permalink']); ?>" class="text-decoration-none text-dark article-title-link" style="text-transform: none !important;">
                                         <?php echo esc_html($item_side_2['title']); ?>
                                     </a>
                                 </h4>
@@ -551,7 +551,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                             : $base_artikel_url;
                     ?>
                         <div class="col-12 col-md-6 col-lg-4">
-                            <article class="card article-card border-0 rounded-4 shadow-sm p-3 bg-white h-100 d-flex flex-column justify-content-between">
+                            <article class="card article-card border-0 rounded-4 shadow-sm p-3 h-100" style="background-color: #F6F6F6;" d-flex flex-column justify-content-between">
                                 <div>
                                     <div class="position-relative overflow-hidden rounded-3 mb-3" style="aspect-ratio: 16/9; width: 100%;">
                                         <a href="<?php echo esc_url($grid_item['permalink']); ?>">
@@ -564,7 +564,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
 
                                     <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
                                         <a href="<?php echo esc_url($cat_url_grid); ?>" 
-                                           class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
+                                           class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-cat-outline text-decoration-none">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                                             </svg>
@@ -572,7 +572,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                                         </a>
                                         <?php if (!empty($grid_item['tag_name'])) : ?>
                                         <a href="<?php echo esc_url($tag_url_grid); ?>" 
-                                           class="badge rounded-pill fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
+                                           class="badge rounded-2 fw-medium bg-transparent d-inline-flex align-items-center badge-tag-outline text-decoration-none">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                                 <circle cx="12" cy="10" r="3"></circle>
@@ -583,7 +583,7 @@ $is_filtered = (!empty($current_kategori) && $current_kategori !== 'semua')
                                     </div>
 
                                     <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 16px; line-height: 1.35;">
-                                        <a href="<?php echo esc_url($grid_item['permalink']); ?>" class="text-decoration-none text-dark article-title-link">
+                                        <a href="<?php echo esc_url($grid_item['permalink']); ?>" class="text-decoration-none text-dark article-title-link" style="text-transform: none !important;">
                                             <?php echo esc_html($grid_item['title']); ?>
                                         </a>
                                     </h4>

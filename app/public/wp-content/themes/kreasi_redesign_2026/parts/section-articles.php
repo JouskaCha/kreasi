@@ -101,7 +101,7 @@ if (!$has_articles) {
         
         <!-- HEADER SECTION -->
         <div class="text-center mb-5">
-            <h2 class="text-dark text-uppercase mb-2" style="font-size: 64px; letter-spacing: 0.5px; color: #1A202C;">
+            <h2 class="text-dark text-uppercase mb-2" style="font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 64px; letter-spacing: 0.5px; color: #1A202C;">
                 <?php echo esc_html(kreasi_t('latest_articles_title', 'ARTIKEL TERKINI', 'LATEST ARTICLES')); ?>
             </h2>
             <p class="mb-0" style="font-family: 'Lato', sans-serif; font-size: 18px; font-weight: 500; opacity: 0.9; margin-left: auto; margin-right: auto;">
@@ -130,7 +130,7 @@ if (!$has_articles) {
                     $tag_name = $tag_obj ? $tag_obj->name : (!empty($tags) ? $tags[0]->name : '');
             ?>
                     <div class="col-10 col-sm-6 col-lg-4 flex-shrink-0 flex-md-shrink-1">
-                        <div class="card article-card border-0 rounded-4 overflow-hidden shadow-sm h-100 bg-white">
+                        <div class="card article-card border-0 rounded-4 overflow-hidden shadow-sm h-100" style="background-color: #F6F6F6;">
                             
                             <!-- THUMBNAIL IMAGE -->
                             <div class="position-relative overflow-hidden" style="height: 210px;">
@@ -156,7 +156,7 @@ if (!$has_articles) {
                                         $tag_url_home = $tag_obj ? add_query_arg('daerah', $tag_obj->slug, home_url('/artikel/')) : home_url('/artikel/');
                                         ?>
                                         <!-- BADGE KATEGORI (KLIK UNTUK FILTER) -->
-                                        <a href="<?php echo esc_url($cat_url_home); ?>" class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center text-decoration-none"
+                                        <a href="<?php echo esc_url($cat_url_home); ?>" class="badge rounded-2 fw-semibold bg-transparent d-inline-flex align-items-center text-decoration-none"
                                             style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #163d6b; color: #163d6b;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
@@ -169,7 +169,7 @@ if (!$has_articles) {
                                         </a>
                                         <!-- BADGE TAG DAERAH (KLIK UNTUK FILTER) -->
                                         <?php if (!empty($tag_name)) : ?>
-                                        <a href="<?php echo esc_url($tag_url_home); ?>" class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center text-decoration-none"
+                                        <a href="<?php echo esc_url($tag_url_home); ?>" class="badge rounded-2 fw-semibold bg-transparent d-inline-flex align-items-center text-decoration-none"
                                             style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -181,10 +181,10 @@ if (!$has_articles) {
                                     </div>
                                     <!-- TITLE -->
                                     <h5 class="fw-bold mb-3"
-                                        style="font-family: 'Oswald', sans-serif; color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px;">
+                                        style="font-family: 'Oswald', sans-serif; color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px; text-transform: none !important;">
                                         <a href="<?php the_permalink(); ?>"
                                         class="text-decoration-none text-dark article-title-link"
-                                        style="font-family: 'Oswald', sans-serif; transition: color 0.3s ease;">
+                                        style="font-family: 'Oswald', sans-serif; text-transform: none !important; transition: color 0.3s ease;">
                                             <?php the_title(); ?>
                                         </a>
                                     </h5>
@@ -192,11 +192,11 @@ if (!$has_articles) {
 
                                 <!-- DATE & SELENGKAPNYA LINK (ANIMASI MASUK DARI BAWAH) -->
                                 <div class="mt-3 d-flex align-items-center justify-content-between position-relative" style="min-height: 24px;">
-                                    <span class="fw-semibold small"
-                                        style="font-family: 'Lato', sans-serif; color: #D8232A; font-size: 12px;">
+                                    <span class="small"
+                                        style="font-family: 'Lato', sans-serif; font-weight: 400; color: #D8232A; font-size: 12px;">
                                         <?php echo get_the_date('j F Y'); ?>
                                     </span>
-                                    <a href="<?php the_permalink(); ?>" class="text-decoration-none fw-bold text-uppercase article-hover-link" style="color: #D8232A; font-size: 11px; letter-spacing: 0.5px;">
+                                    <a href="<?php the_permalink(); ?>" class="text-decoration-none text-uppercase article-hover-link" style="font-family: 'Lato', sans-serif; font-weight: 400; color: #D8232A; font-size: 12px; letter-spacing: 0.5px;">
                                         <?php echo esc_html(kreasi_t('read_more', 'SELENGKAPNYA', 'READ MORE')); ?> →
                                     </a>
                                 </div>
@@ -253,14 +253,14 @@ if (!$has_articles) {
                 foreach ($dummy_articles as $dummy) :
             ?>
                     <div class="col-10 col-sm-6 col-lg-4 flex-shrink-0 flex-md-shrink-1">
-                        <div class="card article-card border-0 rounded-4 overflow-hidden shadow-sm h-100 bg-white">
+                        <div class="card article-card border-0 rounded-4 overflow-hidden shadow-sm h-100" style="background-color: #F6F6F6;">
                             <div class="position-relative overflow-hidden" style="height: 210px;">
                                 <img src="<?php echo esc_url($dummy['img']); ?>" class="w-100 h-100 object-fit-cover article-card-img" style="transition: transform 0.4s ease;">
                             </div>
                             <div class="card-body p-4 d-flex flex-column justify-content-between">
                                 <div>
                                     <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #163d6b; color: #163d6b;">
+                                        <span class="badge rounded-2 fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #163d6b; color: #163d6b;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                                                 <line x1="9" y1="9" x2="15" y2="9" stroke-width="1.8"/>
@@ -270,7 +270,7 @@ if (!$has_articles) {
                                             </svg>
                                             <?php echo esc_html($dummy['cat']); ?>
                                         </span>
-                                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
+                                        <span class="badge rounded-2 fw-semibold bg-transparent d-inline-flex align-items-center" style="font-size: 11px; padding: 5px 12px; border: 1.5px solid #D8232A; color: #D8232A;">
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                                                 <circle cx="12" cy="10" r="3"></circle>
@@ -279,12 +279,12 @@ if (!$has_articles) {
                                         </span>
                                     </div>
                                     <h5 class="fw-bold mb-3"
-                                        style="font-family: 'Oswald', sans-serif; color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px;">
+                                        style="font-family: 'Oswald', sans-serif; color: #1A202C; font-size: 18px; line-height: 1.35; letter-spacing: -0.3px; text-transform: none !important;">
                                         <a href="#" class="text-decoration-none text-dark article-title-link" style="transition: color 0.3s ease;"><?php echo esc_html($dummy['title']); ?></a>
                                     </h5>
                                 </div>
                                 <div class="mt-3 d-flex align-items-center justify-content-between position-relative" style="min-height: 24px;">
-                                    <span class="fw-semibold small" style="color: #D8232A; font-size: 12px;"><?php echo esc_html($dummy['date']); ?></span>
+                                    <span class="small" style="color: #D8232A; font-size: 12px;"><?php echo esc_html($dummy['date']); ?></span>
                                     <a href="#" class="text-decoration-none fw-bold text-uppercase article-hover-link" style="color: #D8232A; font-size: 11px; letter-spacing: 0.5px;">
                                         SELENGKAPNYA →
                                     </a>
@@ -306,10 +306,10 @@ if (!$has_articles) {
             $artikel_url   = $posts_page_id ? get_permalink($posts_page_id) : home_url('/artikel');
             ?>
             <a href="<?php echo esc_url($artikel_url); ?>"
-            class="btn text-white fw-bold px-4 py-3 text-uppercase shadow-sm articles-more-btn d-inline-flex align-items-center justify-content-center"
-            style="font-family: 'Oswald', sans-serif; background-color: #D8232A; border-radius: 6px; font-size: 12px; letter-spacing: 0.5px; transition: all 0.35s ease;">
+            class="btn text-white px-4 py-3 text-uppercase shadow-sm articles-more-btn d-inline-flex align-items-center justify-content-center"
+            style="font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 16px; background-color: #D8232A; border-radius: 6px; letter-spacing: 0.5px; transition: all 0.35s ease; padding-left: 28px; padding-right: 28px;">
                 <span style="font-family: 'Oswald', sans-serif;"><?php echo esc_html(kreasi_t('see_all_articles', 'BACA ARTIKEL LAINNYA', 'SEE ALL ARTICLES')); ?></span>
-                <span class="btn-arrow ms-2">→</span>
+                <span class="btn-arrow">→</span>
             </a>
         </div>
     </div>
@@ -344,7 +344,7 @@ if (!$has_articles) {
 }
 .article-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16) !important;
 }
 .article-card:hover .article-card-img {
     transform: scale(1.06);

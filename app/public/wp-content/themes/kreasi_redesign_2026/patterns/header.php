@@ -74,7 +74,7 @@
                         <?php
                         $nav_items = array(
                             array(
-                                'label' => 'TENTANG KAMI',
+                                'label' => 'TENTANG KAMI---',
                                 'slug'  => 'tentang-kami',
                             ),
                             array(

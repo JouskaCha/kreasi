@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Template Part: Single Publikasi
  * Sesuai desain Image 4 & PRD FR-05 (Tombol Unduh & Baca, Cover, Sinopsis, Share)
@@ -48,15 +48,27 @@ if (empty($summary)) {
 
 $share_url   = rawurlencode(get_permalink());
 $share_title = rawurlencode(get_the_title());
-$bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.png';
+
+// Background Banner Header Publikasi (Sama dengan Header Artikel)
+$artikel_bg_desktop = get_theme_mod('artikel_header_bg_desktop', '');
+$artikel_bg_mobile  = get_theme_mod('artikel_header_bg_mobile', '');
+if (empty($artikel_bg_desktop)) {
+    $artikel_bg_desktop = get_template_directory_uri() . '/assets/images/bg-header-artikel.png';
+}
+if (empty($artikel_bg_mobile)) {
+    $artikel_bg_mobile = get_template_directory_uri() . '/assets/images/bg-header-artikel-mobile.png';
+}
 ?>
 
 <main id="primary" class="site-main single-publikasi-page pb-5" style="background-color: #F8F9FA;">
 
-    <!-- HERO HEADER BANNER: BIRU MOTIF BATIK (FIGMA) -->
-    <section class="single-publikasi-hero position-relative overflow-hidden" 
-             style="background: #0B2055 url('<?php echo esc_url($bg_header); ?>') center/cover no-repeat; min-height: 220px; padding: 40px 0 100px;">
-        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(11, 32, 85, 0.7); z-index: 1;"></div>
+    <!-- HERO HEADER BANNER: MERAH MOTIF ARTIKEL (PERSIS DENGAN HEADER ARTIKEL) -->
+    <section class="single-publikasi-hero artikel-hero-banner position-relative overflow-hidden text-center text-white d-flex align-items-center justify-content-center" 
+             style="background-color: #D8232A; min-height: 240px; padding: 40px 15px 100px;">
+        <picture class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none" style="z-index: 1;">
+            <source media="(max-width: 767.98px)" srcset="<?php echo esc_url($artikel_bg_mobile); ?>">
+            <img src="<?php echo esc_url($artikel_bg_desktop); ?>" alt="Background Header Publikasi" class="w-100 h-100 object-fit-cover">
+        </picture>
     </section>
 
     <!-- KONTEN UTAMA: COVER KIRI & KARTU PUTIH KANAN (FIGMA IMAGE 4) -->
@@ -81,7 +93,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                     
                     <!-- TOP META BAR: BADGE KATEGORI + TANGGAL -->
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-                        <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
+                        <span class="badge rounded-2 fw-semibold bg-transparent d-inline-flex align-items-center" style="border-radius: 4px;"
                               style="border: 1px solid #062172; color: #062172; font-family: 'Lato', sans-serif; font-size: 12px; padding: 5px 12px;">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
@@ -109,17 +121,27 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                     <!-- GARIS PEMBATAS HORIZONTAL -->
                     <hr class="my-4" style="border: none; border-top: 1px solid #E5E7EB; opacity: 1;">
 
-                    <!-- RINGKASAN / SINOPSIS -->
-                    <div class="single-pub-summary text-secondary mb-4" 
-                         style="font-family: 'Lato', sans-serif; font-size: 15px; line-height: 1.7; color: #374151;">
-                        <?php echo wp_kses_post(wpautop($summary)); ?>
-                    </div>
+                    <!-- KONTEN DESKRIPSI PUBLIKASI (HANYA DITAMPILKAN 1 KALI, TIDAK DOUBLE) -->
+                    <?php 
+                    $raw_custom_summary = get_post_meta($post_id, '_kreasi_pub_summary', true);
+                    $has_editor_content = !empty(get_the_content());
+                    
+                    if (!empty($raw_custom_summary)) : ?>
+                        <div class="single-pub-summary text-secondary mb-4" 
+                             style="font-family: 'Lato', sans-serif; font-size: 15px; line-height: 1.7; color: #374151;">
+                            <?php echo wp_kses_post(wpautop($raw_custom_summary)); ?>
+                        </div>
+                    <?php endif; ?>
 
-                    <!-- ISI KONTEN POST (JIKA ADA TAMBAHAN TEKS DARI EDITOR) -->
-                    <?php if (!empty(get_the_content())) : ?>
+                    <?php if ($has_editor_content) : ?>
                         <div class="single-pub-extra-content text-secondary mb-4 entry-content" 
-                             style="font-family: 'Lato', sans-serif; font-size: 15px; line-height: 1.7; color: #4B5563;">
+                             style="font-family: 'Lato', sans-serif; font-size: 15px; line-height: 1.7; color: #374151;">
                             <?php the_content(); ?>
+                        </div>
+                    <?php elseif (empty($raw_custom_summary)) : ?>
+                        <div class="single-pub-summary text-secondary mb-4" 
+                             style="font-family: 'Lato', sans-serif; font-size: 15px; line-height: 1.7; color: #374151;">
+                            <p><?php echo esc_html(has_excerpt() ? get_the_excerpt() : 'Jejak KREASI adalah laporan bulanan dalam bentuk majalah yang disusun untuk menyebarluaskan informasi perkembangan serta praktik baik kepada seluruh pemangku kepentingan sektor pendidikan.'); ?></p>
                         </div>
                     <?php endif; ?>
 
@@ -132,8 +154,8 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                                 <a href="<?php echo esc_url($pdf_url); ?>" 
                                    target="_blank" 
                                    download
-                                   class="btn btn-navy-download text-white px-4 py-2 text-uppercase fw-bold shadow-sm d-inline-flex align-items-center"
-                                   style="background-color: #062172; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 14px; letter-spacing: 0.5px; transition: all 0.25s ease;">
+                                   class="btn btn-navy-download text-white px-4 py-2 text-uppercase shadow-sm d-inline-flex align-items-center"
+                                   style="background-color: #062172; border-radius: 6px; font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 16px; letter-spacing: 0.5px; transition: all 0.25s ease;">
                                     <span><?php echo esc_html(kreasi_t('unduh', 'UNDUH', 'DOWNLOAD')); ?></span>
                                     <span class="ms-2">↓</span>
                                 </a>
@@ -141,10 +163,8 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
 
                             <?php if ($show_baca) : ?>
                                 <a href="<?php echo esc_url($read_source); ?>" 
-                                   target="_blank" 
-                                   rel="noopener noreferrer"
-                                   class="btn btn-red-read text-white px-4 py-2 text-uppercase fw-bold shadow-sm d-inline-flex align-items-center"
-                                   style="background-color: #D8232A; border-radius: 6px; font-family: 'Oswald', sans-serif; font-size: 14px; letter-spacing: 0.5px; transition: all 0.25s ease;">
+                                   class="btn btn-red-read text-white px-4 py-2 text-uppercase shadow-sm d-inline-flex align-items-center"
+                                   style="background-color: #D8232A; border-radius: 6px; font-family: 'Oswald', sans-serif; font-weight: 400; font-size: 16px; letter-spacing: 0.5px; transition: all 0.25s ease;">
                                     <span><?php echo esc_html(kreasi_t('baca', 'BACA', 'READ')); ?></span>
                                     <span class="ms-2">→</span>
                                 </a>
@@ -163,7 +183,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                                     style="width: 32px; height: 32px; border: 1px solid #D1D5DB; color: #4B5563; background: #fff;"
                                     onclick="navigator.clipboard.writeText('<?php echo esc_url(get_permalink()); ?>'); alert('Tautan berhasil disalin!');"
                                     title="Salin Tautan">
-                                <i class="bi bi-link-45deg"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/link.png'); ?>" alt="Salin" width="16" height="16" style="object-fit: contain;">
                             </button>
 
                             <!-- WhatsApp -->
@@ -172,7 +192,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                                class="btn btn-sm rounded-circle d-inline-flex align-items-center justify-content-center pub-share-circle"
                                style="width: 32px; height: 32px; border: 1px solid #D1D5DB; color: #4B5563; background: #fff;"
                                title="Bagikan ke WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/whatsapp.png'); ?>" alt="WhatsApp" width="16" height="16" style="object-fit: contain;">
                             </a>
 
                             <!-- Instagram -->
@@ -181,7 +201,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                                class="btn btn-sm rounded-circle d-inline-flex align-items-center justify-content-center pub-share-circle"
                                style="width: 32px; height: 32px; border: 1px solid #D1D5DB; color: #4B5563; background: #fff;"
                                title="Instagram">
-                                <i class="bi bi-instagram"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/instagram.png'); ?>" alt="Instagram" width="16" height="16" style="object-fit: contain;">
                             </a>
 
                             <!-- Facebook -->
@@ -190,7 +210,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                                class="btn btn-sm rounded-circle d-inline-flex align-items-center justify-content-center pub-share-circle"
                                style="width: 32px; height: 32px; border: 1px solid #D1D5DB; color: #4B5563; background: #fff;"
                                title="Bagikan ke Facebook">
-                                <i class="bi bi-facebook"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/facebook.png'); ?>" alt="Facebook" width="16" height="16" style="object-fit: contain;">
                             </a>
 
                             <!-- X (Twitter) -->
@@ -199,7 +219,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                                class="btn btn-sm rounded-circle d-inline-flex align-items-center justify-content-center pub-share-circle"
                                style="width: 32px; height: 32px; border: 1px solid #D1D5DB; color: #4B5563; background: #fff;"
                                title="Bagikan ke X">
-                                <i class="bi bi-twitter-x"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/x-twitter.png'); ?>" alt="X" width="16" height="16" style="object-fit: contain;">
                             </a>
                         </div>
 

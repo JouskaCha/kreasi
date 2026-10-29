@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Template Part: Single Foto Kegiatan
  * Sesuai desain Image 3 (Hero Batik, Title & Share, Slider Carousel, Card Deskripsi & Kredit Foto)
@@ -95,7 +95,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                            class="btn btn-sm btn-outline-light rounded-circle d-inline-flex align-items-center justify-content-center"
                            style="width: 32px; height: 32px; border-color: rgba(255,255,255,0.4);"
                            title="Facebook">
-                            <i class="bi bi-facebook"></i>
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/facebook.png'); ?>" alt="Facebook" width="16" height="16" style="object-fit: contain;">
                         </a>
 
                         <!-- X (Twitter) -->
@@ -104,7 +104,7 @@ $bg_header   = get_template_directory_uri() . '/assets/images/bg-header-artikel.
                            class="btn btn-sm btn-outline-light rounded-circle d-inline-flex align-items-center justify-content-center"
                            style="width: 32px; height: 32px; border-color: rgba(255,255,255,0.4);"
                            title="X">
-                            <i class="bi bi-twitter-x"></i>
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/x-twitter.png'); ?>" alt="X" width="16" height="16" style="object-fit: contain;">
                         </a>
                     </div>
                 </div>

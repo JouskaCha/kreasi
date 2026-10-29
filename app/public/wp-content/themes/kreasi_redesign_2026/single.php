@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Template single artikel, publikasi, dan foto kegiatan.
  *
@@ -74,7 +74,7 @@ while (have_posts()) :
             <!-- ==========================================
                  HERO BANNER DENGAN GAMBAR BESAR & JUDUL FIGMA
             =========================================== -->
-            <header class="single-article-hero position-relative overflow-hidden w-100" style="min-height: 480px; max-height: 560px; background-color: #111;">
+            <header class="single-article-hero position-relative overflow-hidden w-100" style="min-height: 600px; height: 600px; background-color: #111;">
                 
                 <?php if (has_post_thumbnail()) : ?>
                     <img src="<?php echo esc_url(get_the_post_thumbnail_url($post_id, 'full')); ?>" 
@@ -94,8 +94,9 @@ while (have_posts()) :
                 </div>
 
                 <!-- Konten Judul di Bawah Banner -->
-                <div class="container position-relative h-100 d-flex align-items-end px-4 px-lg-5 pb-5" style="z-index: 2; min-height: 480px;">
-                    <div style="max-width: 960px;">
+                <div class="container position-relative h-100 d-flex align-items-end px-4 px-lg-5 pb-5" style="z-index: 2; min-height: 600px;">
+                    <div class="row w-100">
+                        <div class="col-12 col-md-10 offset-md-2 col-lg-8 offset-lg-3 col-xl-8 offset-xl-3">
                         <!-- Label Kategori / Anak Indonesia -->
                         <p class="text-white-50 small mb-2 text-uppercase fw-semibold" style="font-family: 'Lato', sans-serif; letter-spacing: 0.5px;">
                             <?php echo esc_html($cat_name); ?>
@@ -106,6 +107,7 @@ while (have_posts()) :
                             style="font-family: 'Oswald', 'Bebas Neue', sans-serif; font-size: clamp(26px, 3.8vw, 48px); line-height: 1.15; letter-spacing: 0.3px;">
                             <?php the_title(); ?>
                         </h1>
+                        </div>
                     </div>
                 </div>
 
@@ -179,12 +181,14 @@ while (have_posts()) :
                         <!-- ==========================================
                              KOTAK INFORMASI / DISCLAIMER KREASI (FIGMA)
                         =========================================== -->
+                        <!-- Disclaimer dinonaktifkan sesuai revisi
                         <div class="kreasi-disclaimer-box p-3 p-md-4 rounded-3 mb-4" 
                              style="background-color: #F8F9FA; border: 1px solid #E5E7EB;">
                             <p class="mb-0 text-secondary" style="font-family: 'Lato', sans-serif; font-size: 13px; line-height: 1.65;">
                                 <em><?php echo wp_kses_post(kreasi_t('about_description')); ?></em>
                             </p>
                         </div>
+                        -->
 
 
                         <!-- ==========================================
@@ -231,7 +235,7 @@ while (have_posts()) :
                                     style="width: 32px; height: 32px; padding: 0;"
                                     onclick="navigator.clipboard.writeText('<?php echo esc_url(get_permalink()); ?>'); alert('Tautan artikel berhasil disalin!');"
                                     title="Salin Tautan">
-                                <i class="bi bi-link-45deg"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/link.png'); ?>" alt="Salin" width="16" height="16" style="object-fit: contain;">
                             </button>
 
                             <!-- WhatsApp -->
@@ -240,7 +244,7 @@ while (have_posts()) :
                                class="btn btn-outline-success btn-sm rounded-circle d-inline-flex align-items-center justify-content-center share-btn"
                                style="width: 32px; height: 32px; padding: 0;"
                                title="Bagikan ke WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/whatsapp.png'); ?>" alt="WhatsApp" width="16" height="16" style="object-fit: contain;">
                             </a>
 
                             <!-- Twitter / X -->
@@ -249,7 +253,7 @@ while (have_posts()) :
                                class="btn btn-outline-dark btn-sm rounded-circle d-inline-flex align-items-center justify-content-center share-btn"
                                style="width: 32px; height: 32px; padding: 0;"
                                title="Bagikan ke X">
-                                <i class="bi bi-twitter-x"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/x-twitter.png'); ?>" alt="X" width="16" height="16" style="object-fit: contain;">
                             </a>
 
                             <!-- Facebook -->
@@ -258,7 +262,7 @@ while (have_posts()) :
                                class="btn btn-outline-primary btn-sm rounded-circle d-inline-flex align-items-center justify-content-center share-btn"
                                style="width: 32px; height: 32px; padding: 0;"
                                title="Bagikan ke Facebook">
-                                <i class="bi bi-facebook"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/facebook.png'); ?>" alt="Facebook" width="16" height="16" style="object-fit: contain;">
                             </a>
 
                             <!-- LinkedIn -->
@@ -267,7 +271,7 @@ while (have_posts()) :
                                class="btn btn-outline-primary btn-sm rounded-circle d-inline-flex align-items-center justify-content-center share-btn"
                                style="width: 32px; height: 32px; padding: 0;"
                                title="Bagikan ke LinkedIn">
-                                <i class="bi bi-linkedin"></i>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/icon-artikel/instagram.png'); ?>" alt="Instagram" width="16" height="16" style="object-fit: contain;">
                             </a>
                         </div>
 
@@ -284,7 +288,11 @@ while (have_posts()) :
         <?php if ($related_query->have_posts()) : ?>
             <section class="single-article-related py-5 bg-light border-top mt-4">
                 <div class="container px-4 px-lg-5">
-                    
+                    <div class="text-center mb-4 mb-md-5">
+                        <h2 class="text-dark text-uppercase mb-0" style="font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(32px, 3.5vw, 44px); letter-spacing: 0.5px;">
+                            <?php echo esc_html(kreasi_t('read_other_articles', 'BACA ARTIKEL LAINNYA', 'READ OTHER ARTICLES')); ?>
+                        </h2>
+                    </div>
                     <div class="row g-4 justify-content-center">
                         <?php while ($related_query->have_posts()) : $related_query->the_post(); 
                             $rel_cat_obj  = function_exists('kreasi_get_post_child_category') ? kreasi_get_post_child_category(get_the_ID()) : null;
@@ -296,7 +304,7 @@ while (have_posts()) :
                                 : get_template_directory_uri() . '/assets/images/thumbnail-1.png';
                         ?>
                             <div class="col-md-6 col-lg-4">
-                                <article class="card article-card border-0 rounded-4 shadow-sm p-3 bg-white h-100 d-flex flex-column justify-content-between">
+                                <article class="card article-card border-0 rounded-4 shadow-sm p-3 h-100 d-flex flex-column justify-content-between" style="background-color: #F6F6F6;">
                                     <div>
                                         <div class="position-relative overflow-hidden rounded-3 mb-3" style="aspect-ratio: 16/9; max-height: 200px;">
                                             <a href="<?php the_permalink(); ?>">
@@ -308,7 +316,7 @@ while (have_posts()) :
                                         </div>
 
                                         <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-                                            <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
+                                            <span class="badge rounded-2 fw-semibold bg-transparent d-inline-flex align-items-center"
                                                   style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 4px 10px; border: 1.5px solid #062172; color: #062172;">
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
@@ -316,7 +324,7 @@ while (have_posts()) :
                                                 <?php echo esc_html($rel_cat_name); ?>
                                             </span>
                                             <?php if (!empty($rel_tag_name)) : ?>
-                                            <span class="badge rounded-pill fw-semibold bg-transparent d-inline-flex align-items-center"
+                                            <span class="badge rounded-2 fw-semibold bg-transparent d-inline-flex align-items-center"
                                                   style="font-family: 'Lato', sans-serif; font-size: 11px; padding: 4px 10px; border: 1.5px solid #DA291C; color: #DA291C;">
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                                                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -327,7 +335,7 @@ while (have_posts()) :
                                             <?php endif; ?>
                                         </div>
 
-                                        <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 17px; line-height: 1.35;">
+                                        <h4 class="fw-bold mb-2" style="font-family: 'Oswald', sans-serif; font-size: 17px; line-height: 1.35; text-transform: none !important;">
                                             <a href="<?php the_permalink(); ?>" class="text-decoration-none text-dark article-title-link">
                                                 <?php the_title(); ?>
                                             </a>
