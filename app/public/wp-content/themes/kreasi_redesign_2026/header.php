@@ -14,6 +14,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .kreasi-nav-menu ul li a {
+            font-family: 'Oswald', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            min-height: 36px !important;
+            padding: 4px 18px !important;
+        }
+    </style>
 </head>
 
 <body <?php body_class(); ?>>
@@ -29,7 +38,7 @@
                     <!-- SISI KIRI: Logo Utama (Dinamis dari WordPress Media Library / Custom Logo) -->
                     <div class="header-main-logo d-flex align-items-center">
                         <a href="<?php echo esc_url(home_url('/')); ?>" class="d-inline-block" rel="home">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-kreasi.png'); ?>"
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-header/Kreasi logo.png'); ?>"
                                 alt="<?php bloginfo('name'); ?>"
                                 class="logo-kreasi-img"
                                 onerror="this.outerHTML='<h3 class=\'fw-bold text-navy mb-0\'>KREASI</h3><small class=\'text-secondary fw-semibold\'>Kolaborasi untuk Edukasi Anak Indonesia</small>'">

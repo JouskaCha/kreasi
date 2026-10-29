@@ -1,10 +1,10 @@
-/*
+﻿/*
 Theme Name: Kreasi Redesign 2026
 Theme URI: https://example.com/kreasi_redesign_2026
 Author: Kreasi Team
 Author URI: https://example.com
 Description: Tema kustom WordPress responsif dengan Bootstrap 5 dan hirarki standar.
-Version: 1.0.0
+Version: 1.0.1
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -136,7 +136,7 @@ img {
 
 .kreasi-nav-menu ul li a {
     font-family: 'Oswald', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400 !important;
     letter-spacing: 0.4px;
 }
@@ -164,7 +164,7 @@ img {
     border-radius: 20px;
     background-color: #f1f3f7;
     color: #163d6b;
-    font-size: 16px !important;
+    font-size: 14px !important;
     font-weight: 400;
     text-decoration: none;
     letter-spacing: 0.4px;
@@ -595,16 +595,21 @@ img {
 }
 
 .contact-icon {
-    width: 26px;
-    height: 26px;
-    background-color: #0b2351;
-    color: #fff;
-    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
     flex-shrink: 0;
+}
+.contact-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
 }
 
 .contact-text {
@@ -1634,4 +1639,42 @@ a.btn,
     transform: translateX(0);
     max-width: 20px;
     margin-left: 8px;
+}
+
+
+/* =========================================
+   SHARE ICONS & FOOTER ICONS: NO BORDER
+========================================= */
+.share-btn,
+.pub-share-circle,
+.article-share-section .btn,
+.pub-share-wrap .btn {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 0 !important;
+}
+
+.share-btn img,
+.pub-share-circle img,
+.article-share-section img,
+.pub-share-wrap img {
+    width: 24px !important;
+    height: 24px !important;
+    object-fit: contain !important;
+    transition: transform 0.2s ease, opacity 0.2s ease !important;
+}
+
+.share-btn:hover img,
+.pub-share-circle:hover img,
+.article-share-section a:hover img,
+.article-share-section button:hover img {
+    transform: scale(1.15) !important;
+    opacity: 0.8 !important;
 }

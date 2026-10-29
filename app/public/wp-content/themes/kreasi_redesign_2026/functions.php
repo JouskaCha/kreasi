@@ -576,19 +576,19 @@ function kreasi_redesign_2026_render_partner_logos($is_mobile = false) {
     $theme_uri = get_template_directory_uri();
     $logos = [
         [
-            'src' => $theme_uri . '/assets/images/logo-kemendikdasmen.png',
+            'src' => $theme_uri . '/assets/images/logo-header/kemendikbud.png',
             'alt' => 'Kemendikdasmen',
         ],
         [
-            'src' => $theme_uri . '/assets/images/logo-kemenag.png',
+            'src' => $theme_uri . '/assets/images/logo-header/kemenag.png',
             'alt' => 'Kemenag',
         ],
         [
-            'src' => $theme_uri . '/assets/images/logo-gpe.png',
+            'src' => $theme_uri . '/assets/images/logo-header/gpe.png',
             'alt' => 'GPE',
         ],
         [
-            'src' => $theme_uri . '/assets/images/logo-save-the-children.png',
+            'src' => $theme_uri . '/assets/images/logo-header/STC.png',
             'alt' => 'Save the Children',
         ],
     ];
@@ -762,7 +762,7 @@ function kreasi_redesign_2026_enqueue_scripts()
         'kreasi_redesign_2026-style',
         get_stylesheet_uri(),
         array('bootstrap-css', 'bootstrap-icons'),
-        wp_get_theme()->get('Version')
+        file_exists(get_stylesheet_directory() . '/style.css') ? filemtime(get_stylesheet_directory() . '/style.css') : '1.0.1'
     );
 
     // Bootstrap 5 JS Bundle CDN
